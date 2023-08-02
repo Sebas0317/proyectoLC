@@ -1,0 +1,329 @@
+{% extends 'core/base.html' %}
+{% block title %}Checkout{% endblock %}
+
+{% load static %}
+{% block content %}
+ <!-- My Account Start -->
+ <div class="my-account">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <div
+            class="nav flex-column nav-pills"
+            role="tablist"
+            aria-orientation="vertical"
+          >
+            <a
+              class="nav-link active"
+              id="dashboard-nav"
+              data-toggle="pill"
+              href="#dashboard-tab"
+              role="tab"
+              ><i class="fa fa-tachometer-alt"></i>Configuracion</a
+            >
+            <a
+              class="nav-link"
+              id="orders-nav"
+              data-toggle="pill"
+              href="#orders-tab"
+              role="tab"
+              ><i class="fa fa-shopping-bag"></i>Productos</a
+            >
+            <a
+              class="nav-link"
+              id="payment-nav"
+              data-toggle="pill"
+              href="#payment-tab"
+              role="tab"
+              ><i class="fa fa-credit-card"></i>Usuarios</a
+            >
+            <a
+              class="nav-link"
+              id="address-nav"
+              data-toggle="pill"
+              href="#address-tab"
+              role="tab"
+              ><i class="fa fa-map-marker-alt"></i>Pedidos</a
+            >
+            <a
+              class="nav-link"
+              id="account-nav"
+              data-toggle="pill"
+              href="#account-tab"
+              role="tab"
+              ><i class="fa fa-user"></i>Detalle de la cuenta</a
+            >
+            <a class="nav-link" href="index.html"
+              ><i class="fa fa-sign-out-alt"></i>Cerrar sesión</a
+            >
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="tab-content">
+            <div
+              class="tab-pane fade show active"
+              id="dashboard-tab"
+              role="tabpanel"
+              aria-labelledby="dashboard-nav"
+            >
+              <h4>Panel</h4>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
+                condimentum quam ac mi viverra dictum. In efficitur ipsum
+                diam, at dignissim lorem tempor in. Vivamus tempor hendrerit
+                finibus. Nulla tristique viverra nisl, sit amet bibendum ante
+                suscipit non. Praesent in faucibus tellus, sed gravida lacus.
+                Vivamus eu diam eros. Aliquam et sapien eget arcu rhoncus
+                scelerisque.
+              </p>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="orders-tab"
+              role="tabpanel"
+              aria-labelledby="orders-nav"
+            >
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>No</th>
+                      <th>Producto</th>
+                      <th>Fecha</th>
+                      <th>Precio</th>
+                      <th>Estado</th>
+                      <th>Acción</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>Nombre de producto</td>
+                      <td>01 Jan 2020</td>
+                      <td>$99</td>
+                      <td>Aprobado</td>
+                      <td><button class="btn">Vista</button></td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>Nombre de producto</td>
+                      <td>01 Jan 2020</td>
+                      <td>$99</td>
+                      <td>Aprobado</td>
+                      <td><button class="btn">Visto</button></td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>Nombre de producto</td>
+                      <td>01 Jan 2020</td>
+                      <td>$99</td>
+                      <td>Aprobado</td>
+                      <td><button class="btn">Vista</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="payment-tab"
+              role="tabpanel"
+              aria-labelledby="payment-nav"
+            >
+              <h4>Usuarios registrados</h4>
+              <div id="user-container" class="d-flex justify-content-center">
+                <div
+                  id="card-container"
+                  class="d-flex justify-content-center"
+                >
+                  <div
+                    class="modal fade"
+                    id="myModal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">
+                            Editar Usuario
+                          </h5>
+                          <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form>
+                            <div class="form-group">
+                              <label for="name">Nombre</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="name"
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label for="surname">Apellido</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="surname"
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label for="email">Correo</label>
+                              <input
+                                type="email"
+                                class="form-control"
+                                id="email"
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label for="phone">Teléfono</label>
+                              <input type="tel" class="form-control"
+                              id="phone" ">
+                            </div>
+                            <div class="form-group">
+                              <label for="address">Dirección</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="address"
+                              />
+                            </div>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                          >
+                            Cerrar
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-primary"
+                            id="saveChangesBtn"
+                          >
+                            Guardar Cambios
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="address-tab"
+              role="tabpanel"
+              aria-labelledby="address-nav"
+            >
+              <h4>Address</h4>
+              <div class="row">
+                <div class="col-md-6">
+                  <h5>Dirección de pago</h5>
+                  <p>123 Payment Street, Los Angeles, CA</p>
+                  <p>Telefono: 012-345-6789</p>
+                  <button class="btn">Dirección de correo electronico</button>
+                </div>
+                <div class="col-md-6">
+                  <h5>Dirección de envio</h5>
+                  <p>123 Shipping Street, Los Angeles, CA</p>
+                  <p>Telefono: 012-345-6789</p>
+                  <button class="btn">Dirección de correo electronico</button>
+                </div>
+              </div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="account-tab"
+              role="tabpanel"
+              aria-labelledby="account-nav"
+            >
+              <h4>Detalle de cuenta</h4>
+              <div class="row">
+                <div class="col-md-6">
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="First Name"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Last Name"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Mobile"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Email"
+                  />
+                </div>
+                <div class="col-md-12">
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Address"
+                  />
+                </div>
+                <div class="col-md-12">
+                  <button class="btn">Actualizar cuenta</button>
+                  <br /><br />
+                </div>
+              </div>
+              <h4>Cambiar contraseña</h4>
+              <div class="row">
+                <div class="col-md-12">
+                  <input
+                    class="form-control"
+                    type="password"
+                    placeholder="Current Password"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="New Password"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Confirm Password"
+                  />
+                </div>
+                <div class="col-md-12">
+                  <button class="btn">Guardar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- My Account End -->
+{%endblock%}

@@ -71,14 +71,12 @@
         >
           <div class="navbar-nav mr-auto">
             <a href="{% url 'home' %}" class="nav-item nav-link active">Inicio</a>
-            <a href="{% url 'product-list' %}" class="nav-item nav-link"
+            <a href="{% url 'product_list' %}" class="nav-item nav-link"
               >Productos</a
             >
-            <a href="{% url 'product-detail' %}" class="nav-item nav-link"
-              >Detalle de Productos</a
-            >
-            <a href="{% url 'home' %}" class="nav-item nav-link">Carrito</a>
-            <a href="{% url 'home' %}" class="nav-item nav-link">Checkout</a>
+           
+            {% comment %} <a href="{% url 'home' %}" class="nav-item nav-link">Carrito</a>
+            <a href="{% url 'home' %}" class="nav-item nav-link">Checkout</a> {% endcomment %}
             <a href="{% url 'home' %}" class="nav-item nav-link">Mi Cuenta</a>
             <div class="nav-item dropdown">
               <a

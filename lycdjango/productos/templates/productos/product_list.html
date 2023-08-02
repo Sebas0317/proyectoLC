@@ -86,7 +86,7 @@
                 </div>
                 <div class="product-image">
                   {% if producto.imagen %}
-                  <a href="{% url 'product_detail' %}">
+                  <a href="{% url 'product-detail' %}">
                     <img src="{{ producto.imagen.url }}" />
                   </a>
                   {% else %}
@@ -103,7 +103,7 @@
                 <div class="product-price">
                   <h3><span>$</span>{{ producto.precio }}</h3>
                   {% if producto.cantidad_disponible > 0 %}
-                  <a class="btn" href="{% url 'product_detail' producto.id %}">
+                  <a class="btn" href="{% url 'product-detail' producto.id %}">
                     <i class="fa fa-shopping-cart"></i>Comprar
                   </a>
                   {% else %}
@@ -213,7 +213,7 @@
             </div>
             <div class="product-price">
               <h3><span>$</span>{{ producto_aleatorio.precio }}</h3>
-              <a class="btn" href="{% url 'product_detail' %}">
+              <a class="btn" href="{% url 'product-detail' %}">
                 <i class="fa fa-shopping-cart"></i>Comprar
               </a>
             </div>

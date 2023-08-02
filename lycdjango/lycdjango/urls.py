@@ -19,17 +19,18 @@ from django.urls import path
 from django.conf.urls.static import static, settings
 from core import views
 from core import views as core_views
+from productos import views as productos_views
 
 urlpatterns = [
     path('', views.home, name="home"),
     path('product-detail/', views.product_detail, name="product-detail"),
     path('product-detail/<int:producto_id>/',views.product_detail, name='product-detail'),
-    path('product-list/', views.productlist, name="product-list"),
+    path('product_list/', productos_views.product_list, name='product_list'),
     path('checkout/', views.checkout, name="checkout"),
     path('my-account/', core_views.myaccount, name="my-account"),
     path('wishlist/', views.wishlist, name="wishlist"),
     path('contact/', views.contact, name="contact"),
-    path('admin/', views.admin, name="admin"),
+    path('user_admin/', views.admin, name="admin"),
     path('regis/', views.regis, name="regis"),
     path('admin/', admin.site.urls),
     

@@ -1,60 +1,82 @@
-{% extends 'core/base.html' %}
-{% block title %}Detalle del producto{% endblock %}
-
-{% load static %}
+{% extends 'core/base.html' %} 
+{% block title %}Detalle del producto{% endblock %} 
+{% load static %} 
 {% block content %}
- <!-- Breadcrumb Start -->
- <div class="breadcrumb-wrap">
-    <div class="container-fluid">
-      <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Incio</a></li>
-        <li class="breadcrumb-item"><a href="#">Productos</a></li>
-        <li class="breadcrumb-item active">Detalles de Producto</li>
-      </ul>
-    </div>
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+  <div class="container-fluid">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Incio</a></li>
+      <li class="breadcrumb-item"><a href="#">Productos</a></li>
+      <li class="breadcrumb-item active">Detalles de Producto</li>
+    </ul>
   </div>
-  <!-- Breadcrumb End -->
+</div>
+<!-- Breadcrumb End -->
 
-  <!-- Product Detail Start -->
-  <div class="product-detail">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-8">
-          <div class="product-detail-top">
+<!-- Product Detail Start -->
+<div class="product-detail">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="product-detail-top">
+          <div class="container">
             <div class="row align-items-center">
               <div class="col-md-5">
-                <div class="product-slider-single normal-slider">
-                  <img src="{% static 'core/img/product-1.jpg' %}" alt="Product Image" />
-                  <img src="{% static 'core/img/product-3.jpg' %}" alt="Product Image" />
-                  <img src="{% static 'core/img/product-5.jpg' %}" alt="Product Image" />
-                  <img src="{% static 'core/img/product-7.jpg' %}" alt="Product Image" />
-                  <img src="{% static 'core/img/product-9.jpg' %}" alt="Product Image" />
-                  <img src="{% static 'core/img/product-10.jpg' %}" alt="Product Image" />
-                </div>
-                <div class="product-slider-single-nav normal-slider">
-                  <div class="slider-nav-img">
-                    <img src="{% static 'core/img/product-1.jpg' %}" alt="Product Image" />
+                <div
+                  id="product-slider"
+                  class="carousel slide"
+                  data-ride="carousel"
+                >
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      {% if producto.imagen %}
+                      <img
+                        src="{{ producto.imagen.url }}"
+                        alt="Product Image"
+                        class="d-block w-100"
+                      />
+                      {% else %}
+                      <img
+                        src="{% static 'core/img/product-1.jpg' %}"
+                        alt="Product Image"
+                        class="d-block w-100"
+                      />
+                      {% endif %}
+                    </div>
+
+                    <!-- Agrega más elementos del carrusel aquí -->
                   </div>
-                  <div class="slider-nav-img">
-                    <img src="{% static 'core/img/product-3.jpg' %}" alt="Product Image" />
-                  </div>
-                  <div class="slider-nav-img">
-                    <img src="{% static 'core/img/product-5.jpg' %}" alt="Product Image" />
-                  </div>
-                  <div class="slider-nav-img">
-                    <img src="{% static 'core/img/product-7.jpg' %}" alt="Product Image" />
-                  </div>
-                  <div class="slider-nav-img">
-                    <img src="{% static 'core/img/product-9.jpg' %}" alt="Product Image" />
-                  </div>
-                  <div class="slider-nav-img">
-                    <img src="{% static 'core/img/product-10.jpg' %}" alt="Product Image" />
-                  </div>
+                  <a
+                    class="carousel-control-prev"
+                    href="#product-slider"
+                    role="button"
+                    data-slide="prev"
+                  >
+                    <span
+                      class="carousel-control-prev-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a
+                    class="carousel-control-next"
+                    href="#product-slider"
+                    role="button"
+                    data-slide="next"
+                  >
+                    <span
+                      class="carousel-control-next-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="sr-only">Next</span>
+                  </a>
                 </div>
               </div>
+
               <div class="col-md-7">
                 <div class="product-content">
-                  <div class="title"><h2>Nombre del Producto</h2></div>
+                  <div class="title"><h2>{{ producto.nombre }}</h2></div>
                   <div class="ratting">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -64,7 +86,7 @@
                   </div>
                   <div class="price">
                     <h4>Precio:</h4>
-                    <p>$COP <span>$COP</span></p>
+                    <p>$COP {{ producto.precio }}</p>
                   </div>
                   <div class="quantity">
                     <h4>Cantidad:</h4>
@@ -96,271 +118,98 @@
                     </div>
                   </div>
                   <div class="action">
-                    <a class="btn" href="#"
-                      ><i class="fa fa-shopping-cart"></i>Añadir al Carrito</a
-                    >
-                    <a class="btn" href="#"
-                      ><i class="fa fa-shopping-bag"></i>Comprar</a
-                    >
+                    <a class="btn" href="{% url 'add_to_cart' producto.id %}">
+                      <i class="fa fa-shopping-cart"></i>Añadir al Carrito
+                    </a>
+                    <a class="btn" href="#">
+                      <i class="fa fa-shopping-bag"></i>Comprar
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="row product-detail-bottom">
-            <div class="col-lg-12">
-              <ul class="nav nav-pills nav-justified">
-                <li class="nav-item">
-                  <a
-                    class="nav-link active"
-                    data-toggle="pill"
-                    href="#description"
-                    >Descripcion</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="pill" href="#specification"
-                    >Especificaciones</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="pill" href="#reviews"
-                    >Comentarios</a
-                  >
-                </li>
-              </ul>
+        <div class="row product-detail-bottom">
+          <div class="col-lg-12">
+            <ul class="nav nav-pills nav-justified">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  data-toggle="pill"
+                  href="#description"
+                  >Descripcion</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#specification"
+                  >Especificaciones</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#reviews"
+                  >Comentarios</a
+                >
+              </li>
+            </ul>
 
-              <div class="tab-content">
-                <div id="description" class="container tab-pane active">
-                  <h4>Descripcion Del Producto</h4>
+            <div class="tab-content">
+              <div id="description" class="container tab-pane active">
+                <h4>Descripcion Del Producto</h4>
+                <p>{{ producto.descripcion }}</p>
+              </div>
+
+              <div id="specification" class="container tab-pane fade">
+                <h4>Especificaciones del Producto</h4>
+                <ul>
+                  {% for especificacion in producto.especificaciones.all %}
+                  <li>
+                    {{ especificacion.nombre }}: {{ especificacion.valor }}
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <div id="reviews" class="container tab-pane fade">
+                <div class="reviews-submitted">
+                  <div class="reviewer">
+                    Phasellus Gravida - <span>01 Jan 2020</span>
+                  </div>
+                  <div class="ratting">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                  </div>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    In condimentum quam ac mi viverra dictum. In efficitur
-                    ipsum diam, at dignissim lorem tempor in. Vivamus tempor
-                    hendrerit finibus. Nulla tristique viverra nisl, sit amet
-                    bibendum ante suscipit non. Praesent in faucibus tellus,
-                    sed gravida lacus. Vivamus eu diam eros. Aliquam et sapien
-                    eget arcu rhoncus scelerisque. Suspendisse sit amet neque
-                    neque. Praesent suscipit et magna eu iaculis. Donec arcu
-                    libero, commodo ac est a, malesuada finibus dolor. Aenean
-                    in ex eu velit semper fermentum. In leo dui, aliquet sit
-                    amet eleifend sit amet, varius in turpis. Maecenas
-                    fermentum ut ligula at consectetur. Nullam et tortor leo.
+                    Sed ut perspiciatis unde omnis iste natus error sit
+                    voluptatem accusantium doloremque laudantium, totam rem
+                    aperiam.
                   </p>
                 </div>
-                <div id="specification" class="container tab-pane fade">
-                  <h4>Especificaciones del Producto</h4>
-                  <ul>
-                    <li>Lorem ipsum dolor sit amet</li>
-                    <li>Lorem ipsum dolor sit amet</li>
-                    <li>Lorem ipsum dolor sit amet</li>
-                    <li>Lorem ipsum dolor sit amet</li>
-                    <li>Lorem ipsum dolor sit amet</li>
-                  </ul>
-                </div>
-                <div id="reviews" class="container tab-pane fade">
-                  <div class="reviews-submitted">
-                    <div class="reviewer">
-                      Phasellus Gravida - <span>01 Jan 2020</span>
+                <div class="reviews-submit">
+                  <h4>Dejanos un Comentario:</h4>
+                  <div class="ratting">
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                  </div>
+                  <div class="row form">
+                    <div class="col-sm-6">
+                      <input type="text" placeholder="Name" />
                     </div>
-                    <div class="ratting">
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
+                    <div class="col-sm-6">
+                      <input type="email" placeholder="Email" />
                     </div>
-                    <p>
-                      Sed ut perspiciatis unde omnis iste natus error sit
-                      voluptatem accusantium doloremque laudantium, totam rem
-                      aperiam.
-                    </p>
-                  </div>
-                  <div class="reviews-submit">
-                    <h4>Dejanos un Comentario:</h4>
-                    <div class="ratting">
-                      <i class="far fa-star"></i>
-                      <i class="far fa-star"></i>
-                      <i class="far fa-star"></i>
-                      <i class="far fa-star"></i>
-                      <i class="far fa-star"></i>
+                    <div class="col-sm-12">
+                      <textarea placeholder="Review"></textarea>
                     </div>
-                    <div class="row form">
-                      <div class="col-sm-6">
-                        <input type="text" placeholder="Name" />
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="email" placeholder="Email" />
-                      </div>
-                      <div class="col-sm-12">
-                        <textarea placeholder="Review"></textarea>
-                      </div>
-                      <div class="col-sm-12">
-                        <button>Enviar</button>
-                      </div>
+                    <div class="col-sm-12">
+                      <button>Enviar</button>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="product">
-            <div class="section-header">
-              <h1>Productos Relacionados</h1>
-            </div>
-
-            <div
-              class="row align-items-center product-slider product-slider-3"
-            >
-              <div class="col-lg-3">
-                <div class="product-item">
-                  <div class="product-title">
-                    <a href="#">Nombre del Producto</a>
-                    <div class="ratting">
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="product-image">
-                    <a href="product-detail.html">
-                      <img src="{% static 'core/img/product-10.jpg' %}" alt="Product Image" />
-                    </a>
-                    <div class="product-action">
-                      <a href="#"><i class="fa fa-cart-plus"></i></a>
-                      <a href="#"><i class="fa fa-heart"></i></a>
-                      <a href="#"><i class="fa fa-search"></i></a>
-                    </div>
-                  </div>
-                  <div class="product-price">
-                    <h3><span>$</span>COP</h3>
-                    <a class="btn" href=""
-                      ><i class="fa fa-shopping-cart"></i>Comprar</a
-                    >
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <div class="product-item">
-                  <div class="product-title">
-                    <a href="#">Nombre del Producto</a>
-                    <div class="ratting">
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="product-image">
-                    <a href="product-detail.html">
-                      <img src="{% static 'core/img/product-8.jpg' %}" alt="Product Image" />
-                    </a>
-                    <div class="product-action">
-                      <a href="#"><i class="fa fa-cart-plus"></i></a>
-                      <a href="#"><i class="fa fa-heart"></i></a>
-                      <a href="#"><i class="fa fa-search"></i></a>
-                    </div>
-                  </div>
-                  <div class="product-price">
-                    <h3><span>$</span>COP</h3>
-                    <a class="btn" href=""
-                      ><i class="fa fa-shopping-cart"></i>Comprar</a
-                    >
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <div class="product-item">
-                  <div class="product-title">
-                    <a href="#">Nombre del Producto</a>
-                    <div class="ratting">
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="product-image">
-                    <a href="product-detail.html">
-                      <img src="img/product-6.jpg" alt="Product Image" />
-                    </a>
-                    <div class="product-action">
-                      <a href="#"><i class="fa fa-cart-plus"></i></a>
-                      <a href="#"><i class="fa fa-heart"></i></a>
-                      <a href="#"><i class="fa fa-search"></i></a>
-                    </div>
-                  </div>
-                  <div class="product-price">
-                    <h3><span>$</span>COP</h3>
-                    <a class="btn" href=""
-                      ><i class="fa fa-shopping-cart"></i>Comprar</a
-                    >
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <div class="product-item">
-                  <div class="product-title">
-                    <a href="#">Nombre del Producto</a>
-                    <div class="ratting">
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="product-image">
-                    <a href="product-detail.html">
-                      <img src="{% static 'core/img/product-4.jpg' %}" alt="Product Image" />
-                    </a>
-                    <div class="product-action">
-                      <a href="#"><i class="fa fa-cart-plus"></i></a>
-                      <a href="#"><i class="fa fa-heart"></i></a>
-                      <a href="#"><i class="fa fa-search"></i></a>
-                    </div>
-                  </div>
-                  <div class="product-price">
-                    <h3><span>$</span>COP</h3>
-                    <a class="btn" href=""
-                      ><i class="fa fa-shopping-cart"></i>Comprar</a
-                    >
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <div class="product-item">
-                  <div class="product-title">
-                    <a href="#">Nombre del Producto</a>
-                    <div class="ratting">
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="product-image">
-                    <a href="product-detail.html">
-                      <img src="{% static 'core/img/product-2.jpg' %}" alt="Product Image" />
-                    </a>
-                    <div class="product-action">
-                      <a href="#"><i class="fa fa-cart-plus"></i></a>
-                      <a href="#"><i class="fa fa-heart"></i></a>
-                      <a href="#"><i class="fa fa-search"></i></a>
-                    </div>
-                  </div>
-                  <div class="product-price">
-                    <h3><span>$</span>COP</h3>
-                    <a class="btn" href=""
-                      ><i class="fa fa-shopping-cart"></i>Comprar</a
-                    >
                   </div>
                 </div>
               </div>
@@ -368,178 +217,265 @@
           </div>
         </div>
 
-        <!-- Side Bar Start -->
-        <div class="col-lg-4 sidebar">
-          <div class="sidebar-widget category">
-            <h2 class="title">Categoria</h2>
-            <nav class="navbar bg-light">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="#"
-                    ><i class="fa fa-female"></i>Moda y Belleza</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"
-                    ><i class="fa fa-child"></i>Ropa para bebes y niños</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"
-                    ><i class="fa fa-tshirt"></i>Ropa para mujeres y
-                    hombres</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"
-                    ><i class="fa fa-mobile-alt"></i>Joyeria y accesorios</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"
-                    ><i class="fa fa-microchip"></i>Electronicos</a
-                  >
-                </li>
-              </ul>
-            </nav>
+        <div class="product">
+          <div class="section-header">
+            <h1>Productos Relacionados</h1>
           </div>
 
-          <div class="sidebar-widget widget-slider">
-            <div class="sidebar-slider normal-slider">
-              <div class="product-item">
-                <div class="product-title">
-                  <a href="#">Nombre del Producto</a>
-                  <div class="ratting">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
+          <div class="row align-items-center product-slider product-slider-3">
+            {% for producto_relacionado in productos_relacionados %}
+            <div class="col-lg-3">
+                <div class="product-item">
+                    <div class="product-title">
+                        <a href="#">{{ producto_relacionado.nombre }}</a>
+                        <div class="ratting">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="product-image">
+                        <a href="#">
+                            <img src="{{ producto_relacionado.imagen.url }}" alt="Product Image" />
+                        </a>
+                        <div class="product-action">
+                            <form method="post" action="{% url 'add_to_cart' producto_relacionado.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn">
+                                    <i class="fa fa-cart-plus"></i>
+                                </button>
+                            </form>
+                            <a href="#"><i class="fa fa-heart"></i></a>
+                            <a href="#"><i class="fa fa-search"></i></a>
+                        </div>
+                    </div>
+                    <div class="product-price">
+                      <h3><span>$</span>{{ producto_relacionado.precio }}</h3>
+                      {% if producto_relacionado.cantidad_disponible > 0 %}
+                      <a class="btn" href="{% url 'product-detail' producto_relacionado.id %}">
+                          <i class="fa fa-shopping-cart"></i>Comprar
+                      </a>
+                      {% else %}
+                      <button class="btn btn-disabled" disabled>Agotado</button>
+                      {% endif %}
                   </div>
                 </div>
-                <div class="product-image">
-                  <a href="product-detail.html">
-                    <img src="{% static 'core/img/product-7.jpg' %}" alt="Product Image" />
-                  </a>
-                  <div class="product-action">
-                    <a href="#"><i class="fa fa-cart-plus"></i></a>
-                    <a href="#"><i class="fa fa-heart"></i></a>
-                    <a href="#"><i class="fa fa-search"></i></a>
-                  </div>
-                </div>
-                <div class="product-price">
-                  <h3><span>$</span>COP</h3>
-                  <a class="btn" href=""
-                    ><i class="fa fa-shopping-cart"></i>Comprar</a
-                  >
-                </div>
-              </div>
-              <div class="product-item">
-                <div class="product-title">
-                  <a href="#">Nombre del Producto</a>
-                  <div class="ratting">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                  </div>
-                </div>
-                <div class="product-image">
-                  <a href="product-detail.html">
-                    <img src="{% static 'core/img/product-8.jpg' %}" alt="Product Image" />
-                  </a>
-                  <div class="product-action">
-                    <a href="#"><i class="fa fa-cart-plus"></i></a>
-                    <a href="#"><i class="fa fa-heart"></i></a>
-                    <a href="#"><i class="fa fa-search"></i></a>
-                  </div>
-                </div>
-                <div class="product-price">
-                  <h3><span>$</span>COP</h3>
-                  <a class="btn" href=""
-                    ><i class="fa fa-shopping-cart"></i>Comprar</a
-                  >
-                </div>
-              </div>
-              <div class="product-item">
-                <div class="product-title">
-                  <a href="#">Nombre del Producto</a>
-                  <div class="ratting">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                  </div>
-                </div>
-                <div class="product-image">
-                  <a href="product-detail.html">
-                    <img src="{% static 'core/img/product-9.jpg' %}" alt="Product Image" />
-                  </a>
-                  <div class="product-action">
-                    <a href="#"><i class="fa fa-cart-plus"></i></a>
-                    <a href="#"><i class="fa fa-heart"></i></a>
-                    <a href="#"><i class="fa fa-search"></i></a>
-                  </div>
-                </div>
-                <div class="product-price">
-                  <h3><span>$</span>COP</h3>
-                  <a class="btn" href=""
-                    ><i class="fa fa-shopping-cart"></i>Comprar</a
-                  >
-                </div>
-              </div>
             </div>
-          </div>
+            {% endfor %}
+        </div>
+        
+        </div>
+      </div>
 
-          <div class="sidebar-widget brands">
-            <h2 class="title">Nuestras Marcas</h2>
-            <ul>
-              <li><a href="#">Nulla </a><span>(45)</span></li>
-              <li><a href="#">Curabitur </a><span>(34)</span></li>
-              <li><a href="#">Nunc </a><span>(67)</span></li>
-              <li><a href="#">Ullamcorper</a><span>(74)</span></li>
-              <li><a href="#">Fusce </a><span>(89)</span></li>
-              <li><a href="#">Sagittis</a><span>(28)</span></li>
+      <!-- Side Bar Start -->
+      <div class="col-lg-4 sidebar">
+        <div class="sidebar-widget category">
+          <h2 class="title">Categoria</h2>
+          <nav class="navbar bg-light">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#"
+                  ><i class="fa fa-female"></i>Moda y Belleza</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"
+                  ><i class="fa fa-child"></i>Ropa para bebes y niños</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"
+                  ><i class="fa fa-tshirt"></i>Ropa para mujeres y hombres</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"
+                  ><i class="fa fa-mobile-alt"></i>Joyeria y accesorios</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"
+                  ><i class="fa fa-microchip"></i>Electronicos</a
+                >
+              </li>
             </ul>
-          </div>
+          </nav>
+        </div>
 
-          <div class="sidebar-widget tag">
-            <h2 class="title">Etiquetas</h2>
-            <a href="#">Lorem ipsum</a>
-            <a href="#">Vivamus</a>
-            <a href="#">Phasellus</a>
-            <a href="#">pulvinar</a>
-            <a href="#">Curabitur</a>
-            <a href="#">Fusce</a>
-            <a href="#">Sem quis</a>
-            <a href="#">Mollis metus</a>
-            <a href="#">Sit amet</a>
-            <a href="#">Vel posuere</a>
-            <a href="#">orci luctus</a>
-            <a href="#">Nam lorem</a>
+        <div class="sidebar-widget">
+          <div class="product-item">
+            <div class="product-title">
+              <a href="#">{{ producto_aleatorio.nombre }}</a>
+              <div class="ratting">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+              </div>
+            </div>
+            <div class="product-image">
+              <a href="#">
+                <img
+                  src="{{ producto_aleatorio.imagen.url }}"
+                  alt="Product Image"
+                />
+              </a>
+              <div class="product-action">
+                <a href="#"><i class="fa fa-cart-plus"></i></a>
+                <a href="#"><i class="fa fa-heart"></i></a>
+                <a href="#"><i class="fa fa-search"></i></a>
+              </div>
+            </div>
+            <div class="product-price">
+              <h3><span>$</span>{{ producto_aleatorio.precio }}</h3>
+              <a class="btn" href="{% url 'product-detail' %}">
+                <i class="fa fa-shopping-cart"></i>Comprar
+              </a>
+            </div>
           </div>
         </div>
-        <!-- Side Bar End -->
+
+        <div class="sidebar-widget brands">
+          <h2 class="title">Nuestras Marcas</h2>
+          <ul>
+            <li><a href="#">Nulla </a><span>(45)</span></li>
+            <li><a href="#">Curabitur </a><span>(34)</span></li>
+            <li><a href="#">Nunc </a><span>(67)</span></li>
+            <li><a href="#">Ullamcorper</a><span>(74)</span></li>
+            <li><a href="#">Fusce </a><span>(89)</span></li>
+            <li><a href="#">Sagittis</a><span>(28)</span></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-widget tag">
+          <h2 class="title">Etiquetas</h2>
+          <a href="#">Lorem ipsum</a>
+          <a href="#">Vivamus</a>
+          <a href="#">Phasellus</a>
+          <a href="#">pulvinar</a>
+          <a href="#">Curabitur</a>
+          <a href="#">Fusce</a>
+          <a href="#">Sem quis</a>
+          <a href="#">Mollis metus</a>
+          <a href="#">Sit amet</a>
+          <a href="#">Vel posuere</a>
+          <a href="#">orci luctus</a>
+          <a href="#">Nam lorem</a>
+        </div>
       </div>
+      <!-- Side Bar End -->
     </div>
   </div>
-  <!-- Product Detail End -->
+</div>
+<!-- Product Detail End -->
 
-  <!-- Brand Start -->
-  <div class="brand">
-    <div class="container-fluid">
-      <div class="brand-slider">
-        <div class="brand-item"><img src="img/brand-1.png" alt="" /></div>
-        <div class="brand-item"><img src="img/brand-2.png" alt="" /></div>
-        <div class="brand-item"><img src="img/brand-3.png" alt="" /></div>
-        <div class="brand-item"><img src="img/brand-4.png" alt="" /></div>
-        <div class="brand-item"><img src="img/brand-5.png" alt="" /></div>
-        <div class="brand-item"><img src="img/brand-6.png" alt="" /></div>
-      </div>
+<!-- Brand Start -->
+<div class="brand">
+  <div class="container-fluid">
+    <div class="brand-slider">
+      <div class="brand-item"><img src="img/brand-1.png" alt="" /></div>
+      <div class="brand-item"><img src="img/brand-2.png" alt="" /></div>
+      <div class="brand-item"><img src="img/brand-3.png" alt="" /></div>
+      <div class="brand-item"><img src="img/brand-4.png" alt="" /></div>
+      <div class="brand-item"><img src="img/brand-5.png" alt="" /></div>
+      <div class="brand-item"><img src="img/brand-6.png" alt="" /></div>
     </div>
   </div>
-  <!-- Brand End -->
+</div>
+<!-- Brand End -->
+<style>
+  /* Personalizar las flechas */
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: #0a326f;
+    color: #ffffff; /* Color del ícono (flechas) */
+    font-size: 20px;
+    border-radius: 50%;
+    padding: 10px;
+  }
 
-{%endblock%}
+  /* Hacer que el carrusel se mueva automáticamente */
+  .carousel {
+    /* Ajusta la velocidad de desplazamiento */
+    -webkit-transition: 0.5s ease-in-out;
+    -moz-transition: 0.5s ease-in-out;
+    -o-transition: 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
+  }
+
+  .carousel:hover {
+    /* Detiene la transición en el hover */
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+  }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $(".btn-minus").on("click", function () {
+      var $input = $(this).parent().find("input");
+      var oldValue = parseInt($input.val());
+      if (oldValue > 1) {
+        $input.val(oldValue - 1);
+      }
+    });
+
+    $(".btn-plus").on("click", function () {
+      var $input = $(this).parent().find("input");
+      var oldValue = parseInt($input.val());
+      $input.val(oldValue + 1);
+    });
+
+     // Función para obtener el token CSRF desde las cookies
+     function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+              // Buscar el nombre del token CSRF en las cookies
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
+  // Manejar el clic en el enlace "Añadir al Carrito"
+  $(".add-to-cart-link").click(function(e) {
+      e.preventDefault(); // Evitar que el enlace redireccione a la página de detalles
+      e.stopPropagation(); // Evitar que el evento se propague y se active la redirección predeterminada
+      var product_id = $(this).data("product-id");
+      var quantity = 1; // Opcional: Puedes permitir que el usuario ingrese la cantidad o usar un valor predeterminado.
+
+      // Obtener el token CSRF
+      var csrftoken = getCookie('csrftoken');
+
+      // Realizar la solicitud AJAX para agregar al carrito
+      $.ajax({
+          type: "POST",
+          url: "{% url 'add_to_cart' 0 %}".replace('0', product_id),
+          data: {
+              'quantity': quantity,
+          },
+          beforeSend: function(xhr) {
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          },
+          dataType: 'json',
+        
+      });
+  });
+  });
+
+  
+
+</script>
+
+{% endblock%}

@@ -70,16 +70,16 @@
           id="navbarCollapse"
         >
           <div class="navbar-nav mr-auto">
-            <a href="index.html" class="nav-item nav-link active">Inicio</a>
-            <a href="product-list.html" class="nav-item nav-link"
+            <a href="{% url 'home' %}" class="nav-item nav-link active">Inicio</a>
+            <a href="{% url 'product-list' %}" class="nav-item nav-link"
               >Productos</a
             >
-            <a href="product-detail.html" class="nav-item nav-link"
+            <a href="{% url 'product-detail' %}" class="nav-item nav-link"
               >Detalle de Productos</a
             >
-            <a href="cart.html" class="nav-item nav-link">Carrito</a>
-            <a href="checkout.html" class="nav-item nav-link">Checkout</a>
-            <a href="my-account.html" class="nav-item nav-link">Mi Cuenta</a>
+            <a href="{% url 'home' %}" class="nav-item nav-link">Carrito</a>
+            <a href="{% url 'home' %}" class="nav-item nav-link">Checkout</a>
+            <a href="{% url 'home' %}" class="nav-item nav-link">Mi Cuenta</a>
             <div class="nav-item dropdown">
               <a
                 href="#"
@@ -88,13 +88,13 @@
                 >Mas Paginas</a
               >
               <div class="dropdown-menu">
-                <a href="wishlist.html" class="dropdown-item"
+                <a href="{% url 'home' %}" class="dropdown-item"
                   >Lista de Deseos</a
                 >
-                <a href="login.html" class="dropdown-item"
+                <a href="{% url 'home' %}" class="dropdown-item"
                   >Inicio & Registro</a
                 >
-                <a href="contact.html" class="dropdown-item">Contactenos</a>
+                <a href="{% url 'home' %}" class="dropdown-item">Contactenos</a>
               </div>
             </div>
           </div>

@@ -16,12 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.static import static, settings
 from core import views
 from core import views as core_views
 
 urlpatterns = [
-    path('home/', views.home, name="home"),
-    path('product-detail/', views.productdetail, name="product-detail"),
+    path('', views.home, name="home"),
+    path('product-detail/', views.product_detail, name="product-detail"),
+    path('product-detail/<int:producto_id>/',views.product_detail, name='product-detail'),
     path('product-list/', views.productlist, name="product-list"),
     path('checkout/', views.checkout, name="checkout"),
     path('my-account/', core_views.myaccount, name="my-account"),
@@ -30,4 +32,12 @@ urlpatterns = [
     path('admin/', views.admin, name="admin"),
     path('regis/', views.regis, name="regis"),
     path('admin/', admin.site.urls),
+    
+    
+    path('cart/', core_views.product_cart, name='cart'),
+    path('add_to_cart/<int:product_id>/', core_views.add_to_cart, name='add_to_cart'),
+    path('add_to_cart_product_list/<int:product_id>/', core_views.add_to_cart_product_list, name='add_to_cart_product_list'),
+    path('remove_from_cart/<int:product_id>/', core_views.remove_from_cart, name='remove_from_cart')
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

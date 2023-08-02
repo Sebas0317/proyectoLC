@@ -1,0 +1,190 @@
+{% extends 'core/base.html' %} 
+{% block title %}Carrito{% endblock%} 
+{% load static %} 
+{% block content %}
+<div class="cart-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="cart-page-inner">
+          {% if cart_items %}
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Producto</th>
+                  <th>Precio</th>
+                  <th>Cantidad</th>
+                  <th>Total</th>
+                  <th>Eliminar</th>
+                </tr>
+              </thead>
+              <tbody class="align-middle">
+                {% for item in cart_items %}
+                <tr>
+                  <td>
+                    <div class="img">
+                      <a href="#">
+                        {% comment %}
+                        <img
+                          src="{{ item.product.imagen.url }}"
+                          alt="{{ item.product.nombre }}"
+                        />
+                        {% endcomment %}
+                      </a>
+                      <p>{{ item.product.nombre }}</p>
+                    </div>
+                  </td>
+                  <td>${{ item.product.precio }} COP</td>
+                  <td data-product-id="{{ item.product.id }}">
+                    <div class="qty">
+                      <button class="btn-minus">
+                        <i class="fa fa-minus"></i>
+                      </button>
+                      <input
+                        type="text"
+                        value="{{ item.quantity }}"
+                        data-product-id="{{ item.product.id }}"
+                        data-product-price="{{ item.product.precio }}"
+                      />
+                      <button class="btn-plus">
+                        <i class="fa fa-plus"></i>
+                      </button>
+                    </div>
+                  </td>
+                  <td class="total-price">${{ item.total_item_price }} COP</td>
+                  <td>
+                    {% csrf_token %}
+                    <button class="btn-delete" data-product-id="{{ item.product.id }}">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <div class="alert alert-info" role="alert">
+            <strong>No hay elementos agregados al carrito.</strong>
+        </div>  
+        {% endif %}
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="cart-page-inner">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="coupon">
+                <input type="text" placeholder="Coupon Code" />
+                <button>Aplicar codigo</button>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="cart-summary">
+                <div class="cart-content">
+                  <h1>Resumen del carrito</h1>
+                  <p>Sub Total<span>$99</span></p>
+                  <p>Gastos de envio<span>$1</span></p>
+                  <h2>Total<span>$100</span></h2>
+                </div>
+                <div class="cart-btn">
+                  <button>Actualizar carrito</button>
+                  <button>Checkout</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+      $(".btn-minus").on("click", function () {
+        var $input = $(this).parent().find("input");
+        var oldValue = parseInt($input.val());
+        if (oldValue > 1) {
+          $input.val(oldValue - 1);
+          updateTotalPrice($input);
+        }
+      });
+
+      $(".btn-plus").on("click", function () {
+        var $input = $(this).parent().find("input");
+        var oldValue = parseInt($input.val());
+        $input.val(oldValue + 1);
+        updateTotalPrice($input);
+      });
+    });
+
+    function updateTotalPrice($input) {
+      var productId = $input.data("product-id");
+      var quantity = parseñInt($input.val());
+      var productPrice = parseFloat($input.data("product-price"));
+      var totalPrice = quantity * productPrice;
+      var totalCell = $("td[data-product-id='" + productId + "'] .total-price");
+      totalCell.text("$COP " + totalPrice.toFixed(2));
+    }
+    $(".btn-delete").on("click", function (event) {
+      event.preventDefault(); // Prevenir el comportamiento predeterminado del botón
+
+      // Obtener el ID del producto desde el atributo data-product-id
+      var productId = $(this).data("product-id");
+
+      // Realizar la solicitud AJAX para eliminar el producto
+      $.ajax({
+        url: "/remove_from_cart/" + productId + "/", // Ruta del endpoint para eliminar el producto
+        type: "POST",
+        data: { product_id: productId }, // Datos que se enviarán con la solicitud POST
+        dataType: "json",
+        success: function (data) {
+          // La solicitud se realizó con éxito, actualizar la página para reflejar los cambios
+          location.reload();
+        },
+        error: function (error) {
+          // Ocurrió un error, mostrar el mensaje de error en la consola
+          console.log(error);
+        },
+      });
+    });
+
+  // Obtener el valor del token CSRF del formulario o de las cookies
+var csrfToken = getCookie('csrftoken');
+
+// Configurar el encabezado de la solicitud AJAX para incluir el token CSRF
+$.ajaxSetup({
+  beforeSend: function (xhr, settings) {
+    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+      xhr.setRequestHeader('X-CSRFToken', csrfToken);
+    }
+  }
+});
+
+// Función para obtener el valor del token CSRF de las cookies
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + '=') {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+// Función para comprobar si el método de solicitud es seguro contra CSRF
+function csrfSafeMethod(method) {
+  // Estos métodos no requieren CSRF
+  return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
+}
+
+</script>
+
+{%endblock%}

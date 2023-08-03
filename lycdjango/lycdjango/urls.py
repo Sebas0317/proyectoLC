@@ -47,9 +47,9 @@ urlpatterns = [
     #     espacio reservado para futuros cambios
 
 
-
-
     # """
+    #app contacto
+    path('contacto/', include('contact.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

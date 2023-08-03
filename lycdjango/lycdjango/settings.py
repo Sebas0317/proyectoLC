@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'productos',
-    #reservado para contacto
+    'contact',
 ]
 
 MIDDLEWARE = [

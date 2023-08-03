@@ -40,16 +40,16 @@ urlpatterns = [
     path('add_to_cart_product_list/<int:product_id>/', core_views.add_to_cart_product_list, name='add_to_cart_product_list'),
     path('remove_from_cart/<int:product_id>/', core_views.remove_from_cart, name='remove_from_cart'),
 
-    """
+    # """
     
 
 
-        espacio reservado para futuros cambios
+    #     espacio reservado para futuros cambios
 
 
 
 
-    """
+    # """
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -173,7 +173,6 @@ input[type="radio"]:checked + .slider .slide {
     transform: translateX(-16.666% * var(--index, 0));
 }
 
-
 /**********************************/
 /******* Normal Slider CSS ********/
 /**********************************/
@@ -1468,6 +1467,11 @@ input[type="radio"]:checked + .slider .slide {
     border: 1px solid #353535;
     border-radius: 4px;
     transition: .3s;
+
+}
+
+.sidebar-widget.tag h2{
+    margin-top: 10px;
 }
 
 .sidebar-widget.tag a:hover {
@@ -2432,7 +2436,6 @@ input[type="radio"]:checked + .slider .slide {
     width: 100%;
     height: auto;
 
-
 }
 
 .slider_section{
@@ -2445,4 +2448,3 @@ input[type="radio"]:checked + .slider .slide {
     height: 500px;
 
 }
-

@@ -11,12 +11,17 @@ from .cart import Cart
 # Importaciones de Python
 import random   
 
-
 def home(request):
     ultimos_productos = Producto.objects.filter(cantidad_disponible__gt=0).order_by('-fecha_carga')[:4]
+    productos_aleatorios = list(Producto.objects.filter(cantidad_disponible__gt=0))
+    random.shuffle(productos_aleatorios)
+    productos_aleatorios = productos_aleatorios[:4]  # Mostrar 4 productos aleatorios
+    
     return render(request, "core/home.html", {
-        'ultimos_productos': ultimos_productos
-        })
+        'ultimos_productos': ultimos_productos,
+        'productos_aleatorios': productos_aleatorios,
+    })
+
 
 def product_detail(request, producto_id):
         producto = get_object_or_404(Producto, id=producto_id)

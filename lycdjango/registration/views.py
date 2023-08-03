@@ -51,5 +51,5 @@ class SignUpView(CreateView): #registro user
 #     template_name = 'registration/password_reset_complete.html'
 
 
-#def passwordReset(request):
-#    return render(request, "registration/password_reset_form.html")
+def passwordReset(request):
+    return render(request, "registration/password_reset_form.html")

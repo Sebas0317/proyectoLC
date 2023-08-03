@@ -31,7 +31,7 @@ urlpatterns = [
     path('wishlist/', views.wishlist, name="wishlist"),
     path('contact/', views.contact, name="contact"),
     path('user_admin/', views.admin, name="admin"),
-    path('regis/', views.regis, name="regis"),
+    #path('regis/', views.regis, name="regis"),
     path('admin/', admin.site.urls),
     
     
@@ -40,16 +40,17 @@ urlpatterns = [
     path('add_to_cart_product_list/<int:product_id>/', core_views.add_to_cart_product_list, name='add_to_cart_product_list'),
     path('remove_from_cart/<int:product_id>/', core_views.remove_from_cart, name='remove_from_cart'),
 
-    """
-    
+    #app registro
+    path('accounts/',include('django.contrib.auth.urls')),
+    path('accounts/',include('registration.urls')),
+    # """
+
+    # espacio reservado para futuros cambios
 
 
-        espacio reservado para futuros cambios
 
 
-
-
-    """
+    # """
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

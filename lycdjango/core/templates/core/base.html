@@ -78,6 +78,26 @@
             {% comment %} <a href="{% url 'home' %}" class="nav-item nav-link">Carrito</a>
             <a href="{% url 'home' %}" class="nav-item nav-link">Checkout</a> {% endcomment %}
             <a href="{% url 'home' %}" class="nav-item nav-link">Mi Cuenta</a>
+
+            {% comment %} autenticacion si esta logueado {% endcomment %}
+            {% if not request.user.is_authenticated%}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Iniciar sesion</a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'signup' %}">Registro</a>
+              </li>
+            
+            {% else %}
+
+
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'logout' %}">Cerrar sesion</a>
+              </li>
+              
+            {% endif %}
+
             <div class="nav-item dropdown">
               <a
                 href="#"

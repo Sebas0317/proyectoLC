@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf.urls.static import static, settings
 from core import views
 from core import views as core_views
@@ -38,7 +38,18 @@ urlpatterns = [
     path('cart/', core_views.product_cart, name='cart'),
     path('add_to_cart/<int:product_id>/', core_views.add_to_cart, name='add_to_cart'),
     path('add_to_cart_product_list/<int:product_id>/', core_views.add_to_cart_product_list, name='add_to_cart_product_list'),
-    path('remove_from_cart/<int:product_id>/', core_views.remove_from_cart, name='remove_from_cart')
+    path('remove_from_cart/<int:product_id>/', core_views.remove_from_cart, name='remove_from_cart'),
+
+    # """
+    
+
+
+    #     espacio reservado para futuros cambios
+
+
+
+
+    # """
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -18,6 +18,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #reservado para registro
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -26,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'productos',
+    #reservado para contacto
 ]
 
 MIDDLEWARE = [
@@ -118,4 +120,16 @@ CORE_STATIC_DIR = os.path.join(BASE_DIR, 'core', 'static', 'core')
 
 STATICFILES_DIRS = [
     CORE_STATIC_DIR,
-]                 
+]
+
+#redireccionsr el login y logout
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+#envio de emails
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'xmiguelx209@gmail.com'
+EMAIL_HOST_PASSWORD = 'bscwgysrxsumyvie'
+EMAIL_USE_TLS = True

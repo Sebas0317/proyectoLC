@@ -85,10 +85,11 @@
               <div class="cart-summary">
                 <div class="cart-content">
                   <h1>Resumen del carrito</h1>
-                  <p>Sub Total<span>$99</span></p>
-                  <p>Gastos de envio<span>$1</span></p>
-                  <h2>Total<span>$100</span></h2>
-                </div>
+                  <p>Sub Total<span>${{ subtotal }}</span></p>
+                  <p>Gastos de envío<span>${{ gastos_envio.monto }}</span></p>
+                  <h2>Total<span>${{ total }}</span></h2>
+              </div>
+              
                 <div class="cart-btn">
                   <button>Actualizar carrito</button>
                   <button>Checkout</button>

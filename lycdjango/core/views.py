@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST
-
+from politicas.models import GastosEnvio
 # Importaciones del proyecto
 from productos.models import Producto
 from .cart import Cart
@@ -65,13 +65,21 @@ def product_cart(request):
             'product': product,
             'quantity': quantity,
             'total_item_price': total_item_price,
-            # 'imagen': product.imagen.url,  # Agregar la URL de la imagen al diccionario
         })
-
+        
+    gastos_envio = GastosEnvio.objects.first()
+    subtotal = total_price  # Calcula el subtotal sumando el total de productos
+    total = subtotal + gastos_envio.monto  # Calcula el precio total sumando el subtotal y los gastos de envío
+    
     return render(request, "core/cart.html", {
-        'cart_items': cart_items, 
-        'total_price': total_price
-        })
+        'cart_items': cart_items,
+        'total_price': total_price,
+        'gastos_envio': gastos_envio,
+        'subtotal': subtotal,
+        'total': total,  # Pasa el precio total a la plantilla
+    })
+
+
 def add_to_cart(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Producto, pk=product_id)

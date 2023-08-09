@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'productos',
+    'politicas',
     #reservado para contacto
 ]
 

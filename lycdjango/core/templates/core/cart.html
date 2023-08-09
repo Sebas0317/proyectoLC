@@ -53,6 +53,7 @@
                     </div>
                   </td>
                   <td class="total-price">${{ item.total_item_price }} COP</td>
+                    
                   <td>
                     {% csrf_token %}
                     <button class="btn-delete" data-product-id="{{ item.product.id }}">
@@ -108,7 +109,8 @@
       var oldValue = parseInt($input.val());
       if (oldValue > 1) {
         $input.val(oldValue - 1);
-        updateTotalPrice($input);
+        var productId = $input.data("product-id");
+        updateCartQuantity(productId, oldValue - 1);
       }
     });
 
@@ -116,75 +118,95 @@
       var $input = $(this).parent().find("input");
       var oldValue = parseInt($input.val());
       $input.val(oldValue + 1);
-      updateTotalPrice($input);
+      var productId = $input.data("product-id");
+      updateCartQuantity(productId, oldValue + 1);
     });
-  });
 
-  function updateTotalPrice($input) {
-    var productId = $input.data("product-id");
-    var quantity = parseñInt($input.val());
-    var productPrice = parseFloat($input.data("product-price"));
-    var totalPrice = quantity * productPrice;
-    var totalCell = $("td[data-product-id='" + productId + "'] .total-price");
-    totalCell.text("$COP " + totalPrice.toFixed(2));
-  }
-  $(".btn-delete").on("click", function (event) {
-    event.preventDefault(); // Prevenir el comportamiento predeterminado del botón
-
-    // Obtener el ID del producto desde el atributo data-product-id
-    var productId = $(this).data("product-id");
-
-    // Realizar la solicitud AJAX para eliminar el producto
-    $.ajax({
-      url: "/remove_from_cart/" + productId + "/", // Ruta del endpoint para eliminar el producto
-      type: "POST",
-      data: { product_id: productId }, // Datos que se enviarán con la solicitud POST
-      dataType: "json",
-      success: function (data) {
-        // La solicitud se realizó con éxito, actualizar la página para reflejar los cambios
-        location.reload();
-      },
-      error: function (error) {
-        // Ocurrió un error, mostrar el mensaje de error en la consola
-        console.log(error);
-      },
-    });
-  });
-
-// Obtener el valor del token CSRF del formulario o de las cookies
-var csrfToken = getCookie('csrftoken');
-
-// Configurar el encabezado de la solicitud AJAX para incluir el token CSRF
-$.ajaxSetup({
-beforeSend: function (xhr, settings) {
-  if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-    xhr.setRequestHeader('X-CSRFToken', csrfToken);
-  }
-}
-});
-
-// Función para obtener el valor del token CSRF de las cookies
-function getCookie(name) {
-var cookieValue = null;
-if (document.cookie && document.cookie !== '') {
-  var cookies = document.cookie.split(';');
-  for (var i = 0; i < cookies.length; i++) {
-    var cookie = cookies[i].trim();
-    if (cookie.substring(0, name.length + 1) === name + '=') {
-      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-      break;
+    function updateCartQuantity(productId, newQuantity) {
+      var csrfToken = getCookie('csrftoken');
+    
+      $.ajax({
+        url: "/update_cart_quantity/",
+        type: "POST",
+        data: {
+          'product_id': productId,
+          'new_quantity': newQuantity,
+          'csrfmiddlewaretoken': csrfToken,
+        },
+        dataType: "json",
+        success: function (data) {
+          var totalCell = $("td[data-product-id='" + productId + "'] .total-price");
+          totalCell.text("$COP " + data.total_item_price.toFixed(2));
+    
+          // Recargar la página después de actualizar la cantidad
+          location.reload();
+        },
+        error: function (error) {
+          console.log(error);
+        },
+      });
     }
-  }
-}
-return cookieValue;
-}
+    
 
-// Función para comprobar si el método de solicitud es seguro contra CSRF
-function csrfSafeMethod(method) {
-// Estos métodos no requieren CSRF
-return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
-}
+    $(".btn-delete").on("click", function (event) {
+      event.preventDefault(); // Prevenir el comportamiento predeterminado del botón
+
+      // Obtener el ID del producto desde el atributo data-product-id
+      var productId = $(this).data("product-id");
+
+      // Realizar la solicitud AJAX para eliminar el producto
+      $.ajax({
+        url: "/remove_from_cart/" + productId + "/", // Ruta del endpoint para eliminar el producto
+        type: "POST",
+        data: { product_id: productId }, // Datos que se enviarán con la solicitud POST
+        dataType: "json",
+        success: function (data) {
+          // La solicitud se realizó con éxito, actualizar la página para reflejar los cambios
+          location.reload();
+        },
+        error: function (error) {
+          // Ocurrió un error, mostrar el mensaje de error en la consola
+          console.log(error);
+        },
+      });
+    });
+
+    // Obtener el valor del token CSRF del formulario o de las cookies
+    var csrfToken = getCookie('csrftoken');
+
+    // Configurar el encabezado de la solicitud AJAX para incluir el token CSRF
+    $.ajaxSetup({
+      beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader('X-CSRFToken', csrfToken);
+        }
+      }
+    });
+
+    // Función para obtener el valor del token CSRF de las cookies
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === name + '=') {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    // Función para comprobar si el método de solicitud es seguro contra CSRF
+    function csrfSafeMethod(method) {
+      // Estos métodos no requieren CSRF
+      return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
+    }
+  });
 </script>
+
 
 {% endblock %}
 

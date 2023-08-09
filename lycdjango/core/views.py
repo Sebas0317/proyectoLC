@@ -101,6 +101,23 @@ def remove_from_cart(request, product_id):
     else:
         return redirect('core/cart.html')
     
+def update_cart_quantity(request):
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')
+        new_quantity = int(request.POST.get('new_quantity'))
+        
+        cart = Cart(request)  # Assuming you have your Cart class defined
+        cart.update_quantity(product_id, new_quantity)
+        
+        product = cart.get_product(product_id)
+        total_item_price = product.precio * new_quantity
+        
+        response_data = {
+            'total_item_price': total_item_price,
+        }
+        
+        return JsonResponse(response_data)
+    
 def add_to_cart_product_list(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Producto, pk=product_id)

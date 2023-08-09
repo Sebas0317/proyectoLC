@@ -26,6 +26,12 @@ class Cart:
             del self.cart[product_id_str]
             self.save()
             
+    def update_quantity(self, product_id, new_quantity):
+        product_id_str = str(product_id)
+        if product_id_str in self.cart:
+            self.cart[product_id_str]['quantity'] = new_quantity
+            self.save()
+            
     def get_product(self, product_id):
         product_model = apps.get_model('productos', 'Producto')
         return product_model.objects.get(id=product_id)

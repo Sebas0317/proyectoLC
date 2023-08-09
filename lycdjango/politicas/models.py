@@ -12,3 +12,9 @@ class Cupon(models.Model):
 
     def __str__(self):
         return self.codigo
+    
+class CorreoEmpresa(models.Model):
+    correo = models.EmailField(unique=True)
+
+    def __str__(self):
+        return self.correo

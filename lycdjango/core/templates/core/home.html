@@ -454,7 +454,7 @@
           <div class="product-price">
             <h3><span>$</span>{{ producto.precio }}</h3>
             {% if producto.cantidad_disponible > 0 %}
-            <a class="btn" href="{% url 'product-detail'%}">
+            <a class="btn" href="{% url 'product_detail' producto.id %}">
               <i class="fa fa-shopping-cart"></i>Comprar
             </a>
             {% else %}
@@ -487,7 +487,7 @@
             <a href="#">{{ producto.nombre }}</a>
           </div>
           <div class="product-image">
-            <a href="{% url 'product-detail' %}">
+            <a class="btn" href="{% url 'product_detail' producto.id %}">
               <img src="{{ producto.imagen.url }}" alt="Product Image" />
             </a>
             <div class="product-action">

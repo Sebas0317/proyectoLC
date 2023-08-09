@@ -102,89 +102,91 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-      $(".btn-minus").on("click", function () {
-        var $input = $(this).parent().find("input");
-        var oldValue = parseInt($input.val());
-        if (oldValue > 1) {
-          $input.val(oldValue - 1);
-          updateTotalPrice($input);
-        }
-      });
-
-      $(".btn-plus").on("click", function () {
-        var $input = $(this).parent().find("input");
-        var oldValue = parseInt($input.val());
-        $input.val(oldValue + 1);
+  $(document).ready(function () {
+    $(".btn-minus").on("click", function () {
+      var $input = $(this).parent().find("input");
+      var oldValue = parseInt($input.val());
+      if (oldValue > 1) {
+        $input.val(oldValue - 1);
         updateTotalPrice($input);
-      });
+      }
     });
 
-    function updateTotalPrice($input) {
-      var productId = $input.data("product-id");
-      var quantity = parseñInt($input.val());
-      var productPrice = parseFloat($input.data("product-price"));
-      var totalPrice = quantity * productPrice;
-      var totalCell = $("td[data-product-id='" + productId + "'] .total-price");
-      totalCell.text("$COP " + totalPrice.toFixed(2));
-    }
-    $(".btn-delete").on("click", function (event) {
-      event.preventDefault(); // Prevenir el comportamiento predeterminado del botón
-
-      // Obtener el ID del producto desde el atributo data-product-id
-      var productId = $(this).data("product-id");
-
-      // Realizar la solicitud AJAX para eliminar el producto
-      $.ajax({
-        url: "/remove_from_cart/" + productId + "/", // Ruta del endpoint para eliminar el producto
-        type: "POST",
-        data: { product_id: productId }, // Datos que se enviarán con la solicitud POST
-        dataType: "json",
-        success: function (data) {
-          // La solicitud se realizó con éxito, actualizar la página para reflejar los cambios
-          location.reload();
-        },
-        error: function (error) {
-          // Ocurrió un error, mostrar el mensaje de error en la consola
-          console.log(error);
-        },
-      });
+    $(".btn-plus").on("click", function () {
+      var $input = $(this).parent().find("input");
+      var oldValue = parseInt($input.val());
+      $input.val(oldValue + 1);
+      updateTotalPrice($input);
     });
+  });
 
-  // Obtener el valor del token CSRF del formulario o de las cookies
+  function updateTotalPrice($input) {
+    var productId = $input.data("product-id");
+    var quantity = parseñInt($input.val());
+    var productPrice = parseFloat($input.data("product-price"));
+    var totalPrice = quantity * productPrice;
+    var totalCell = $("td[data-product-id='" + productId + "'] .total-price");
+    totalCell.text("$COP " + totalPrice.toFixed(2));
+  }
+  $(".btn-delete").on("click", function (event) {
+    event.preventDefault(); // Prevenir el comportamiento predeterminado del botón
+
+    // Obtener el ID del producto desde el atributo data-product-id
+    var productId = $(this).data("product-id");
+
+    // Realizar la solicitud AJAX para eliminar el producto
+    $.ajax({
+      url: "/remove_from_cart/" + productId + "/", // Ruta del endpoint para eliminar el producto
+      type: "POST",
+      data: { product_id: productId }, // Datos que se enviarán con la solicitud POST
+      dataType: "json",
+      success: function (data) {
+        // La solicitud se realizó con éxito, actualizar la página para reflejar los cambios
+        location.reload();
+      },
+      error: function (error) {
+        // Ocurrió un error, mostrar el mensaje de error en la consola
+        console.log(error);
+      },
+    });
+  });
+
+// Obtener el valor del token CSRF del formulario o de las cookies
 var csrfToken = getCookie('csrftoken');
 
 // Configurar el encabezado de la solicitud AJAX para incluir el token CSRF
 $.ajaxSetup({
-  beforeSend: function (xhr, settings) {
-    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-      xhr.setRequestHeader('X-CSRFToken', csrfToken);
-    }
+beforeSend: function (xhr, settings) {
+  if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+    xhr.setRequestHeader('X-CSRFToken', csrfToken);
   }
+}
 });
 
 // Función para obtener el valor del token CSRF de las cookies
 function getCookie(name) {
-  var cookieValue = null;
-  if (document.cookie && document.cookie !== '') {
-    var cookies = document.cookie.split(';');
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === name + '=') {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
+var cookieValue = null;
+if (document.cookie && document.cookie !== '') {
+  var cookies = document.cookie.split(';');
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i].trim();
+    if (cookie.substring(0, name.length + 1) === name + '=') {
+      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+      break;
     }
   }
-  return cookieValue;
+}
+return cookieValue;
 }
 
 // Función para comprobar si el método de solicitud es seguro contra CSRF
 function csrfSafeMethod(method) {
-  // Estos métodos no requieren CSRF
-  return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
+// Estos métodos no requieren CSRF
+return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
 }
-
 </script>
 
-{%endblock%}
+{% endblock %}
+
+
+

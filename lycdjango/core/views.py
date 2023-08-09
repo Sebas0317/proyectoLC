@@ -7,6 +7,7 @@ from politicas.models import GastosEnvio
 # Importaciones del proyecto
 from productos.models import Producto
 from .cart import Cart
+from politicas.models import Cupon
 
 # Importaciones de Python
 import random   
@@ -68,17 +69,30 @@ def product_cart(request):
         })
         
     gastos_envio = GastosEnvio.objects.first()
-    subtotal = total_price  # Calcula el subtotal sumando el total de productos
-    total = subtotal + gastos_envio.monto  # Calcula el precio total sumando el subtotal y los gastos de envío
-    
+    subtotal = total_price
+
+    cupon_codigo = request.POST.get('cupon_codigo')  # Obtiene el código del cupón del formulario
+
+    # descuento = 0  # Inicializa el descuento en 0
+    # if cupon_codigo:
+    #     try:
+    #         cupon = Cupon.objects.get(codigo=cupon_codigo)
+    #         descuento = cupon.descuento
+    #         total_price -= total_price * (descuento / 100)  # Aplica el descuento al total_price
+    #     except Cupon.DoesNotExist:
+    #         pass
+
+    total = total_price + gastos_envio.monto  # Calcula el total sumando total_price y gastos de envío
+    # descuento_total = total_price * (descuento / 100)  # Calcula el descuento total
+
     return render(request, "core/cart.html", {
         'cart_items': cart_items,
         'total_price': total_price,
         'gastos_envio': gastos_envio,
         'subtotal': subtotal,
-        'total': total,  # Pasa el precio total a la plantilla
+        'total': total,
+        # 'descuento_total': descuento_total,
     })
-
 
 def add_to_cart(request, product_id):
     cart = Cart(request)

@@ -76,27 +76,31 @@
         <div class="cart-page-inner">
           <div class="row">
             <div class="col-md-12">
-              <div class="coupon">
-                <input type="text" placeholder="Coupon Code" />
-                <button>Aplicar codigo</button>
-              </div>
+                <div class="coupon">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="text" name="cupon_codigo" placeholder="Coupon Code" />
+                        <button type="submit">Aplicar código</button>
+                    </form>
+                </div>
             </div>
             <div class="col-md-12">
-              <div class="cart-summary">
-                <div class="cart-content">
-                  <h1>Resumen del carrito</h1>
-                  <p>Sub Total<span>${{ subtotal }}</span></p>
-                  <p>Gastos de envío<span>${{ gastos_envio.monto }}</span></p>
-                  <h2>Total<span>${{ total }}</span></h2>
-              </div>
-              
-                <div class="cart-btn">
-                  <button>Actualizar carrito</button>
-                  <button>Checkout</button>
+                <div class="cart-summary">
+                    <div class="cart-content">
+                        <h1>Resumen del carrito</h1>
+                        <p>Sub Total<span>${{ subtotal }}</span></p>
+                        <p>Gastos de envío<span>${{ gastos_envio.monto }}</span></p>
+                        {% comment %} <p>Descuento<span>${{ descuento_total }}</span></p> {% endcomment %}
+                        <h2>Total<span>${{ total }}</span></h2>
+                    </div>
+                    <div class="cart-btn">
+                        <button>Actualizar carrito</button>
+                        <button>Checkout</button>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
+        </div>
+        
         </div>
       </div>
     </div>

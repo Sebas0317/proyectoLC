@@ -3,6 +3,143 @@
 {% load static %} 
 {%block content%}
 
+<style>
+
+#slider-container {
+  position: relative;
+  width: 50%;
+  max-width: 800px;
+  margin: 220px auto 0; /* Margen superior para separar del contenido anterior */
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  white-space: nowrap;
+  left: 0px;
+  top: 0px;
+  padding: 150px;
+}
+
+.slider {
+  display: flex;
+  scroll-snap-align: start;
+}
+
+.slider img {
+  width: 100%;
+  object-fit: cover;
+  scroll-snap-align: start;
+  background-color: #ffffff;
+
+}
+  /* Media query para pantallas medianas */
+  @media screen and (max-width: 1024px) {
+    #slider-container {
+      width: 70%; /* Cambia el ancho para pantallas medianas */
+      left: -100px; /* Ajusta el valor izquierdo según tus necesidades */
+    }
+  }
+  
+  /* Media query para pantallas pequeñas */
+  @media screen and (max-width: 768px) {
+    #slider-container {
+      width: 80%; /* Cambia el ancho para pantallas pequeñas */
+      left: 0; /* Vuelve a centrar horizontalmente */
+      top: -400px; /* Ajusta la posición vertical según tus necesidades */
+    }
+  }
+  
+  /* Media query para pantallas aún más pequeñas */
+  @media screen and (max-width: 480px) {
+    #slider-container {
+      width: 90%; /* Cambia el ancho para pantallas aún más pequeñas */
+    }
+  }
+  
+    .product-item:hover .product-image .product-action a {
+      margin-top: 0;
+  }
+  
+  .product-item .product-image .product-action a:last-child {
+      margin-right: 0;
+  }
+  
+  .product-item .product-image .product-action a:hover {
+      color: #003171;
+      background: #ffffff;
+      border: 1px solid #003171;
+  }
+  
+  .product-item .product-price {
+      padding: 20px;
+      background: #000000;
+      transition: all 0.3s;
+  }
+  
+  .product-item:hover .product-price {
+      background: #003171;
+  }
+  
+  .product-item .product-price h3 {
+      display: inline-block;
+      color: #ffffff;
+      margin: 0;
+  }
+  
+  .product-item .product-price h3 span {
+      font-size: 16px;
+  }
+  
+  .product-item .product-price .btn {
+      float: right;
+      border: none;
+      color: #000000;
+      background: #003171;
+  }
+  
+  .product-item:hover .product-price .btn,
+  .product-item .product-price .btn:hover {
+      color: #003171;
+      background: #ffffff;
+  }
+  
+  .product-item .product-price .btn i {
+      margin-right: 5px;
+  }
+  
+  .product-image-small {
+      max-height: 200px; /* Ajusta esta altura según tus necesidades */
+  }
+  
+  @media (min-width: 992px) {
+      .sidebar {
+          flex: 0 0 40%; /* Puedes ajustar el valor para cambiar el ancho */
+          max-width: 40%; /* Puedes ajustar el valor para cambiar el ancho */
+      }
+  }
+  
+  /* Add margin-left to move the sidebar content to the right */
+  .sidebar {
+    width: 100%;
+    margin-left: 850px; /* This pushes the content to the right */
+    margin-top: -1645px;
+  
+  }
+  
+  .sidebar-widget .product-item .product-image img {
+      max-height: 200px; /* Ajusta esta altura según tus preferencias */
+      max-width: 200px;
+  }
+  
+  .product-image img {
+  max-width: 100%;
+  height: auto;
+}
+.pagination a.page-link,
+.pagination span.page-link {
+  margin-bottom: 30px; /* Ajusta los valores de padding según necesites */
+}
+
+
+  </style>
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-wrap">
   <div class="container-fluid">
@@ -76,14 +213,12 @@
               <div class="product-item">
                 <div class="product-title">
                   <a href="#">{{ producto.nombre }}</a>
-                  
                 </div>
                 <div class="product-image">
                   {% if producto.imagen %}
                   <a href="{% url 'product_detail' producto.id %}">
-                    <img src="{{ producto.imagen.url }}" />
+                    <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" />
                   </a>
-                  
                   {% else %}
                   <div class="no-image-placeholder">
                     LO SIENTO NO HAY IMAGEN DISPONIBLE
@@ -101,10 +236,6 @@
                   <a class="btn" href="{% url 'product_detail' producto.id %}">
                     <i class="fa fa-shopping-cart"></i>Comprar
                   </a>
-                  
-                  
-                  
-                  
                   {% else %}
                   <button class="btn btn-disabled" disabled>Agotado</button>
                   {% endif %}
@@ -113,8 +244,6 @@
             </div>
             {% endfor %}
           </div>
-        </div>
-
         <!-- Pagination Start -->
         <div class="col-md-12 mt-5">
           <nav aria-label="Page navigation example">
@@ -248,28 +377,14 @@
 </div>
 <!-- Product List End -->
 <!-- Brand Start -->
-<div class="brand">
-  <div class="container-fluid">
-    <div class="brand-slider">
-      <div class="brand-item">
-        <img src="{% static 'core/img/brand-1.png' %}" alt="" />
-      </div>
-      <div class="brand-item">
-        <img src="{% static 'core/img/brand-2.png' %}" alt="" />
-      </div>
-      <div class="brand-item">
-        <img src="{% static 'core/img/brand-3.png' %}" alt="" />
-      </div>
-      <div class="brand-item">
-        <img src="{% static 'core/img/brand-4.png' %}" alt="" />
-      </div>
-      <div class="brand-item">
-        <img src="{% static 'core/img/brand-5.png' %}" alt="" />
-      </div>
-      <div class="brand-item">
-        <img src="{% static 'core/img/brand-6.png' %}" alt="" />
-      </div>
-    </div>
+<div id="slider-container">
+  <div class="slider">
+      <img src="{% static 'core/img/brand-1.png' %}" alt="Brand 1">
+      <img src="{% static 'core/img/brand-2.png' %}" alt="Brand 2">
+      <img src="{% static 'core/img/brand-3.png' %}" alt="Brand 3">
+      <img src="{% static 'core/img/brand-4.png' %}" alt="Brand 4">
+      <img src="{% static 'core/img/brand-5.png' %}" alt="Brand 5">
+      <img src="{% static 'core/img/brand-6.png' %}" alt="Brand 6">
   </div>
 </div>
 <!-- Brand End -->

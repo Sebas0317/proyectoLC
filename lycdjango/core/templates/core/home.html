@@ -2,7 +2,6 @@
 {% block title %}Inicio{% endblock %} 
 {% load static %} 
 {% block content %}
-<<<<<<< HEAD
  <style>
     ul {  
       list-style-type: none;
@@ -71,7 +70,6 @@
     z-index: 15;
     display: -ms-flexbox;
 }
-{% comment %} 
 <style>
   ul {
     list-style-type: none;
@@ -269,17 +267,18 @@
     transition: 0.3s;
     outline: none; /* Agrega esta línea para eliminar el contorno */
 }
+.carousel-indicators {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 15;
+    display: -ms-flexbox;
+    opacity: 0;
+}
 
-  </style>
-
-=======
-  /* Cambiar el color del icono de regresar */
-  #carousel-control-prev-icon::before {
-    content: "\e75b";
-    color: #003171;
-  }
 </style>
- {% endcomment %}
+
 
 <div class="header">
   <div class="container-fluid">
@@ -408,17 +407,6 @@
           <img src="{% static 'core/img/brand-6.png' %}" class="d-block w-100" alt="..." />
         </div>
       </div>
-<<<<<<< HEAD
-=======
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
->>>>>>> f51f397f19cde270c9343fee025da15498396b41
     </div>
   </div>
 </div>

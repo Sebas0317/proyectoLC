@@ -192,14 +192,14 @@
     margin-bottom: 45px;
 }
 
-.product-detail .tab-content .reviewer {
-    color: #ffffff;
+.product-detail .tab-content .reviewer .reviewer_name {
+    color: black;
     font-size: 18px;
     font-weight: 600;
 }
 
-.product-detail .tab-content .reviewer span {
-    color: #666666;
+.product-detail .tab-content .reviewer span{
+    color:  black;
     font-size: 14px;
     font-weight: 400;
 }

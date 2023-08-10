@@ -1,6 +1,9 @@
 /**********************************/
 /********** General CSS ***********/
 /**********************************/
+*{
+    overflow: hidden;
+}
 body {
     color: #353535;
     font-family: 'Open Sans', sans-serif;
@@ -35,31 +38,6 @@ h2 {
         padding-right: 60px;
         padding-left: 60px;
     }
-}
-
-/**********************************/
-/******** Back to Top CSS *********/
-/**********************************/
-.back-to-top {
-    position: fixed;
-    display: none;
-    background: #003171;
-    color: #ffffff;
-    width: 40px;
-    height: 40px;
-    text-align: center;
-    line-height: 1;
-    font-size: 16px;
-    border-radius: 4px;
-    right: 15px;
-    bottom: 15px;
-    transition: background 0.5s;
-    z-index: 11;
-}
-
-.back-to-top i {
-    padding-top: 12px;
-    color: #ffffff;
 }
 
 /**********************************/
@@ -118,11 +96,6 @@ h2 {
 /******* Slider Creado CSS ********/
 /**********************************/
 
-body {
-    margin: 0;
-    padding: 0;
-}
-
 .slider-container {
     width: 300px; /* Ajusta el ancho según tus necesidades */
     overflow: hidden;
@@ -171,85 +144,6 @@ input[type="radio"] {
 
 input[type="radio"]:checked + .slider .slide {
     transform: translateX(-16.666% * var(--index, 0));
-}
-
-/**********************************/
-/******* Normal Slider CSS ********/
-/**********************************/
-.normal-slider .slick-prev,
-.normal-slider .slick-next {
-    width: 40px;
-    height: 40px;
-    z-index: 1;
-    opacity: 0;
-    transition: .5s;
-    background: #003171;
-    border-radius: 4px;
-}
-
-.normal-slider .slick-prev {
-    left: 55px;
-}
-
-.normal-slider .slick-next {
-    right: 55px;
-}
-
-.normal-slider.slick-slider:hover .slick-prev {
-    left: 15px;
-    opacity: 1;
-}
-
-.normal-slider.slick-slider:hover .slick-next {
-    right: 15px;
-    opacity: 1;
-}
-
-.normal-slider .slick-prev:hover,
-.normal-slider .slick-prev:focus,
-.normal-slider .slick-next:hover,
-.normal-slider .slick-next:focus {
-    background: rgba(0, 0, 0, .7);
-}
-
-.normal-slider .slick-prev:hover::before,
-.normal-slider .slick-prev:focus::before,
-.normal-slider .slick-next:hover::before,
-.normal-slider .slick-next:focus::before {
-    color: #003171;
-}
-
-.normal-slider .slick-prev::before,
-.normal-slider .slick-next::before {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    font-size: 30px;
-    color: #ffffff;
-}
-
-.normal-slider .slick-prev::before {
-    content: "\f104";
-}
-
-.normal-slider .slick-next::before {
-    content: "\f105";
-}
-
-.normal-slider .slick-dots {
-    bottom: 15px;
-}
-
-.normal-slider .slick-dots li button:before {
-    color: #ffffff;
-    font-size: 15px;
-}
-
-.normal-slider .slick-dots li.slick-active button:before {
-    color: #003171;
-}
-
-.slick-dotted.slick-slider {
-    margin-bottom: 0;
 }
 
 /**********************************/
@@ -898,57 +792,6 @@ input[type="radio"]:checked + .slider .slide {
     padding: 20px 30px 15px 30px;
     color: #003171;
     background: #ffffff;
-}
-
-.product .slick-prev,
-.product .slick-next {
-    top: -75px;
-    width: 30px;
-    height: 30px;
-    z-index: 1;
-    transition: .5s;
-    color: #003171;
-    background: #ffffff;
-    border: 1px solid #003171;
-    border-radius: 4px;
-}
-
-.product .slick-prev {
-    left: calc(100% - 120px);
-}
-
-.product .slick-next {
-    right: 45px;
-}
-
-.product .slick-prev:hover,
-.product .slick-prev:focus,
-.product .slick-next:hover,
-.product .slick-next:focus {
-    background: #003171;
-}
-
-.product .slick-prev::before,
-.product .slick-next::before {
-    font-family: "Font Awesome 5 Free";
-    font-size: 18px;
-    font-weight: 900;
-    color: #003171;
-}
-
-.product .slick-prev::before {
-    content: "\f104";
-}
-
-.product .slick-next::before {
-    content: "\f105";
-}
-
-.product .slick-prev:hover::before,
-.product .slick-prev:focus::before,
-.product .slick-next:hover::before,
-.product .slick-next:focus::before {
-    color: #ffffff;
 }
 
 /**********************************/
@@ -2245,191 +2088,6 @@ input[type="radio"]:checked + .slider .slide {
     padding: 30px;
     background: #ffffff;
     margin-bottom: 30px;
-}
-
-/**********************************/
-/********** Footer CSS ************/
-/**********************************/
-.footer {
-    position: relative;
-    padding: 30px 0 0 0;
-    background: #ffffff;
-}
-
-.footer .footer-widget {
-    position: relative;
-    width: 100%;
-    margin-bottom: 30px;
-}
-
-.footer .footer-widget h2 {
-    font-size: 25px;
-    white-space: nowrap;
-    margin-bottom: 20px; 
-}
-
-.footer .footer-widget ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.footer .footer-widget ul li {
-    margin-bottom: 12px; 
-}
-
-.footer .footer-widget ul li:last-child {
-    margin-bottom: 0; 
-}
-
-.footer .footer-widget ul li a {
-    color: #353535;
-    white-space: nowrap;
-    display: block;
-    line-height: 23px;
-    transition: all .3s;
-}
-
-.footer .footer-widget ul li a::before {
-    content: '\f105';
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    padding-right: 5px;
-}
-
-.footer .footer-widget ul li a:hover {
-    color: #003171;
-}
-
-.footer .footer-widget ul li a:hover::before {
-    content: '\f101';
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-}
-
-.footer .contact-info p {
-    margin-bottom: 10px;
-    font-size: 16px;
-}
-
-.footer .contact-info p i {
-    margin-right: 5px;
-}
-
-.footer .social {
-    position: relative;
-    width: 100%;
-}
-
-.footer .social a {
-    display: inline-block;
-    margin: 10px 5px 0 0;
-    width: 40px;
-    height: 40px;
-    padding: 6px 0;
-    text-align: center;
-    font-size: 18px;
-    color: #353535;
-    border: 1px solid #353535;
-    border-radius: 4px;
-    transition: all .3s;
-}
-
-.footer .social a:hover {
-    color: #003171;
-    border-color: #003171;
-}
-
-.footer .payment {
-    padding-top: 25px;
-    padding-bottom: 25px;
-    border-top: 1px solid rgba(0,0,0,.1);
-}
-
-@media (min-width: 992px) {
-    .footer .payment {
-        max-width: 80%;
-        margin: 0 auto;
-    }
-}
-
-.footer .payment-method,
-.footer .payment-security {
-    overflow: hidden;
-}
-
-.footer .payment-method {
-    text-align: left;
-}
-
-.footer .payment-security {
-    text-align: right;
-}
-
-@media (max-width: 768.98px) {
-    .footer .payment-method {
-        margin-bottom: 15px;
-    }
-    
-    .footer .payment-method,
-    .footer .payment-security {
-        text-align: center; 
-    } 
-}
-
-.footer .payment-method h2,
-.footer .payment-security h2 {
-    display: inline-block;
-    margin: 0 10px 0 0;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 22px;
-}
-
-.footer .payment-method img,
-.footer .payment-security img {
-    height: 25px;
-}
-
-/**********************************/
-/******** Footer Bottom CSS *******/
-/**********************************/
-.footer-bottom {
-    position: relative;
-    padding: 25px 0;
-    background: #000000;
-}
-
-.footer-bottom .copyright {
-    text-align: left;
-}
-
-.footer-bottom .template-by {
-    text-align: right;
-}
-
-.footer-bottom .copyright p,
-.footer-bottom .template-by p {
-    color: #ffffff;
-    font-weight: 400;
-    margin: 0;
-}
-
-.footer-bottom .copyright p a,
-.footer-bottom .template-by p a {
-    font-weight: 600;
-}
-
-.footer-bottom .copyright p a:hover,
-.footer-bottom .template-by p a:hover {
-    color: #ffffff;
-}
-
-@media (max-width: 768.98px) {
-    .footer-bottom .copyright,
-    .footer-bottom .template-by {
-        text-align: center; 
-    } 
 }
 
 .slider_container{

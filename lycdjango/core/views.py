@@ -11,6 +11,7 @@ from politicas.models import Cupon
 
 # Importaciones de Python
 import random   
+from politicas.models import CorreoEmpresa
 
 def home(request):
     ultimos_productos = Producto.objects.filter(cantidad_disponible__gt=0).order_by('-fecha_carga')[:4]
@@ -18,11 +19,13 @@ def home(request):
     random.shuffle(productos_aleatorios)
     productos_aleatorios = productos_aleatorios[:4]  # Mostrar 4 productos aleatorios
     
+    correo_empresa = CorreoEmpresa.objects.first()  # Obtén el primer registro de CorreoEmpresa
+    
     return render(request, "core/home.html", {
         'ultimos_productos': ultimos_productos,
         'productos_aleatorios': productos_aleatorios,
+        'correo_empresa': correo_empresa,  # Agrega el correo de la empresa al contexto
     })
-
 
 def product_detail(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)

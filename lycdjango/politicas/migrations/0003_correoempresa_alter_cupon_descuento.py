@@ -17,9 +17,9 @@ class Migration(migrations.Migration):
                 ('correo', models.EmailField(max_length=254, unique=True)),
             ],
         ),
-        migrations.AlterField(
-            model_name='cupon',
-            name='descuento',
-            field=models.PositiveIntegerField(),
-        ),
+        migrations.AddField(
+        model_name='correoempresa',
+        name='telefono',
+        field=models.CharField(max_length=15, null=True),
+    ),
     ]

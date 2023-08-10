@@ -15,6 +15,7 @@ class Cupon(models.Model):
     
 class CorreoEmpresa(models.Model):
     correo = models.EmailField(unique=True)
+    telefono = models.CharField(max_length=20)
 
     def __str__(self):
         return self.correo

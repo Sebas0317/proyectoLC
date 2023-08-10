@@ -11,5 +11,5 @@ class CuponAdmin(admin.ModelAdmin):
 
 @admin.register(CorreoEmpresa)
 class CorreoEmpresaAdmin(admin.ModelAdmin):
-    list_display = ('correo',)  # Cambia 'Correo' por 'correo' para que coincida con el nombre del campo en el modelo
+    list_display = ('correo','telefono')  # Cambia 'Correo' por 'correo' para que coincida con el nombre del campo en el modelo
 

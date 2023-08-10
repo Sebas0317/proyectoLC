@@ -3,7 +3,6 @@
 {% load static %} 
 {%block content%}
 
-
 <style>
 
   #slider-container {
@@ -15,7 +14,7 @@
     scroll-snap-type: x mandatory;
     white-space: nowrap;
     left: -200px;
-    top: -600px;
+    top: 0px;
   }
   
   .slider {
@@ -119,7 +118,7 @@
   .sidebar {
     width: 100%;
     margin-left: 850px; /* This pushes the content to the right */
-    margin-top: -690px;
+    margin-top: -1645px;
   
   }
   
@@ -132,11 +131,8 @@
   max-width: 100%;
   height: auto;
 }
-
-  
   
   </style>
-
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-wrap">
   <div class="container-fluid">
@@ -241,7 +237,6 @@
             </div>
             {% endfor %}
           </div>
-
         <!-- Pagination Start -->
         <div class="col-md-12 mt-5">
           <nav aria-label="Page navigation example">
@@ -401,4 +396,4 @@
   }
 </style>
 
-{%endblock%}
+{% endblock %}

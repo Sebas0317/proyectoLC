@@ -13,9 +13,9 @@
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
   white-space: nowrap;
-  left: -200px;
+  left: 0px;
   top: 0px;
-  padding: 200px;
+  padding: 150px;
 }
 
 .slider {
@@ -27,6 +27,8 @@
   width: 100%;
   object-fit: cover;
   scroll-snap-align: start;
+  background-color: #ffffff;
+
 }
   /* Media query para pantallas medianas */
   @media screen and (max-width: 1024px) {
@@ -131,7 +133,12 @@
   max-width: 100%;
   height: auto;
 }
-  
+.pagination a.page-link,
+.pagination span.page-link {
+  margin-bottom: 30px; /* Ajusta los valores de padding según necesites */
+}
+
+
   </style>
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-wrap">

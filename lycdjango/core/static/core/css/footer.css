@@ -2,9 +2,18 @@
 /**********************************/
 /********** Footer CSS ************/
 /**********************************/
+
+.footer_container {
+  position: relative;
+  clear: both;
+  width: 100%;
+  margin-top:300px; /* Puedes ajustar este valor según sea necesario */
+}
 .footer {
     padding: 30px 0 0;
     background: #ffffff;
+    position: relative;
+    z-index: 1;
   }
   
   .footer .row {

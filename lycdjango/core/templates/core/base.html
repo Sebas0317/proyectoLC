@@ -98,6 +98,7 @@
     <link href="{% static 'core/css/newsletter.css' %}" rel="stylesheet" />
     <link href="{% static 'core/css/productdetail.css' %}" rel="stylesheet" />
     <link href="{% static 'core/css/productitem.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/productList.css' %}" rel="stylesheet" />
     <link href="{% static 'core/css/productView.css' %}" rel="stylesheet" />
     <link href="{% static 'core/css/review.css' %}" rel="stylesheet" />
     <link href="{% static 'core/css/sidebar.css' %}" rel="stylesheet" />
@@ -221,7 +222,7 @@
     {% if request.path != "/" %}
     <hr />
     {% endif %}
-
+<div class="footer_container">
     <div class="footer">
       <div class="container-fluid">
         <div class="row">
@@ -311,7 +312,7 @@
       </div>
     </div>
     <!-- Footer Bottom End -->
-
+  </div>
     <!-- Back to Top -->
     <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
     <!-- Bootstrap y Javascripts -->

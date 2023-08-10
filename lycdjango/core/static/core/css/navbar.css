@@ -82,6 +82,7 @@
     .nav .navbar-dark a.nav-link:hover,
     .nav .navbar-dark a.nav-link.active {
         color: #000000;
+        background-color: #f8f9fa; /* Cambia esto al color deseado */
     }
 }
 

@@ -1,0 +1,54 @@
+
+/**********************************/
+/******* Slider Creado CSS ********/
+/**********************************/
+
+.slider-container {
+    width: 300px; /* Ajusta el ancho según tus necesidades */
+    overflow: hidden;
+    position: relative;
+}
+
+.slider {
+    display: flex;
+    transition: transform 1s ease;
+    width: 600%; /* 100% * número de slides */
+}
+
+.slide {
+    flex: 0 0 16.666%; /* 100% / número de slides */
+}
+
+.slider img {
+    width: 100%;
+    height: auto;
+}
+
+.slider-navigation {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.slider-navigation label {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #888;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.slider-navigation label:hover {
+    background: #555;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"]:checked + .slider .slide {
+    transform: translateX(-16.666% * var(--index, 0));
+}

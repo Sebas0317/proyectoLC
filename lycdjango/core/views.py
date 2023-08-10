@@ -112,6 +112,17 @@ def add_to_cart(request, product_id):
         return redirect(referer)  # Redirigir a la página de detalles del producto
     else:
         return redirect('product_detail', producto_id=product_id)  # Redirigir a la página de inicio o a la página del carrito.
+    
+def add_to_cart_home(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Producto, pk=product_id)
+    quantity = 1  # Establecer la cantidad
+    cart.add(product=product, quantity=quantity)
+
+    # Agregar el mensaje flash
+    messages.success(request, 'El producto se ha añadido al carrito correctamente.')
+
+    return redirect('home')  # Redirigir a la página de inicio
 
 
 def remove_from_cart(request, product_id):

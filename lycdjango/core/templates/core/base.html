@@ -80,13 +80,38 @@
 
     <!-- Template Stylesheet -->
     <link href="{% static 'core/css/style.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/backTop.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/brand.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/bread.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/callaction.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/cart.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/category.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/check.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/contact.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/featured.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/footer.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/forminput.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/header.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/loginregister.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/myaccount.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/navbar.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/newsletter.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/productdetail.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/productitem.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/productView.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/review.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/sidebar.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/slidermaked.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/style.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/widh.css' %}" rel="stylesheet" />
+    
+
+
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'core/lib/easing/easing.min.js' %}"></script>
-    <script src="{% static 'core/lib/slick/slick.min.js' %}"></script>
-
+    
     <!-- Template Javascript -->
     <script src="{% static 'core/js/main.js' %}"></script>
   </head>
@@ -107,6 +132,7 @@
         </div>
       </div>
     </div>
+    
     <!-- Top bar End -->
     <!-- Navegación -->
 
@@ -123,45 +149,24 @@
             <span class="navbar-toggler-icon"></span>
           </button>
     
-          <div
-            class="collapse navbar-collapse justify-content-between"
-            id="navbarCollapse"
-          >
+          <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
             <div class="navbar-nav mr-auto">
               <a href="{% url 'home' %}" class="nav-item nav-link active">Inicio</a>
-              <a href="{% url 'product_list' %}" class="nav-item nav-link"
-                >Productos</a
-              >
-             
-              {% comment %} <a href="{% url 'home' %}" class="nav-item nav-link">Carrito</a>
-              <a href="{% url 'home' %}" class="nav-item nav-link">Checkout</a> {% endcomment %}
+              <a href="{% url 'product_list' %}" class="nav-item nav-link">Productos</a>
+              
               <a href="{% url 'home' %}" class="nav-item nav-link">Mi Cuenta</a>
               <div class="nav-item dropdown">
-                <a
-                  href="#"
-                  class="nav-link dropdown-toggle"
-                  data-toggle="dropdown"
-                  >Mas Paginas</a
-                >
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Mas Paginas</a>
                 <div class="dropdown-menu">
-                  <a href="{% url 'home' %}" class="dropdown-item"
-                    >Lista de Deseos</a
-                  >
-                  <a href="{% url 'home' %}" class="dropdown-item"
-                    >Inicio & Registro</a
-                  >
+                  <a href="{% url 'home' %}" class="dropdown-item">Lista de Deseos</a>
+                  <a href="{% url 'home' %}" class="dropdown-item">Inicio & Registro</a>
                   <a href="{% url 'home' %}" class="dropdown-item">Contactenos</a>
                 </div>
               </div>
             </div>
             <div class="navbar-nav ml-auto">
               <div class="nav-item dropdown">
-                <a
-                  href="#"
-                  class="nav-link dropdown-toggle"
-                  data-toggle="dropdown"
-                  >Cuenta de Usuario</a
-                >
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Cuenta de Usuario</a>
                 <div class="dropdown-menu">
                   <a href="#" class="dropdown-item">Inicio</a>
                   <a href="#" class="dropdown-item">Registro</a>
@@ -172,6 +177,7 @@
         </nav>
       </div>
     </div>
+    
    
     <!-- Cabecera -->
     <header class="masthead">
@@ -207,13 +213,15 @@
         </div>
       </div>
     </header>
+    
 
     <!-- contenido es la parte que cambia por ejemplo home.html-->
-    {% block content%} {% endblock%} {% if request.path != "/" %}
+    {% block content%} 
+    {% endblock%} 
+    {% if request.path != "/" %}
     <hr />
     {% endif %}
 
-    <!-- Footer Start -->
     <div class="footer">
       <div class="container-fluid">
         <div class="row">
@@ -271,19 +279,16 @@
         <div class="row payment align-items-center">
           <div class="col-md-6">
             <div class="payment-method">
-              <h2>Aceptamos:</h2>
-              <img
-                src="/static/core/img/payment-method.png"
-                alt="Payment Method"
-              />
+              <h2>We Accept:</h2>
+              <img src="img/payment-method.png" alt="Payment Method" />
             </div>
           </div>
           <div class="col-md-6">
             <div class="payment-security">
-              <h2>Asegurado Por:</h2>
-              <img src="/static/core/img/godaddy.svg" alt="Payment Security" />
-              <img src="/static/core/img/norton.svg" alt="Payment Security" />
-              <img src="/static/core/img/ssl.svg" alt="Payment Security" />
+              <h2>Asegurado por:</h2>
+              <img src="img/godaddy.svg" alt="Payment Security" />
+              <img src="img/norton.svg" alt="Payment Security" />
+              <img src="img/ssl.svg" alt="Payment Security" />
             </div>
           </div>
         </div>
@@ -296,7 +301,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6 copyright">
-            <p>Copyright &copy; Todos los derechos reservados/p></p>
+            <p>Copyright &copy; Todos los derechos reservados</p>
           </div>
 
           <div class="col-md-6 template-by">
@@ -309,7 +314,8 @@
 
     <!-- Back to Top -->
     <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
-
     <!-- Bootstrap y Javascripts -->
   </body>
+
+
 </html>

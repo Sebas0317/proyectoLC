@@ -1,0 +1,46 @@
+
+/**********************************/
+/******* Call to Action CSS *******/
+/**********************************/
+.call-to-action {
+    position: relative;
+    padding: 30px 0;
+    background: #003171;
+}
+
+.call-to-action .col-md-6:last-child {
+    text-align: right;
+}
+
+.call-to-action h1 {
+    color: #ffffff;
+    font-size: 30px;
+    margin: 0;
+}
+
+.call-to-action a {
+    display: inline-block;
+    padding: 0 20px;
+    border: 1px solid #ffffff;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 30px;
+    letter-spacing: 2px;
+    transition: all .3s;
+}
+
+.call-to-action a:hover {
+    color: #000000;
+    border-color: #000000;
+}
+
+@media (max-width: 767.98px) {
+    .call-to-action,
+    .call-to-action .col-md-6:last-child {
+        text-align: center;
+    }
+    
+    .call-to-action h1 {
+        margin-bottom: 20px;
+    }
+}

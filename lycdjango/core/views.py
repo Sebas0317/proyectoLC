@@ -26,6 +26,8 @@ def home(request):
         'productos_aleatorios': productos_aleatorios,
         'correo_empresa': correo_empresa,  # Agrega el correo de la empresa al contexto
     })
+    
+
 
 def product_detail(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
@@ -41,7 +43,10 @@ def product_detail(request, producto_id):
 
 
 def productlist(request):
-        return render(request, "core/product-list.html")
+    correo_empresa = CorreoEmpresa.objects.first()  # Obtén el primer registro de CorreoEmpresa
+    return render(request, "core/product-list.html",{
+            'correo_empresa': correo_empresa,
+        })
 
 def checkout(request):
         return render(request, "core/checkout.html")
@@ -74,7 +79,7 @@ def product_cart(request):
     gastos_envio = GastosEnvio.objects.first()
     subtotal = total_price
 
-    cupon_codigo = request.POST.get('cupon_codigo')  # Obtiene el código del cupón del formulario
+    # cupon_codigo = request.POST.get('cupon_codigo')  # Obtiene el código del cupón del formulario
 
     # descuento = 0  # Inicializa el descuento en 0
     # if cupon_codigo:

@@ -111,24 +111,19 @@
 
             <div class="row">
               {% for producto in page_obj %}
-              <div class="col-md-4 mt-5">
+              <div class="col-md-4 mt-3">
                 <div class="product-item">
                   <div class="product-title">
                     <a href="#">{{ producto.nombre }}</a>
                   </div>
                   <div class="product-image">
-                    {% if producto.imagen %}
                     <a href="{% url 'product_detail' producto.id %}">
                       <img
                         src="{{ producto.imagen.url }}"
                         alt="{{ producto.nombre }}"
                       />
                     </a>
-                    {% else %}
-                    <div class="no-image-placeholder">
-                      LO SIENTO NO HAY IMAGEN DISPONIBLE
-                    </div>
-                    {% endif %}
+                   
                     <div class="product-action">
                       <a href="#"><i class="fa fa-cart-plus"></i></a>
                       <a href="#"><i class="fa fa-heart"></i></a>

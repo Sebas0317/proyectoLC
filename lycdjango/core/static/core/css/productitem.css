@@ -4,17 +4,25 @@
 /**********************************/
 .product-item {
     position: relative;
+    font-size: 18px; 
 }
-
 .product-item .product-title {
     padding: 15px;
     text-align: center;
     background: #000000;
     transition: all .3s;
+    height: 90px;
+    max-width: 100%;
+    white-space: normal; /* Permite el ajuste de línea */
+    display: flex; /* Utiliza flexbox para alinear verticalmente */
+    flex-direction: column; /* Alinea el contenido verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
 }
 
 .product-item:hover .product-title {
     background: #003171;
+    font-size: 16px;
 }
 
 .product-item .product-title a,
@@ -27,6 +35,11 @@
     margin-bottom: 5px;
     color: #ffffff;
     font-size: 18px;
+    max-width: 100%;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
 }
 
 .product-item .product-title .ratting i {

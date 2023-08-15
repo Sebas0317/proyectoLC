@@ -2,7 +2,7 @@
 {% block title %}Inicio{% endblock %} 
 {% load static %} 
 {% block content %}
- <style>
+ {% comment %} <style>
     ul {  
       list-style-type: none;
       display: flex;
@@ -277,7 +277,7 @@
     opacity: 0;
 }
 
-</style>
+</style> {% endcomment %}
 
 
 <div class="header">
@@ -375,38 +375,15 @@
 </div>
 
 <!-- Brand Start -->
-<div id="slider2" class="slider_container">
-  <div id="section" class="slider_section">
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
-      </div>
-
-      <div class="carousel-inner">
-        <div id="brandimg" class="carousel-item active">
-          <img src="{% static 'core/img/brand-1.png' %}" class="d-block w-100" alt="..." />
-        </div>
-        <div id="brandimg" class="carousel-item">
-          <img src="{% static 'core/img/brand-2.png' %}" class="d-block w-100" alt="..." />
-        </div>
-        <div id="brandimg" class="carousel-item">
-          <img src="{% static 'core/img/brand-3.png' %}" class="d-block w-100" alt="..." />
-        </div>
-        <div id="brandimg" class="carousel-item">
-          <img src="{% static 'core/img/brand-4.png' %}" class="d-block w-100" alt="..." />
-        </div>
-        <div id="brandimg" class="carousel-item">
-          <img src="{% static 'core/img/brand-5.png' %}" class="d-block w-100" alt="..." />
-        </div>
-        <div id="brandimg" class="carousel-item">
-          <img src="{% static 'core/img/brand-6.png' %}" class="d-block w-100" alt="..." />
-        </div>
-      </div>
+<div class="brand">
+  <div class="container-fluid">
+    <div class="brand-slider">
+      <div class="brand-item"><img src="{% static 'core/img/brand-1.png'%}" alt="" /></div>
+      <div class="brand-item"><img src="{% static 'core/img/brand-2.png'%}"  alt="" /></div>
+      <div class="brand-item"><img src="{% static 'core/img/brand-3.png'%}"  alt="" /></div>
+      <div class="brand-item"><img src="{% static 'core/img/brand-4.png'%}"  alt="" /></div>
+      <div class="brand-item"><img src="{% static 'core/img/brand-5.png'%}"  alt="" /></div>
+      <div class="brand-item"><img src="{% static 'core/img/brand-6.png'%}"  alt="" /></div>
     </div>
   </div>
 </div>

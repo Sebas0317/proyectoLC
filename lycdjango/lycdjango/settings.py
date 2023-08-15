@@ -6,20 +6,16 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-
 SECRET_KEY = 'django-insecure-118lyoxk4kwqaa*g!pmakd8euo9nffxb%l2wcz$v6_(o@9)!jx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 
-
-
-
 # Application definition
 
 INSTALLED_APPS = [
-    #reservado para registro
+    # reservado para registro
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -29,7 +25,7 @@ INSTALLED_APPS = [
     'core',
     'productos',
     'politicas',
-    #reservado para contacto
+    # reservado para contacto
 ]
 
 MIDDLEWARE = [
@@ -40,6 +36,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Whitenoise
 ]
 
 ROOT_URLCONF = 'lycdjango.urls'
@@ -58,7 +55,7 @@ TEMPLATES = [
             ],
         },
     },
-]   
+]
 
 WSGI_APPLICATION = 'lycdjango.wsgi.application'
 
@@ -105,33 +102,39 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / "static"
-#archivo media
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / "media"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORE_STATIC_DIR = os.path.join(BASE_DIR, 'core', 'static', 'core')
-
-STATICFILES_DIRS = [
-    CORE_STATIC_DIR,
-]
-
-#redireccionsr el login y logout
+# redireccionsr el login y logout
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-#envio de emails
+# envio de emails
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'xmiguelx209@gmail.com'
 EMAIL_HOST_PASSWORD = 'bscwgysrxsumyvie'
 EMAIL_USE_TLS = True
+
+
+# STATIC FILES CONTENT CONFIG
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# ALMACEN DE ARCHIVOS QUE EL USUARIO SUBE, SON MODIFICABLES
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media'),
+# ALMACEN DE ARCHIVOS ASSET ESTATICOS, NECESARIOS PARA IMLEMENTACION DEL SITIO
+STATIC_URL = '/core/static/core/'
+STATIC_TMP = os.path.join(BASE_DIR, 'core', 'static', 'core')
+# DIRECTORIO DE DJANGO GENERADO AUTOMATICAMENTE, RECOPILA LOS ASSET DE LIBRERIAS PIP + TU RUTA DE STATIC
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# COMPRUEBA QUE LOS DIRECTORIOS EXISTAN
+os.makedirs(STATIC_TMP, exist_ok=True)
+os.makedirs(STATIC_ROOT, exist_ok=True)
+# DIRECTORIOS STATICOS QUE DJANGO LEERA PARA LOS TEMPLATES
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'core', 'static', 'core'),
+    os.path.join(BASE_DIR, 'media'),
+]

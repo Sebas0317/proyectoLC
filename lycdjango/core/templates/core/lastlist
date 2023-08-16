@@ -1,0 +1,325 @@
+{% extends 'core/base.html'%} 
+{% block title %}Lista de productos{% endblock %}
+{% load static %} 
+{% block content%}
+
+<div class="product_list_container">
+  <!-- Breadcrumb Start -->
+  <div class="breadcrumb-wrap">
+    <div class="container-fluid">
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="#">Productos</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- Breadcrumb End -->
+
+  <!-- Product List Start -->
+  <div class="product-view">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="product-view-top">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="product-search">
+                      <input type="email" value="Buscar" />
+                      <button><i class="fa fa-search"></i></button>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="product-short">
+                      <div class="dropdown">
+                        <div class="dropdown-toggle" data-toggle="dropdown">
+                          Filtrar por
+                        </div>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a href="?filtro=" class="dropdown-item"
+                            >Cualquiera</a
+                          >
+                          <!-- Agrega la opción "Cualquiera" -->
+                          <a href="?filtro=reciente" class="dropdown-item"
+                            >Reciente</a
+                          >
+                          <a href="?filtro=popular" class="dropdown-item"
+                            >Popular</a
+                          >
+                          <a href="?filtro=masvendidos" class="dropdown-item"
+                            >Mas Vendidos</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="product-price-range">
+                      <form method="get">
+                        <div class="dropdown">
+                          <div class="dropdown-toggle" data-toggle="dropdown">
+                            Rango de precio
+                          </div>
+                          <div
+                            class="dropdown-menu dropdown-menu-right price-dropdown"
+                          >
+                            <input
+                              type="hidden"
+                              name="filtro"
+                              value="{{ filtro }}"
+                            />
+                            <a
+                              href="{% url 'product_list' %}?filtro={{ filtro }}"
+                              >Cualquier Precio</a
+                            >
+                            <a
+                              href="{% url 'product_list' %}?filtro={{ filtro }}&precio=0-20000"
+                              >$0 to $20000</a
+                            >
+                            <a
+                              href="{% url 'product_list' %}?filtro={{ filtro }}&precio=20000-40000"
+                              >$20000 to $40000</a
+                            >
+                            <a
+                              href="{% url 'product_list' %}?filtro={{ filtro }}&precio=40000-60000"
+                              >$40000 to $60000</a
+                            >
+                            <a
+                              href="{% url 'product_list' %}?filtro={{ filtro }}&precio=60000-80000"
+                              >$60000 to $80000</a
+                            >
+                            <a
+                              href="{% url 'product_list' %}?filtro={{ filtro }}&precio=80000-100000"
+                              >$80000 to $100000</a
+                            >
+                            <a
+                              href="{% url 'product_list' %}?filtro={{ filtro }}&precio=100000"
+                              >$100000+</a
+                            >
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tu plantilla HTML -->
+
+            <div class="row">
+              {% for producto in page_obj %}
+              <div class="col-md-4">
+                <div class="product-item">
+                  <div class="product-title">
+                    <a href="#">{{ producto.nombre }}</a>
+                  </div>
+                  <div class="product-image">
+                    <a href="{% url 'product_detail' producto.id %}">
+                      <img
+                        src="{{ producto.imagen.url }}"
+                        alt="{{ producto.nombre }}"
+                      />
+                    </a>
+                   
+                    <div class="product-action">
+                      <a href="#"><i class="fa fa-cart-plus"></i></a>
+                      <a href="#"><i class="fa fa-heart"></i></a>
+                      <a href="#"><i class="fa fa-search"></i></a>
+                    </div>
+                  </div>
+                  <div class="product-price">
+                    <h3><span>$</span>{{ producto.precio }}</h3>
+                    {% if producto.cantidad_disponible > 0 %}
+                    <a
+                      class="btn"
+                      href="{% url 'product_detail' producto.id %}"
+                    >
+                      <i class="fa fa-shopping-cart"></i>Comprar
+                    </a>
+                    {% else %}
+                    <button class="btn btn-disabled" disabled>Agotado</button>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+
+            <!-- Pagination Start -->
+            <div class="col-md-12 mt-5">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                  {% if page_obj.has_previous %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page=1" tabindex="-1"
+                      >Anterior</a
+                    >
+                  </li>
+                  {% endif %} 
+                  {% for num in page_obj.paginator.page_range %} 
+                  {% if page_obj.number == num %}
+                  <li class="page-item active">
+                    <span class="page-link">{{ num }}</span>
+                  </li>
+                  {% else %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                  </li>
+                  {% endif %} 
+                  {% endfor %} 
+                  {% if page_obj.has_next %}
+                  <li class="page-item">
+                    <a
+                      class="page-link"
+                      href="?page={{ page_obj.paginator.num_pages }}"
+                      >Siguiente</a
+                    >
+                  </li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+            <!-- Pagination Start -->
+          </div>
+
+          <!-- Side Bar Start -->
+          <div class="col-lg-4 sidebar">
+            <div class="sidebar-widget category">
+              <h2 class="title">Categoria</h2>
+              <nav class="navbar bg-light">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="#"
+                      ><i class="fa fa-home"></i>Inicio</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#"
+                      ><i class="fa fa-shopping-bag"></i>Populares</a
+                    >
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="#"
+                      ><i class="fa fa-plus-square"></i>Nuevos productos</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#"
+                      ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="1em"
+                        viewBox="0 0 640 512"
+                      >
+                        <path
+                          d="M106.66,170.64l.09,0,49.55-20.65a7.32,7.32,0,0,0,3.68-6h0a7.29,7.29,0,0,0-3.68-6l-49.57-20.67-.07,0L86,67.68a6.66,6.66,0,0,0-11.92,0l-20.7,49.63-.05,0L3.7,138A7.29,7.29,0,0,0,0,144H0a7.32,7.32,0,0,0,3.68,6L53.27,170.6l.07,0L74,220.26a6.65,6.65,0,0,0,11.92,0l20.69-49.62ZM471.38,467.41l-1-.42-1-.5a38.67,38.67,0,0,1,0-69.14l1-.49,1-.43,37.49-15.63,15.63-37.48.41-1,.47-.95c3.85-7.74,10.58-13.63,18.35-17.34,0-1.33.25-2.69.27-4V144a32,32,0,0,0-64,0v72a8,8,0,0,1-8,8H456a8,8,0,0,1-8-8V64a32,32,0,0,0-64,0V216a8,8,0,0,1-8,8H360a8,8,0,0,1-8-8V32a32,32,0,0,0-64,0V216a8,8,0,0,1-8,8H264a8,8,0,0,1-8-8V64a32,32,0,0,0-64,0v241l-23.59-32.49a40,40,0,0,0-64.71,47.09L229.3,492.21A48.07,48.07,0,0,0,268.09,512H465.7c19.24,0,35.65-11.73,43.24-28.79l-.07-.17ZM349.79,339.52,320,351.93l-12.42,29.78a4,4,0,0,1-7.15,0L288,351.93l-29.79-12.41a4,4,0,0,1,0-7.16L288,319.94l12.42-29.78a4,4,0,0,1,7.15,0L320,319.94l29.79,12.42a4,4,0,0,1,0,7.16ZM640,431.91a7.28,7.28,0,0,0-3.68-6l-49.57-20.67-.07,0L566,355.63a6.66,6.66,0,0,0-11.92,0l-20.7,49.63-.05,0L483.7,426a7.28,7.28,0,0,0-3.68,6h0a7.29,7.29,0,0,0,3.68,5.95l49.57,20.67.07,0L554,508.21a6.65,6.65,0,0,0,11.92,0l20.69-49.62h0l.09,0,49.55-20.66a7.29,7.29,0,0,0,3.68-5.95h0Z"
+                        /></svg
+                      >Cuidado de Uñas</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#"
+                      ><i class="fa fa-child"></i>Cuidado de Cabello</a
+                    >
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+            <div class="sidebar-widget">
+              <div class="product-item">
+                <div class="product-title">
+                  <a href="#">{{ producto_aleatorio.nombre }}</a>
+                </div>
+                <div class="product-image">
+                  <a href="#">
+                    <img
+                      src="{{ producto_aleatorio.imagen.url }}"
+                      alt="Product Image"
+                    />
+                  </a>
+                  <div class="product-action">
+                    <a href="#"><i class="fa fa-cart-plus"></i></a>
+                    <a href="#"><i class="fa fa-heart"></i></a>
+                    <a href="#"><i class="fa fa-search"></i></a>
+                  </div>
+                </div>
+                <div class="product-price">
+                  <h3><span>$</span>{{ producto_aleatorio.precio }}</h3>
+                  <a
+                    class="btn"
+                    href="{% url 'product_detail' producto_aleatorio.id %}"
+                  >
+                    <i class="fa fa-shopping-cart"></i>Comprar
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="sidebar-widget brands" style="maring-top=30">
+              <h2 class="title">Nuestras Marcas</h2>
+              <ul>
+                <li><a href="#">Nulla </a><span>(45)</span></li>
+                <li><a href="#">Curabitur </a><span>(34)</span></li>
+                <li><a href="#">Nunc </a><span>(67)</span></li>
+                <li><a href="#">Ullamcorper</a><span>(74)</span></li>
+                <li><a href="#">Fusce </a><span>(89)</span></li>
+                <li><a href="#">Sagittis</a><span>(28)</span></li>
+              </ul>
+            </div>
+
+            <div class="sidebar-widget tag">
+              <h2 class="title" style="maring-top=20">Etiquetas</h2>
+              <a href="#">Lorem ipsum</a>
+              <a href="#">Vivamus</a>
+              <a href="#">Phasellus</a>
+              <a href="#">pulvinar</a>
+              <a href="#">Curabitur</a>
+              <a href="#">Fusce</a>
+              <a href="#">Sem quis</a>
+              <a href="#">Mollis metus</a>
+              <a href="#">Sit amet</a>
+              <a href="#">Vel posuere</a>
+              <a href="#">orci luctus</a>
+              <a href="#">Nam lorem</a>
+            </div>
+          </div>
+          <!-- Side Bar End -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+</div>
+<div class="brand">
+  <div class="container-fluid">
+    <div class="brand-slider">
+      <div class="brand-item"><img src="{% static 'core/img/brand-1.png'%}" alt="" /></div>
+      <div class="brand-item"><img src="{% static 'core/img/brand-2.png'%}"  alt="" /></div>
+      <div class="brand-item"><img src="{% static 'core/img/brand-3.png'%}"  alt="" /></div>
+      <div class="brand-item"><img src="{% static 'core/img/brand-4.png'%}"  alt="" /></div>
+      <div class="brand-item"><img src="{% static 'core/img/brand-5.png'%}"  alt="" /></div>
+      <div class="brand-item"><img src="{% static 'core/img/brand-6.png'%}"  alt="" /></div>
+    </div>
+  </div>
+</div>
+<style>
+  {% comment %} .product-item {
+    height: 400px;
+    /* Establece aquí la altura deseada */
+  }
+
+  .no-image-placeholder {
+    height: 100%;
+    /* Hace que el div ocupe el 100% del contenedor .product-item */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  } {% endcomment %}
+</style>
+
+{% endblock %}

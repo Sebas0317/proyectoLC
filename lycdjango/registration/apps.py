@@ -6,5 +6,5 @@ class RegistrationConfig(AppConfig):
     name = "registration"
     verbose_name = 'perfiles'
 
-    def listo(self):
+    def ready(self):
         import registration.signals

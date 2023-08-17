@@ -54,7 +54,7 @@ def productlist(request):
     correo_empresa = CorreoEmpresa.objects.first()  # Obtén el primer registro de CorreoEmpresa
     return render(request, "core/product-list.html",{
             'correo_empresa': correo_empresa,
-        })
+        }) 
 
 def checkout(request):
         return render(request, "core/checkout.html")

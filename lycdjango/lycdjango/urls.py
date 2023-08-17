@@ -4,7 +4,7 @@ from django.conf.urls.static import static, settings
 from core import views
 from core import views as core_views
 from productos import views as productos_views
-
+ 
 urlpatterns = [
     path('', views.home, name="home"),
     path('product-detail/<int:producto_id>/', core_views.product_detail, name='product_detail'),

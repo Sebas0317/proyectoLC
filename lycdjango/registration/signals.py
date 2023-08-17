@@ -10,4 +10,6 @@ def add_user_to_usuarios_group(sender, instance, created, **kwargs):
             usuario = Group.objects.get(name='usuario')
         except Group.DoesNotExist:
             usuario = Group.objects.create(name='usuario')
+            
+            
         instance.user.groups.add(usuario)

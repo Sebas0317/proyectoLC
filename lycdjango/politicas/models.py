@@ -20,3 +20,6 @@ class CorreoEmpresa(models.Model):
 
     def __str__(self):
         return self.correo
+    
+class BrandImage(models.Model):
+    image = models.ImageField(upload_to='brand_images/')

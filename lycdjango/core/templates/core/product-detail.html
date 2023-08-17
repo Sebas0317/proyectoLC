@@ -337,12 +337,9 @@
 <div class="brand">
   <div class="container-fluid">
     <div class="brand-slider">
-      <div class="brand-item"><img src="{% static 'core/img/brand-1.png'%}" alt="" /></div>
-      <div class="brand-item"><img src="{% static 'core/img/brand-2.png'%}"  alt="" /></div>
-      <div class="brand-item"><img src="{% static 'core/img/brand-3.png'%}"  alt="" /></div>
-      <div class="brand-item"><img src="{% static 'core/img/brand-4.png'%}"  alt="" /></div>
-      <div class="brand-item"><img src="{% static 'core/img/brand-5.png'%}"  alt="" /></div>
-      <div class="brand-item"><img src="{% static 'core/img/brand-6.png'%}"  alt="" /></div>
+      {% for image in brand_images %}
+      <div class="brand-item"><img src="{{ image.image.url }}" alt="" /></div>
+      {% endfor %}
     </div>
   </div>
 </div>

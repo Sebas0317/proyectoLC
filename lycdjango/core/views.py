@@ -11,8 +11,7 @@ from politicas.models import Cupon
 
 # Importaciones de Python
 import random   
-from politicas.models import CorreoEmpresa
-
+from politicas.models import CorreoEmpresa,BrandImage
 
 
 def home(request):
@@ -22,14 +21,15 @@ def home(request):
     productos_aleatorios = productos_aleatorios[:8]  # Mostrar 4 productos aleatorios
     
     correo_empresa = CorreoEmpresa.objects.first()  # Obtén el primer registro de CorreoEmpresa
+
+    brand_images = BrandImage.objects.all()  # Obtén todas las imágenes de marca disponibles
     
     return render(request, "core/home.html", {
         'ultimos_productos': ultimos_productos,
         'productos_aleatorios': productos_aleatorios,
-        'correo_empresa': correo_empresa,  # Agrega el correo de la empresa al contexto
+        'correo_empresa': correo_empresa,
+        'brand_images': brand_images,  # Agrega las imágenes de la marca al contexto
     })
-    
-
 
 def product_detail(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
@@ -38,10 +38,13 @@ def product_detail(request, producto_id):
     
     productos_aleatorios = random.sample(list(productos_disponibles), len(productos_relacionados))
     
+    brand_images = BrandImage.objects.all()  # Obtén todas las imágenes de marca disponibles
+    
     return render(request, 'core/product-detail.html', {
         'producto': producto,
         'productos_relacionados': productos_relacionados,
         'productos_aleatorios': productos_aleatorios,
+        'brand_images': brand_images,
     })
 
 

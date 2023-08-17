@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from productos.models import Producto
+from politicas.models import BrandImage
 import random
 
 def product_list(request):
@@ -35,12 +36,15 @@ def product_list(request):
     page_obj = paginator.get_page(page_number)
 
     producto_aleatorio = random.choice(productos)
+    
+    brand_images = BrandImage.objects.all()  # Obtén todas las imágenes de marca disponibles
 
     return render(request, 'productos/product_list.html', {
         'page_obj': page_obj,
         'producto_aleatorio': producto_aleatorio,
         'filtro': filtro,
         'precio': precio,
+        'brand_images': brand_images,
     })
 
 

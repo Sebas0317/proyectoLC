@@ -1,7 +1,6 @@
 {% extends 'core/base.html' %} 
-{% block title %}Detalle del producto{% endblock %} 
-{% load static %} 
-{% block content %}
+{% block title %}Detalle del producto{% endblock%} 
+{% load static %} {% block content %}
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-wrap">
   <div class="container-fluid">
@@ -77,13 +76,6 @@
               <div class="col-md-7">
                 <div class="product-content">
                   <div class="title"><h2>{{ producto.nombre }}</h2></div>
-                  <div class="ratting">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                  </div>
                   <div class="price">
                     <h4>Precio:</h4>
                     <p>$COP {{ producto.precio }}</p>
@@ -173,14 +165,8 @@
               <div id="reviews" class="container tab-pane fade">
                 <div class="reviews-submitted">
                   <div class="reviewer">
-                    Phasellus Gravida - <span>01 Jan 2020</span>
-                  </div>
-                  <div class="ratting">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
+                    <span id="reviewer_name">nombre persona</span> -
+                    <span>01 Jan 2020</span>
                   </div>
                   <p>
                     Sed ut perspiciatis unde omnis iste natus error sit
@@ -190,13 +176,6 @@
                 </div>
                 <div class="reviews-submit">
                   <h4>Dejanos un Comentario:</h4>
-                  <div class="ratting">
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                  </div>
                   <div class="row form">
                     <div class="col-sm-6">
                       <input type="text" placeholder="Name" />
@@ -225,47 +204,49 @@
           <div class="row align-items-center product-slider product-slider-3">
             {% for producto_relacionado in productos_relacionados %}
             <div class="col-lg-3">
-                <div class="product-item">
-                    <div class="product-title">
-                        <a href="#">{{ producto_relacionado.nombre }}</a>
-                        <div class="ratting">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="product-image">
-                        <a href="#">
-                            <img src="{{ producto_relacionado.imagen.url }}" alt="Product Image" />
-                        </a>
-                        <div class="product-action">
-                            <form method="post" action="{% url 'add_to_cart' producto_relacionado.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn">
-                                    <i class="fa fa-cart-plus"></i>
-                                </button>
-                            </form>
-                            <a href="#"><i class="fa fa-heart"></i></a>
-                            <a href="#"><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="product-price">
-                      <h3><span>$</span>{{ producto_relacionado.precio }}</h3>
-                      {% if producto_relacionado.cantidad_disponible > 0 %}
-                      <a class="btn" href="{% url 'product-detail' producto_relacionado.id %}">
-                          <i class="fa fa-shopping-cart"></i>Comprar
-                      </a>
-                      {% else %}
-                      <button class="btn btn-disabled" disabled>Agotado</button>
-                      {% endif %}
+              <div class="product-item">
+                <div class="product-title">
+                  <a href="#">{{ producto_relacionado.nombre }}</a>
+                </div>
+                <div class="product-image">
+                  <a href="#">
+                    <img
+                      src="{{ producto_relacionado.imagen.url }}"
+                      alt="Product Image"
+                    />
+                  </a>
+                  <div class="product-action">
+                    <form
+                      method="post"
+                      action="{% url 'add_to_cart' producto_relacionado.id %}"
+                    >
+                      {% csrf_token %}
+                      <button type="submit" class="btn">
+                        <i class="fa fa-cart-plus"></i>
+                      </button>
+                    </form>
+                    <a href="#"><i class="fa fa-heart"></i></a>
+                    <a href="#"><i class="fa fa-search"></i></a>
                   </div>
                 </div>
+                <div class="product-price">
+                  <h3><span>$</span>{{ producto_relacionado.precio }}</h3>
+                  {% if producto_relacionado.cantidad_disponible > 0 %}
+                  <a
+                    class="btn"
+                    href="{% url 'product_detail' producto_relacionado.id %}"
+                  >
+                    <i class="fa fa-shopping-cart"></i>Comprar
+                  </a>
+
+                  {% else %}
+                  <button class="btn btn-disabled" disabled>Agotado</button>
+                  {% endif %}
+                </div>
+              </div>
             </div>
             {% endfor %}
-        </div>
-        
+          </div>
         </div>
       </div>
 
@@ -304,37 +285,31 @@
           </nav>
         </div>
 
-        <div class="sidebar-widget">
-          <div class="product-item">
-            <div class="product-title">
-              <a href="#">{{ producto_aleatorio.nombre }}</a>
-              <div class="ratting">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
+        <div class="sidebar-widget widget-slider">
+          <div class="sidebar-slider normal-slider">
+            {% for producto_aleatorio in productos_aleatorios %}
+            <div class="product-item">
+              <div class="product-title">
+                <a href="#">{{ producto_aleatorio.nombre }}</a>
+              </div>
+              <div class="product-image">
+                <a href="#">
+                  <img src="{{ producto_aleatorio.imagen.url }}" alt="Product Image" />
+                </a>
+                <div class="product-action">
+                  <a href="#"><i class="fa fa-cart-plus"></i></a>
+                  <a href="#"><i class="fa fa-heart"></i></a>
+                  <a href="#"><i class="fa fa-search"></i></a>
+                </div>
+              </div>
+              <div class="product-price">
+                <h3><span>$</span>{{ producto_aleatorio.precio }}</h3>
+                <a class="btn" href="{% url 'product_detail' producto_aleatorio.id %}">
+                  <i class="fa fa-shopping-cart"></i>Comprar
+                </a>
               </div>
             </div>
-            <div class="product-image">
-              <a href="#">
-                <img
-                  src="{{ producto_aleatorio.imagen.url }}"
-                  alt="Product Image"
-                />
-              </a>
-              <div class="product-action">
-                <a href="#"><i class="fa fa-cart-plus"></i></a>
-                <a href="#"><i class="fa fa-heart"></i></a>
-                <a href="#"><i class="fa fa-search"></i></a>
-              </div>
-            </div>
-            <div class="product-price">
-              <h3><span>$</span>{{ producto_aleatorio.precio }}</h3>
-              <a class="btn" href="{% url 'product-detail' %}">
-                <i class="fa fa-shopping-cart"></i>Comprar
-              </a>
-            </div>
+          {% endfor %}
           </div>
         </div>
 
@@ -370,9 +345,11 @@
     </div>
   </div>
 </div>
+
 <!-- Product Detail End -->
 
 <!-- Brand Start -->
+
 <div class="brand">
   <div class="container-fluid">
     <div class="brand-slider">
@@ -385,35 +362,9 @@
     </div>
   </div>
 </div>
+¿
 <!-- Brand End -->
-<style>
-  /* Personalizar las flechas */
-  .carousel-control-prev-icon,
-  .carousel-control-next-icon {
-    background-color: #0a326f;
-    color: #ffffff; /* Color del ícono (flechas) */
-    font-size: 20px;
-    border-radius: 50%;
-    padding: 10px;
-  }
 
-  /* Hacer que el carrusel se mueva automáticamente */
-  .carousel {
-    /* Ajusta la velocidad de desplazamiento */
-    -webkit-transition: 0.5s ease-in-out;
-    -moz-transition: 0.5s ease-in-out;
-    -o-transition: 0.5s ease-in-out;
-    transition: 0.5s ease-in-out;
-  }
-
-  .carousel:hover {
-    /* Detiene la transición en el hover */
-    -webkit-transition: none;
-    -moz-transition: none;
-    -o-transition: none;
-    transition: none;
-  }
-</style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function () {
@@ -431,51 +382,51 @@
       $input.val(oldValue + 1);
     });
 
-     // Función para obtener el token CSRF desde las cookies
-     function getCookie(name) {
+    // Función para obtener el token CSRF desde las cookies
+    function getCookie(name) {
       var cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-          var cookies = document.cookie.split(';');
-          for (var i = 0; i < cookies.length; i++) {
-              var cookie = cookies[i].trim();
-              // Buscar el nombre del token CSRF en las cookies
-              if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                  break;
-              }
+      if (document.cookie && document.cookie !== "") {
+        var cookies = document.cookie.split(";");
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          // Buscar el nombre del token CSRF en las cookies
+          if (cookie.substring(0, name.length + 1) === name + "=") {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
           }
+        }
       }
       return cookieValue;
-  }
+    }
 
-  // Manejar el clic en el enlace "Añadir al Carrito"
-  $(".add-to-cart-link").click(function(e) {
-      e.preventDefault(); // Evitar que el enlace redireccione a la página de detalles
-      e.stopPropagation(); // Evitar que el evento se propague y se active la redirección predeterminada
+    // Manejar el clic en el enlace "Añadir al Carrito"
+    $(".add-to-cart-link").click(function (e) {
+      e.preventDefault(); // Evitar que el enlace redireccione
+      e.stopPropagation(); // Evitar que el evento se propague
+
       var product_id = $(this).data("product-id");
-      var quantity = 1; // Opcional: Puedes permitir que el usuario ingrese la cantidad o usar un valor predeterminado.
+      var quantity = 1;
 
-      // Obtener el token CSRF
-      var csrftoken = getCookie('csrftoken');
+      var csrftoken = getCookie("csrftoken");
 
       // Realizar la solicitud AJAX para agregar al carrito
       $.ajax({
-          type: "POST",
-          url: "{% url 'add_to_cart' 0 %}".replace('0', product_id),
-          data: {
-              'quantity': quantity,
-          },
-          beforeSend: function(xhr) {
-              xhr.setRequestHeader("X-CSRFToken", csrftoken);
-          },
-          dataType: 'json',
-        
+        type: "POST",
+        url: "{% url 'add_to_cart' 0 %}".replace("0", product_id),
+        data: {
+          quantity: quantity,
+        },
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        },
+        dataType: "json",
+        success: function (response) {
+          // Agregar aquí cualquier lógica que desees después de agregar al carrito
+          console.log("Producto agregado al carrito");
+        },
       });
+    });
   });
-  });
-
-  
-
 </script>
 
 {% endblock%}

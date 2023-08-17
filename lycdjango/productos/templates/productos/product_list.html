@@ -1,99 +1,82 @@
-{% extends 'core/base.html'%} 
+{% extends 'core/base.html'%}
 {% block title %}Lista de productos{% endblock %}
-{% load static %} 
-{%block content%}
+{% load static %}
+{% block content%}
 
-<!-- Breadcrumb Start -->
-<div class="breadcrumb-wrap">
-  <div class="container-fluid">
-    <ul class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
-      <li class="breadcrumb-item"><a href="#">Productos</a></li>
-    </ul>
+<div class="product_list_container">
+  <!-- Breadcrumb Start -->
+  <div class="breadcrumb-wrap">
+    <div class="container-fluid">
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="#">Productos</a></li>
+      </ul>
+    </div>
   </div>
-</div>
-<!-- Breadcrumb End -->
+  <!-- Breadcrumb End -->
 
-<!-- Product List Start -->
-<div class="product-view">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-8">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="product-view-top">
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="product-search">
-                    <input type="email" value="Buscar" />
-                    <button><i class="fa fa-search"></i></button>
+  <!-- Product List Start -->
+  <div class="product-view">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="product-view-top">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="product-search">
+                      <input type="email" value="Buscar" />
+                      <button><i class="fa fa-search"></i></button>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="product-short">
-                    <div class="dropdown">
-                      <div class="dropdown-toggle" data-toggle="dropdown">
-                        Filtrar por
-                      </div>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#" class="dropdown-item">Reciente</a>
-                        <a href="#" class="dropdown-item">Popular</a>
-                        <a href="#" class="dropdown-item">Mas Vendidos</a>
+                  <div class="col-md-4">
+                    <div class="product-short">
+                      <div class="dropdown">
+                        <div class="dropdown-toggle" data-toggle="dropdown">
+                          Filtrar por
+                        </div>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a href="?filtro=" class="dropdown-item">Cualquiera</a>
+                          <a href="?filtro=reciente" class="dropdown-item">Reciente</a>
+                          <a href="?filtro=popular" class="dropdown-item">Popular</a>
+                          <a href="?filtro=masvendidos" class="dropdown-item">Mas Vendidos</a>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="product-price-range">
-                    <div class="dropdown">
-                      <div class="dropdown-toggle" data-toggle="dropdown">
-                        Rango de precio
-                      </div>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#" class="dropdown-item">$0 to $50</a>
-                        <a href="#" class="dropdown-item">$51 to $100</a>
-                        <a href="#" class="dropdown-item">$101 to $150</a>
-                        <a href="#" class="dropdown-item">$151 to $200</a>
-                        <a href="#" class="dropdown-item">$201 to $250</a>
-                        <a href="#" class="dropdown-item">$251 to $300</a>
-                        <a href="#" class="dropdown-item">$301 to $350</a>
-                        <a href="#" class="dropdown-item">$351 to $400</a>
-                        <a href="#" class="dropdown-item">$401 to $450</a>
-                        <a href="#" class="dropdown-item">$451 to $500</a>
-                      </div>
+                  <div class="col-md-4">
+                    <div class="product-price-range">
+                      <form method="get">
+                        <div class="dropdown">
+                          <div class="dropdown-toggle" data-toggle="dropdown">
+                            Rango de precio
+                          </div>
+                          <div class="dropdown-menu dropdown-menu-right price-dropdown">
+                            <input type="hidden" name="filtro" value="{{ filtro }}" />
+                            <a href="{% url 'product_list' %}?filtro={{ filtro }}">Cualquier Precio</a>
+                            <a href="{% url 'product_list' %}?filtro={{ filtro }}&precio=0-20000">$0 to $20000</a>
+                            <!-- ... Rest of the price range options ... -->
+                            <a href="{% url 'product_list' %}?filtro={{ filtro }}&precio=100000">$100000+</a>
+                          </div>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-
-          <!-- Tu plantilla HTML -->
-
-          <div class="row">
+            <!-- Loop over products -->
             {% for producto in page_obj %}
-            <div class="col-md-4 mt-5">
+            <div class="col-md-4 mt-3">
               <div class="product-item">
                 <div class="product-title">
                   <a href="#">{{ producto.nombre }}</a>
-                  <div class="ratting">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                  </div>
                 </div>
                 <div class="product-image">
-                  {% if producto.imagen %}
-                  <a href="{% url 'product-detail' %}">
-                    <img src="{{ producto.imagen.url }}" />
+                  <a href="{% url 'product_detail' producto.id %}">
+                    <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" />
                   </a>
-                  {% else %}
-                  <div class="no-image-placeholder">
-                    LO SIENTO NO HAY IMAGEN DISPONIBLE
-                  </div>
-                  {% endif %}
                   <div class="product-action">
                     <a href="#"><i class="fa fa-cart-plus"></i></a>
                     <a href="#"><i class="fa fa-heart"></i></a>
@@ -103,194 +86,186 @@
                 <div class="product-price">
                   <h3><span>$</span>{{ producto.precio }}</h3>
                   {% if producto.cantidad_disponible > 0 %}
-                  <a class="btn" href="{% url 'product-detail' producto.id %}">
+                  <a class="btn" href="{% url 'product_detail' producto.id %}">
                     <i class="fa fa-shopping-cart"></i>Comprar
                   </a>
                   {% else %}
-                  <button class="btn btn-disabled" disabled>Agotado</button>
+                  <button class="btn btn-disabled" disabled>
+                    Agotado
+                  </button>
                   {% endif %}
                 </div>
               </div>
             </div>
             {% endfor %}
           </div>
-        </div>
 
-        <!-- Pagination Start -->
-        <div class="col-md-12 mt-5">
-          <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-              {% if page_obj.has_previous %}
-              <li class="page-item">
-                <a class="page-link" href="?page=1" tabindex="-1">Anterior</a>
-              </li>
-              {% endif %} 
-              {% for num in page_obj.paginator.page_range %} 
-              {% if page_obj.number == num %}
-              <li class="page-item active">
-                <span class="page-link">{{ num }}</span>
-              </li>
-              {% else %}
-              <li class="page-item">
-                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
-              </li>
-              {% endif %} 
-              {% endfor %} 
-              {% if page_obj.has_next %}
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="?page={{ page_obj.paginator.num_pages }}"
-                  >Siguiente</a
-                >
-              </li>
-              {% endif %}
-            </ul>
-          </nav>
-        </div>
-        <!-- Pagination Start -->
-      </div>
-
-      <!-- Side Bar Start -->
-      <div class="col-lg-4 sidebar">
-        <div class="sidebar-widget category">
-          <h2 class="title">Categoria</h2>
-          <nav class="navbar bg-light">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="#"
-                  ><i class="fa fa-female"></i>Moda y Belleza</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"
-                  ><i class="fa fa-child"></i>Ropa para bebes y niños</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"
-                  ><i class="fa fa-tshirt"></i>Ropa para mujeres y hombres</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"
-                  ><i class="fa fa-mobile-alt"></i>Joyeria y accesorios</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"
-                  ><i class="fa fa-microchip"></i>Electronicos</a
-                >
-              </li>
-            </ul>
-          </nav>
-        </div>
-
-        <div class="sidebar-widget">
-          <div class="product-item">
-            <div class="product-title">
-              <a href="#">{{ producto_aleatorio.nombre }}</a>
-              <div class="ratting">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-              </div>
-            </div>
-            <div class="product-image">
-              <a href="#">
-                <img
-                  src="{{ producto_aleatorio.imagen.url }}"
-                  alt="Product Image"
-                />
-              </a>
-              <div class="product-action">
-                <a href="#"><i class="fa fa-cart-plus"></i></a>
-                <a href="#"><i class="fa fa-heart"></i></a>
-                <a href="#"><i class="fa fa-search"></i></a>
-              </div>
-            </div>
-            <div class="product-price">
-              <h3><span>$</span>{{ producto_aleatorio.precio }}</h3>
-              <a class="btn" href="{% url 'product-detail' %}">
-                <i class="fa fa-shopping-cart"></i>Comprar
-              </a>
-            </div>
+          <!-- Pagination Start -->
+          <div class="col-md-12">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page=1" tabindex="-1">Anterior</a>
+                </li>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <li class="page-item active">
+                  <span class="page-link">{{ num }}</span>
+                </li>
+                {% else %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Siguiente</a>
+                </li>
+                {% endif %}
+              </ul>
+            </nav>
           </div>
+          <!-- Pagination End -->
         </div>
-
-        <div class="sidebar-widget brands">
-          <h2 class="title">Nuestras Marcas</h2>
-          <ul>
-            <li><a href="#">Nulla </a><span>(45)</span></li>
-            <li><a href="#">Curabitur </a><span>(34)</span></li>
-            <li><a href="#">Nunc </a><span>(67)</span></li>
-            <li><a href="#">Ullamcorper</a><span>(74)</span></li>
-            <li><a href="#">Fusce </a><span>(89)</span></li>
-            <li><a href="#">Sagittis</a><span>(28)</span></li>
-          </ul>
-        </div>
-
-        <div class="sidebar-widget tag">
-          <h2 class="title">Etiquetas</h2>
-          <a href="#">Lorem ipsum</a>
-          <a href="#">Vivamus</a>
-          <a href="#">Phasellus</a>
-          <a href="#">pulvinar</a>
-          <a href="#">Curabitur</a>
-          <a href="#">Fusce</a>
-          <a href="#">Sem quis</a>
-          <a href="#">Mollis metus</a>
-          <a href="#">Sit amet</a>
-          <a href="#">Vel posuere</a>
-          <a href="#">orci luctus</a>
-          <a href="#">Nam lorem</a>
+        <!-- Side Bar Start -->
+              <div class="col-lg-4 sidebar">
+                <div class="sidebar-widget category">
+                  <h2 class="title">Categoria</h2>
+                  <nav class="navbar bg-light">
+                    <ul class="navbar-nav">
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"
+                          ><i class="fa fa-female"></i>Moda y Belleza</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"
+                          ><i class="fa fa-child"></i>Ropa para bebes y niños</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"
+                          ><i class="fa fa-tshirt"></i>Ropa para mujeres y
+                          hombres</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"
+                          ><i class="fa fa-mobile-alt"></i>Joyeria y accesorios</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"
+                          ><i class="fa fa-microchip"></i>Electronicos</a
+                        >
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+      
+                <div class="sidebar-widget widget-slider">
+                  <div class="sidebar-slider normal-slider">
+                    {% for producto in page_obj %}
+    <div class="product-item">
+      <div class="product-title">
+        <a href="#">{{ producto.nombre }}</a>
+      </div>
+      <div class="product-image">
+        <a href="#">
+          <img src="{{ producto.imagen.url }}" alt="Product Image" />
+        </a>
+        <div class="product-action">
+          <a href="#"><i class="fa fa-cart-plus"></i></a>
+          <a href="#"><i class="fa fa-heart"></i></a>
+          <a href="#"><i class="fa fa-search"></i></a>
         </div>
       </div>
-      <!-- Side Bar End -->
+      <div class="product-price">
+        <h3><span>$</span>{{ producto.precio }}</h3>
+        <a class="btn" href="{% url 'product_detail' producto.id %}">
+          <i class="fa fa-shopping-cart"></i>Comprar
+        </a>
+      </div>
+    </div>
+  {% endfor %}
+                  </div>
+                </div>
+      
+                <div class="sidebar-widget brands">
+                  <h2 class="title">Nuestras Marcas</h2>
+                  <ul>
+                    <li><a href="#">Nulla </a><span>(45)</span></li>
+                    <li><a href="#">Curabitur </a><span>(34)</span></li>
+                    <li><a href="#">Nunc </a><span>(67)</span></li>
+                    <li><a href="#">Ullamcorper</a><span>(74)</span></li>
+                    <li><a href="#">Fusce </a><span>(89)</span></li>
+                    <li><a href="#">Sagittis</a><span>(28)</span></li>
+                  </ul>
+                </div>
+      
+                <div class="sidebar-widget tag">
+                  <h2 class="title">Etiquetas</h2>
+                  <a href="#">Lorem ipsum</a>
+                  <a href="#">Vivamus</a>
+                  <a href="#">Phasellus</a>
+                  <a href="#">pulvinar</a>
+                  <a href="#">Curabitur</a>
+                  <a href="#">Fusce</a>
+                  <a href="#">Sem quis</a>
+                  <a href="#">Mollis metus</a>
+                  <a href="#">Sit amet</a>
+                  <a href="#">Vel posuere</a>
+                  <a href="#">orci luctus</a>
+                  <a href="#">Nam lorem</a>
+                </div>
+              </div>
+             
+        <!-- Side Bar End -->
+      </div>
+    </div>
+  </div>
+
+  <div class="brand">
+    <div class="container-fluid">
+      <div class="brand-slider">
+        <div class="brand-item">
+          <img src="{% static 'core/img/brand-1.png'%}" alt="" />
+        </div>
+        <div class="brand-item">
+          <img src="{% static 'core/img/brand-2.png'%}" alt="" />
+        </div>
+        <div class="brand-item">
+          <img src="{% static 'core/img/brand-3.png'%}" alt="" />
+        </div>
+        <div class="brand-item">
+          <img src="{% static 'core/img/brand-4.png'%}" alt="" />
+        </div>
+        <div class="brand-item">
+          <img src="{% static 'core/img/brand-5.png'%}" alt="" />
+        </div>
+        <div class="brand-item">
+          <img src="{% static 'core/img/brand-6.png'%}" alt="" />
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<!-- Product List End -->
-<!-- Brand Start -->
-<div class="brand">
-  <div class="container-fluid">
-    <div class="brand-slider">
-      <div class="brand-item">
-        <img src="{% static 'core/img/brand-1.png' %}" alt="" />
-      </div>
-      <div class="brand-item">
-        <img src="{% static 'core/img/brand-2.png' %}" alt="" />
-      </div>
-      <div class="brand-item">
-        <img src="{% static 'core/img/brand-3.png' %}" alt="" />
-      </div>
-      <div class="brand-item">
-        <img src="{% static 'core/img/brand-4.png' %}" alt="" />
-      </div>
-      <div class="brand-item">
-        <img src="{% static 'core/img/brand-5.png' %}" alt="" />
-      </div>
-      <div class="brand-item">
-        <img src="{% static 'core/img/brand-6.png' %}" alt="" />
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Brand End -->
-
 <style>
-  .product-item {
-    height: 400px; /* Establece aquí la altura deseada */
-  }
+  /*  .product-item {
+      height: 400px;
+      Establece aquí la altura deseada 
+    }
 
-  .no-image-placeholder {
-    height: 100%; /* Hace que el div ocupe el 100% del contenedor .product-item */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    .no-image-placeholder {
+      height: 100%;
+     Hace que el div ocupe el 100% del contenedor .product-item 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    } */
 </style>
 
-{%endblock%}
+{% endblock %}

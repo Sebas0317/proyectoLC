@@ -53,6 +53,7 @@
                     </div>
                   </td>
                   <td class="total-price">${{ item.total_item_price }} COP</td>
+                    
                   <td>
                     {% csrf_token %}
                     <button class="btn-delete" data-product-id="{{ item.product.id }}">
@@ -75,26 +76,31 @@
         <div class="cart-page-inner">
           <div class="row">
             <div class="col-md-12">
-              <div class="coupon">
-                <input type="text" placeholder="Coupon Code" />
-                <button>Aplicar codigo</button>
-              </div>
+                <div class="coupon">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="text" name="cupon_codigo" placeholder="Coupon Code" />
+                        <button type="submit">Aplicar código</button>
+                    </form>
+                </div>
             </div>
             <div class="col-md-12">
-              <div class="cart-summary">
-                <div class="cart-content">
-                  <h1>Resumen del carrito</h1>
-                  <p>Sub Total<span>$99</span></p>
-                  <p>Gastos de envio<span>$1</span></p>
-                  <h2>Total<span>$100</span></h2>
+                <div class="cart-summary">
+                    <div class="cart-content">
+                        <h1>Resumen del carrito</h1>
+                        <p>Sub Total<span>${{ subtotal }}</span></p>
+                        <p>Gastos de envío<span>${{ gastos_envio.monto }}</span></p>
+                        {% comment %} <p>Descuento<span>${{ descuento_total }}</span></p> {% endcomment %}
+                        <h2>Total<span>${{ total }}</span></h2>
+                    </div>
+                    <div class="cart-btn">
+                        <button>Actualizar carrito</button>
+                        <button>Checkout</button>
+                    </div>
                 </div>
-                <div class="cart-btn">
-                  <button>Actualizar carrito</button>
-                  <button>Checkout</button>
-                </div>
-              </div>
             </div>
-          </div>
+        </div>
+        
         </div>
       </div>
     </div>
@@ -102,32 +108,51 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-      $(".btn-minus").on("click", function () {
-        var $input = $(this).parent().find("input");
-        var oldValue = parseInt($input.val());
-        if (oldValue > 1) {
-          $input.val(oldValue - 1);
-          updateTotalPrice($input);
-        }
-      });
-
-      $(".btn-plus").on("click", function () {
-        var $input = $(this).parent().find("input");
-        var oldValue = parseInt($input.val());
-        $input.val(oldValue + 1);
-        updateTotalPrice($input);
-      });
+  $(document).ready(function () {
+    $(".btn-minus").on("click", function () {
+      var $input = $(this).parent().find("input");
+      var oldValue = parseInt($input.val());
+      if (oldValue > 1) {
+        $input.val(oldValue - 1);
+        var productId = $input.data("product-id");
+        updateCartQuantity(productId, oldValue - 1);
+      }
     });
 
-    function updateTotalPrice($input) {
+    $(".btn-plus").on("click", function () {
+      var $input = $(this).parent().find("input");
+      var oldValue = parseInt($input.val());
+      $input.val(oldValue + 1);
       var productId = $input.data("product-id");
-      var quantity = parseñInt($input.val());
-      var productPrice = parseFloat($input.data("product-price"));
-      var totalPrice = quantity * productPrice;
-      var totalCell = $("td[data-product-id='" + productId + "'] .total-price");
-      totalCell.text("$COP " + totalPrice.toFixed(2));
+      updateCartQuantity(productId, oldValue + 1);
+    });
+
+    function updateCartQuantity(productId, newQuantity) {
+      var csrfToken = getCookie('csrftoken');
+    
+      $.ajax({
+        url: "/update_cart_quantity/",
+        type: "POST",
+        data: {
+          'product_id': productId,
+          'new_quantity': newQuantity,
+          'csrfmiddlewaretoken': csrfToken,
+        },
+        dataType: "json",
+        success: function (data) {
+          var totalCell = $("td[data-product-id='" + productId + "'] .total-price");
+          totalCell.text("$COP " + data.total_item_price.toFixed(2));
+    
+          // Recargar la página después de actualizar la cantidad
+          location.reload();
+        },
+        error: function (error) {
+          console.log(error);
+        },
+      });
     }
+    
+
     $(".btn-delete").on("click", function (event) {
       event.preventDefault(); // Prevenir el comportamiento predeterminado del botón
 
@@ -151,40 +176,44 @@
       });
     });
 
-  // Obtener el valor del token CSRF del formulario o de las cookies
-var csrfToken = getCookie('csrftoken');
+    // Obtener el valor del token CSRF del formulario o de las cookies
+    var csrfToken = getCookie('csrftoken');
 
-// Configurar el encabezado de la solicitud AJAX para incluir el token CSRF
-$.ajaxSetup({
-  beforeSend: function (xhr, settings) {
-    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-      xhr.setRequestHeader('X-CSRFToken', csrfToken);
-    }
-  }
-});
-
-// Función para obtener el valor del token CSRF de las cookies
-function getCookie(name) {
-  var cookieValue = null;
-  if (document.cookie && document.cookie !== '') {
-    var cookies = document.cookie.split(';');
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === name + '=') {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
+    // Configurar el encabezado de la solicitud AJAX para incluir el token CSRF
+    $.ajaxSetup({
+      beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader('X-CSRFToken', csrfToken);
+        }
       }
+    });
+
+    // Función para obtener el valor del token CSRF de las cookies
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === name + '=') {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
     }
-  }
-  return cookieValue;
-}
 
-// Función para comprobar si el método de solicitud es seguro contra CSRF
-function csrfSafeMethod(method) {
-  // Estos métodos no requieren CSRF
-  return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
-}
-
+    // Función para comprobar si el método de solicitud es seguro contra CSRF
+    function csrfSafeMethod(method) {
+      // Estos métodos no requieren CSRF
+      return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
+    }
+  });
 </script>
 
-{%endblock%}
+
+{% endblock %}
+
+
+

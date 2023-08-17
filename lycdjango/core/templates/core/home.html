@@ -225,7 +225,7 @@
           </div>
           <div class="product-image">
             <a class="btn" href="{% url 'product_detail' producto.id %}">
-              <img src="{% static 'core/img/product-1.jpg' %}" alt="Product Image" />
+              <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" />
             </a>
             <div class="product-action">
               <a href="{% url 'add_to_cart_home' producto.id %}"><i class="fa fa-cart-plus"></i></a>
@@ -269,8 +269,7 @@
           </div>
           <div class="product-image">
             <a class="btn" href="{% url 'product_detail' producto.id %}">
-              <img src="{% static 'core/img/product-1.jpg' %}" alt="Product Image" />
-            </a>
+              <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" />            </a>
             <div class="product-action">
               <a href="{% url 'add_to_cart_home' producto.id %}"><i class="fa fa-cart-plus"></i></a>
               <a href="#"><i class="fa fa-heart"></i></a>

@@ -13,6 +13,8 @@ from politicas.models import Cupon
 import random   
 from politicas.models import CorreoEmpresa
 
+
+
 def home(request):
     ultimos_productos = Producto.objects.filter(cantidad_disponible__gt=0).order_by('-fecha_carga')[:8]
     productos_aleatorios = list(Producto.objects.filter(cantidad_disponible__gt=0))

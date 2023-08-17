@@ -1,7 +1,6 @@
 {% extends 'core/base.html' %} 
 {% block title %}Detalle del producto{% endblock%} 
-{% load static %} 
-{% block content %}
+{% load static %} {% block content %}
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-wrap">
   <div class="container-fluid">
@@ -166,7 +165,8 @@
               <div id="reviews" class="container tab-pane fade">
                 <div class="reviews-submitted">
                   <div class="reviewer">
-                    Phasellus Gravida - <span>01 Jan 2020</span>
+                    <span id="reviewer_name">nombre persona</span> -
+                    <span>01 Jan 2020</span>
                   </div>
                   <p>
                     Sed ut perspiciatis unde omnis iste natus error sit
@@ -285,30 +285,31 @@
           </nav>
         </div>
 
-        <div class="sidebar-widget">
-          <div class="product-item">
-            <div class="product-title">
-              <a href="#">{{ producto_aleatorio.nombre }}</a>
-            </div>
-            <div class="product-image">
-              <a href="#">
-                <img
-                  src="{{ producto_aleatorio.imagen.url }}"
-                  alt="Product Image"
-                />
-              </a>
-              <div class="product-action">
-                <a href="#" class="add-to-cart-link" data-product-id="{{ producto_relacionado.id }}"><i class="fa fa-cart-plus"></i></a>
-                <a href="#"><i class="fa fa-heart"></i></a>
-                <a href="#"><i class="fa fa-search"></i></a>
+        <div class="sidebar-widget widget-slider">
+          <div class="sidebar-slider normal-slider">
+            {% for producto_aleatorio in productos_aleatorios %}
+            <div class="product-item">
+              <div class="product-title">
+                <a href="#">{{ producto_aleatorio.nombre }}</a>
+              </div>
+              <div class="product-image">
+                <a href="#">
+                  <img src="{{ producto_aleatorio.imagen.url }}" alt="Product Image" />
+                </a>
+                <div class="product-action">
+                  <a href="#"><i class="fa fa-cart-plus"></i></a>
+                  <a href="#"><i class="fa fa-heart"></i></a>
+                  <a href="#"><i class="fa fa-search"></i></a>
+                </div>
+              </div>
+              <div class="product-price">
+                <h3><span>$</span>{{ producto_aleatorio.precio }}</h3>
+                <a class="btn" href="{% url 'product_detail' producto_aleatorio.id %}">
+                  <i class="fa fa-shopping-cart"></i>Comprar
+                </a>
               </div>
             </div>
-            <div class="product-price">
-              <h3><span>$</span>{{ producto_aleatorio.precio }}</h3>
-              <a class="btn" href="{% url 'product_detail' producto.id %}">
-                <i class="fa fa-shopping-cart"></i>Comprar
-              </a>
-            </div>
+          {% endfor %}
           </div>
         </div>
 
@@ -348,7 +349,7 @@
 <!-- Product Detail End -->
 
 <!-- Brand Start -->
-{% comment %}
+
 <div class="brand">
   <div class="container-fluid">
     <div class="brand-slider">
@@ -361,36 +362,9 @@
     </div>
   </div>
 </div>
-{% endcomment %}
+¿
 <!-- Brand End -->
-<style>
-  /* Personalizar las flechas */
-  .carousel-control-prev-icon,
-  .carousel-control-next-icon {
-    background-color: #0a326f;
-    color: #ffffff; /* Color del ícono (flechas) */
-    font-size: 20px;
-    border-radius: 50%;
-    padding: 10px;
-  }
 
-  /* Hacer que el carrusel se mueva automáticamente */
-  .carousel {
-    /* Ajusta la velocidad de desplazamiento */
-    -webkit-transition: 0.5s ease-in-out;
-    -moz-transition: 0.5s ease-in-out;
-    -o-transition: 0.5s ease-in-out;
-    transition: 0.5s ease-in-out;
-  }
-
-  .carousel:hover {
-    /* Detiene la transición en el hover */
-    -webkit-transition: none;
-    -moz-transition: none;
-    -o-transition: none;
-    transition: none;
-  }
-</style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function () {

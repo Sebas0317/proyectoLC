@@ -1,0 +1,3 @@
+elif filtro == 'popular':
+    productos = list(productos)  # Convierte el QuerySet a una lista
+    random.shuffle(productos)     # Mezcla la lista aleatoriamente

@@ -14,10 +14,10 @@ import random
 from politicas.models import CorreoEmpresa
 
 def home(request):
-    ultimos_productos = Producto.objects.filter(cantidad_disponible__gt=0).order_by('-fecha_carga')[:4]
+    ultimos_productos = Producto.objects.filter(cantidad_disponible__gt=0).order_by('-fecha_carga')[:8]
     productos_aleatorios = list(Producto.objects.filter(cantidad_disponible__gt=0))
     random.shuffle(productos_aleatorios)
-    productos_aleatorios = productos_aleatorios[:4]  # Mostrar 4 productos aleatorios
+    productos_aleatorios = productos_aleatorios[:8]  # Mostrar 4 productos aleatorios
     
     correo_empresa = CorreoEmpresa.objects.first()  # Obtén el primer registro de CorreoEmpresa
     
@@ -26,22 +26,30 @@ def home(request):
         'productos_aleatorios': productos_aleatorios,
         'correo_empresa': correo_empresa,  # Agrega el correo de la empresa al contexto
     })
+    
+
 
 def product_detail(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
-    productos_relacionados = Producto.objects.filter(tipo=producto.tipo).exclude(id=producto_id)[:4]
-    productos = Producto.objects.all().exclude(id=producto_id)
-    producto_aleatorio = random.choice(productos)
+    productos_relacionados = Producto.objects.filter(tipo=producto.tipo).exclude(id=producto_id)[:8]
+    productos_disponibles = Producto.objects.all().exclude(id=producto_id)
+    
+    productos_aleatorios = random.sample(list(productos_disponibles), len(productos_relacionados))
     
     return render(request, 'core/product-detail.html', {
         'producto': producto,
         'productos_relacionados': productos_relacionados,
-        'producto_aleatorio': producto_aleatorio,
+        'productos_aleatorios': productos_aleatorios,
     })
 
 
+
+
 def productlist(request):
-        return render(request, "core/product-list.html")
+    correo_empresa = CorreoEmpresa.objects.first()  # Obtén el primer registro de CorreoEmpresa
+    return render(request, "core/product-list.html",{
+            'correo_empresa': correo_empresa,
+        })
 
 def checkout(request):
         return render(request, "core/checkout.html")
@@ -74,7 +82,7 @@ def product_cart(request):
     gastos_envio = GastosEnvio.objects.first()
     subtotal = total_price
 
-    cupon_codigo = request.POST.get('cupon_codigo')  # Obtiene el código del cupón del formulario
+    # cupon_codigo = request.POST.get('cupon_codigo')  # Obtiene el código del cupón del formulario
 
     # descuento = 0  # Inicializa el descuento en 0
     # if cupon_codigo:

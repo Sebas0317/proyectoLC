@@ -3,6 +3,15 @@
 {% load static %} 
 {% block content %}
 <div class="cart-page">
+  <div class="breadcrumb-wrap">
+    <div class="container-fluid">
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Incio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'product_list' %}">Productos</a></li>
+        <li class="breadcrumb-item active" href="{% url 'cart' %}"> Carrito</li>
+      </ul>
+    </div>
+  </div>
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-8">

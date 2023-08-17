@@ -241,7 +241,11 @@
                 <p>
                   <i class="fa fa-map-marker"></i> {{ correo_empresa.direccion }}
                 </p>
-                <p><i class="fa fa-envelope"></i> {{ correo_empresa.correo }}</p>
+                <p>
+                  <i class="fa fa-envelope"></i>
+                  <a href="mailto:{{ correo_empresa.correo }}" target="_blank" style="color: #353535; text-decoration: none;">{{ correo_empresa.correo }}</a>
+              </p>
+              
                 <p><i class="fa fa-phone"></i> {{ correo_empresa.telefono }}</p>
               </div>
             </div>

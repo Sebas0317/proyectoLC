@@ -1,0 +1,76 @@
+{% extends 'core/base.html' %}
+
+{% block title %}inicio{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% comment %} 
+    
+
+    </head>
+    <body>
+        <form action="" method="POST" id="contenedor">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Nombre *</label>
+                <div class="input-group">
+                    {{ form.nombre }}
+                </div>
+                <div>
+                    {{ form.nombre.errors }}
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label>Email *</label>
+                <div class="input-group">
+                    {{ form.correo }}
+                </div>
+                <div>
+                    {{ form.correo.errors }}
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label>Mensaje *</label>
+                <div class="input-group">
+                    {{ form.mensaje }}
+                </div>
+                <div>
+                    {{ form.mensaje.errors }}
+                </div>
+            </div>
+    
+            <div class="text-center">
+                <input type="submit" value="Enviar" id="botonF">
+            </div>
+    
+            <div class="row m-5">
+                {% if 'ok' in request.GET %}
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <!-- Contenido del mensaje de éxito -->
+                    </div>
+                {% endif %}
+            </div>
+    
+            <div class="row m-5">
+                {% if 'fail' in request.GET %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <!-- Contenido del mensaje de error -->
+                    </div>
+                {% endif %}
+            </div>
+        </form>
+    </body>
+    
+
+
+    <script>
+        const alert = document.querySelector('.alert');
+        const btn = document.querySelector('.btn-close');
+        btn.addEventListener('click', () =>{
+            alert.classList.add("close");
+        });
+    </script>
+{% endblock %}

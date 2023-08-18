@@ -14,7 +14,7 @@ urlpatterns = [
     path('wishlist/', views.wishlist, name="wishlist"),
     path('contact/', views.contact, name="contact"),
     path('user_admin/', views.admin, name="admin"),
-    path('regis/', views.regis, name="regis"),
+    #path('regis/', views.regis, name="regis"),
     path('admin/', admin.site.urls),
     
     
@@ -30,7 +30,9 @@ urlpatterns = [
     path('update_cart_quantity/', views.update_cart_quantity, name='update_cart_quantity'),
 
 
-
+    #app registro
+    path('accounts/',include('django.contrib.auth.urls')),
+    path('accounts/',include('registration.urls')),
     # """
     
 

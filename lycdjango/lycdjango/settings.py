@@ -15,7 +15,7 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
-    # reservado para registro
+    'registration.apps.RegistrationConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

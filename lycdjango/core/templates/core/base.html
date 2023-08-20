@@ -181,9 +181,9 @@
               <div class="footer-widget">
                 <h2>Informacion</h2>
                 <ul>
-                  <li><a href="#">Sobre Nosotros</a></li>
+                  <li><a href="{% url 'sobre-nosotros' %}">Sobre Nosotros</a></li>
                   <li><a href="{% url 'politica-privacidad' %}">Política de privacidad</a></li>
-                  <li><a href="#">Terminos y Condiciones</a></li>
+                  <li><a href="{% url 'terminos-condiciones' %}">Terminos y Condiciones</a></li>
                 </ul>
               </div>
             </div>
@@ -192,9 +192,9 @@
               <div class="footer-widget">
                 <h2>Politica de compras</h2>
                 <ul>
-                  <li><a href="#">Política de pago</a></li>
-                  <li><a href="#">Politica de envios</a></li>
-                  <li><a href="#">Política de devoluciones</a></li>
+                  <li><a href="{% url 'politica-pagos' %}">Política de pago</a></li>
+                  <li><a href="{% url 'politica-envios' %}">Politica de envios</a></li>
+                  <li><a href="{% url 'politica-devoluciones' %}">Política de devoluciones</a></li>
                 </ul>
               </div>
             </div>

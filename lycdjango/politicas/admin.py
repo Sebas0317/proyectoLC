@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.core.files.images import get_image_dimensions
 from django.utils.html import format_html
-from .models import GastosEnvio, Cupon, CorreoEmpresa, BrandImage, polprivacidad
+from .models import GastosEnvio, Cupon, CorreoEmpresa, BrandImage, polprivacidad, acercade, terminos, polpago, polenvio, poldevoluiones
 
 # Define un formulario personalizado para BrandImage con validación de dimensiones
 class BrandImageForm(forms.ModelForm):
@@ -46,4 +46,24 @@ class BrandImageAdmin(admin.ModelAdmin):
 
 @admin.register(polprivacidad)
 class politica_privacidad(admin.ModelAdmin):
+    list_display = ('titulo', 'contenido')
+
+@admin.register(acercade)
+class sobre_nosotros(admin.ModelAdmin):
+    list_display = ('titulo', 'contenido')
+
+@admin.register(terminos)
+class Terminos_condiciones(admin.ModelAdmin):
+    list_display = ('titulo', 'contenido')
+
+@admin.register(polpago)
+class politica_pago(admin.ModelAdmin):
+    list_display = ('titulo', 'contenido')
+
+@admin.register(polenvio)
+class politica_envio(admin.ModelAdmin):
+    list_display = ('titulo', 'contenido')
+
+@admin.register(poldevoluiones)
+class politica_devolucion(admin.ModelAdmin):
     list_display = ('titulo', 'contenido')

@@ -1,0 +1,18 @@
+{% extends 'core/base.html'%}
+{% block title %}Politca de Envios{% endblock %}
+{% load static %}
+{% block content%}
+
+    {%for env in envios %}
+        <div class="card">
+            <div class="card-header">{{env.titulo}}</div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>{{env.contenido | safe}}</p>
+                    {% comment %} {% if request.user.is_authenticated  %}<a href="{% url 'admin:politicas_Privacidads_change' Politica.id %}" target="_blank">Editar</a>{% endif %} {% endcomment %}
+                </blockquote>
+            </div>
+        </div>
+    {%endfor%}
+
+{% endblock %}

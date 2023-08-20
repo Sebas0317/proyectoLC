@@ -31,3 +31,39 @@ class polprivacidad(models.Model):
 
     def __str__(self):
         return self.titulo
+    
+class acercade(models.Model):
+    titulo = models.CharField(max_length=50)
+    contenido = RichTextField()
+
+    def __str__(self):
+        return self.titulo
+    
+
+class terminos(models.Model):
+    titulo = models.CharField(max_length=50)
+    contenido = RichTextField()
+
+    def __str__(self):
+        return self.titulo
+
+class polpago(models.Model):
+    titulo = models.CharField(max_length=50)
+    contenido = RichTextField()
+
+    def __str__(self):
+        return self.titulo
+    
+class polenvio(models.Model):
+    titulo = models.CharField(max_length=50)
+    contenido = RichTextField()
+
+    def __str__(self):
+        return self.titulo
+    
+class poldevoluiones(models.Model):
+    titulo = models.CharField(max_length=50)
+    contenido = RichTextField()
+
+    def __str__(self):
+        return self.titulo

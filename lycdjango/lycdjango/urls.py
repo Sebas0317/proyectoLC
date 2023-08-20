@@ -8,6 +8,7 @@ from productos import views as productos_views
 urlpatterns = [
     path('', views.home, name="home"),
     path('product-detail/<int:producto_id>/', core_views.product_detail, name='product_detail'),
+    path('politicas/', include('politicas.urls')),
     path('product_list/', productos_views.product_list, name='product_list'),
     path('checkout/', views.checkout, name="checkout"),
     path('my-account/', core_views.myaccount, name="my-account"),

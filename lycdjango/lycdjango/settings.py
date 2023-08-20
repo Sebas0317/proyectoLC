@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'core',
     'productos',
     'politicas',
+    'ckeditor',
     # reservado para contacto
 ]
 
@@ -143,3 +144,12 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'core', 'static', 'core'),
     os.path.join(BASE_DIR, 'media'),
 ]
+
+#configuracion ckeditor
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 400,
+        'width': 900,
+    },
+}

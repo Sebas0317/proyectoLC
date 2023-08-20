@@ -1,4 +1,5 @@
 from django.db import models
+from ckeditor.fields import RichTextField
 
 class GastosEnvio(models.Model):
     monto = models.PositiveIntegerField()
@@ -23,3 +24,10 @@ class CorreoEmpresa(models.Model):
     
 class BrandImage(models.Model):
     image = models.ImageField(upload_to='brand_images/')
+
+class polprivacidad(models.Model):
+    titulo = models.CharField(max_length=50)
+    contenido = RichTextField()
+
+    def __str__(self):
+        return self.titulo

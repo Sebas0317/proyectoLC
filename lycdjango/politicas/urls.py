@@ -8,6 +8,4 @@ urlpatterns = [
     path('politica-pagos/', views.Politicapago, name='politica-pagos'),
     path('politica-envios/', views.Politicaenvio, name='politica-envios'),
     path('politica-devoluciones/', views.Politicadev, name='politica-devoluciones'),
-    # path('politica-terminosycondiciones/', views.terminos, name='politica-tt_cc'),
-    # path('politica-pagos/', views.pagos, name='politica-pagos'),
 ]

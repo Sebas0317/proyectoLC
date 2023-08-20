@@ -11,7 +11,7 @@ from politicas.models import Cupon
 
 # Importaciones de Python
 import random   
-from politicas.models import CorreoEmpresa,BrandImage
+from politicas.models import CorreoEmpresa,BrandImage, copyright
 
 
 def home(request):
@@ -21,6 +21,7 @@ def home(request):
     productos_aleatorios = productos_aleatorios[:8]  # Mostrar 4 productos aleatorios
     
     correo_empresa = CorreoEmpresa.objects.first()  # Obtén el primer registro de CorreoEmpresa
+    copy = copyright.objects.first() # obten los derechos de autor
 
     brand_images = BrandImage.objects.all()  # Obtén todas las imágenes de marca disponibles
     
@@ -28,6 +29,7 @@ def home(request):
         'ultimos_productos': ultimos_productos,
         'productos_aleatorios': productos_aleatorios,
         'correo_empresa': correo_empresa,
+        #'copy': copy,
         'brand_images': brand_images,  # Agrega las imágenes de la marca al contexto
     })
 

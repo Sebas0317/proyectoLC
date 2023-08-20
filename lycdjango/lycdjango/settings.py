@@ -15,6 +15,8 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
+    "admin_interface",
+    "colorfield",
     'registration.apps.RegistrationConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,6 +41,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',  # Whitenoise
 ]
 
+X_FRAME_OPTIONS = "SAMEORIGIN"
 ROOT_URLCONF = 'lycdjango.urls'
 
 TEMPLATES = [

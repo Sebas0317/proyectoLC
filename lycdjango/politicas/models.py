@@ -1,5 +1,6 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from decimal import Decimal
 
 class GastosEnvio(models.Model):
     monto = models.PositiveIntegerField()
@@ -9,7 +10,7 @@ class GastosEnvio(models.Model):
 
 class Cupon(models.Model):
     codigo = models.CharField(max_length=50, unique=True)
-    descuento = models.PositiveIntegerField()
+    descuento = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self):
         return self.codigo

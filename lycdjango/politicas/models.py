@@ -25,14 +25,14 @@ class CorreoEmpresa(models.Model):
 class BrandImage(models.Model):
     image = models.ImageField(upload_to='brand_images/')
 
-class polprivacidad(models.Model):
+class Polprivacidad(models.Model):
     titulo = models.CharField(max_length=50)
     contenido = RichTextField()
 
     def __str__(self):
         return self.titulo
     
-class acercade(models.Model):
+class Acercade(models.Model):
     titulo = models.CharField(max_length=50)
     contenido = RichTextField()
 
@@ -40,35 +40,35 @@ class acercade(models.Model):
         return self.titulo
     
 
-class terminos(models.Model):
+class Terminos(models.Model):
     titulo = models.CharField(max_length=50)
     contenido = RichTextField()
 
     def __str__(self):
         return self.titulo
 
-class polpago(models.Model):
-    titulo = models.CharField(max_length=50)
-    contenido = RichTextField()
-
-    def __str__(self):
-        return self.titulo
-    
-class polenvio(models.Model):
+class Polpago(models.Model):
     titulo = models.CharField(max_length=50)
     contenido = RichTextField()
 
     def __str__(self):
         return self.titulo
     
-class poldevoluiones(models.Model):
+class Polenvio(models.Model):
+    titulo = models.CharField(max_length=50)
+    contenido = RichTextField()
+
+    def __str__(self):
+        return self.titulo
+    
+class Poldevoluiones(models.Model):
     titulo = models.CharField(max_length=50)
     contenido = RichTextField()
 
     def __str__(self):
         return self.titulo
 
-class copyright(models.Model):
+class Copyright(models.Model):
     titulo = models.CharField(max_length=50)
     contenido = RichTextField()
 

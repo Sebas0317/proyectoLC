@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.core.files.images import get_image_dimensions
 from django.utils.html import format_html
-from .models import GastosEnvio, Cupon, CorreoEmpresa, BrandImage, polprivacidad, acercade, terminos, polpago, polenvio, poldevoluiones, copyright
+from .models import GastosEnvio, Cupon, CorreoEmpresa, BrandImage, Polprivacidad, Acercade, Terminos, Polpago, Polenvio, Poldevoluiones, Copyright
 
 # Define un formulario personalizado para BrandImage con validación de dimensiones
 class BrandImageForm(forms.ModelForm):
@@ -44,30 +44,30 @@ class BrandImageAdmin(admin.ModelAdmin):
     display_image.short_description = 'Image'
     form = BrandImageForm  # Usa el formulario personalizado
 
-@admin.register(polprivacidad)
+@admin.register(Polprivacidad)
 class politica_privacidad(admin.ModelAdmin):
     list_display = ('titulo', 'contenido')
 
-@admin.register(acercade)
+@admin.register(Acercade)
 class sobre_nosotros(admin.ModelAdmin):
     list_display = ('titulo', 'contenido')
 
-@admin.register(terminos)
+@admin.register(Terminos)
 class Terminos_condiciones(admin.ModelAdmin):
     list_display = ('titulo', 'contenido')
 
-@admin.register(polpago)
+@admin.register(Polpago)
 class politica_pago(admin.ModelAdmin):
     list_display = ('titulo', 'contenido')
 
-@admin.register(polenvio)
+@admin.register(Polenvio)
 class politica_envio(admin.ModelAdmin):
     list_display = ('titulo', 'contenido')
 
-@admin.register(poldevoluiones)
+@admin.register(Poldevoluiones)
 class politica_devolucion(admin.ModelAdmin):
     list_display = ('titulo', 'contenido')
 
-@admin.register(copyright)
+@admin.register(Copyright)
 class derechos_autor(admin.ModelAdmin):
     list_display = ('titulo','contenido')

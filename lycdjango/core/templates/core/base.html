@@ -68,7 +68,10 @@
     
               <a href="{% url 'contact' %}" class="nav-item nav-link">Contactenos</a>
               <a href="{% url 'wishlist' %}" class="nav-item nav-link">Lista de Deseos</a>
-              <a href="{% url 'my-account' %}" class="nav-item nav-link">Mi Cuenta</a>
+              {% if user.is_authenticated %}
+    <a href="{% url 'my-account' %}" class="nav-item nav-link">Mi Cuenta</a>
+{% endif %}
+
     
             </div>
             <div class="navbar-nav ml-auto">  

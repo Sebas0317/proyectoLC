@@ -205,10 +205,7 @@
                       action="{% url 'add_to_cart' producto_relacionado.id %}"
                     >
                       {% csrf_token %}
-                      <button type="submit" class="btn">
-                        <i class="fa fa-cart-plus"></i>
-                      </button>
-                    </form>
+                    <a href="{% url 'add_to_cart' producto.id %}"><i class="fa fa-cart-plus"></i></a>
                     <a href="#"><i class="fa fa-heart"></i></a>
                     <a href="#"><i class="fa fa-search"></i></a>
                   </div>
@@ -281,7 +278,7 @@
                   <img src="{{ producto_aleatorio.imagen.url }}" alt="Product Image" />
                 </a>
                 <div class="product-action">
-                  <a href="#"><i class="fa fa-cart-plus"></i></a>
+                  <a href="{% url 'add_to_cart' producto.id %}"><i class="fa fa-cart-plus"></i></a>
                   <a href="#"><i class="fa fa-heart"></i></a>
                   <a href="#"><i class="fa fa-search"></i></a>
                 </div>

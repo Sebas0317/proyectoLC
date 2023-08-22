@@ -70,6 +70,7 @@ def admin(request):
         return render(request, "core/admin.html")
 def regis(request):
         return render(request, "core/regis.html")
+
 def product_cart(request):
     cart = Cart(request)
     cart_items = []

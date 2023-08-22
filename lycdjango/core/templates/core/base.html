@@ -72,25 +72,24 @@
     
             </div>
             <div class="navbar-nav ml-auto">  
-                  {% comment %} autenticacion si esta logueado {% endcomment %}
-                {% if not request.user.is_authenticated%}
+              {% comment %} autenticacion si esta logueado {% endcomment %}
+              {% if not request.user.is_authenticated %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'login' %}">Iniciar sesion</a>
+                  <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
                 </li>
-                
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'signup' %}">Registro</a>
                 </li>
-              
               {% else %}
-
-
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Cerrar sesion</a>
+                  <a class="nav-link" href="{% url 'home' %}">Hola, {{ request.user.username }}</a>
                 </li>
-                
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
+                </li>
               {% endif %}
             </div>
+            
           </div>
         </nav>
       </div>

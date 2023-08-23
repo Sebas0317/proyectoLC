@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 from politicas.models import GastosEnvio
 # Importaciones del proyecto
 from productos.models import Producto
@@ -59,6 +60,7 @@ def productlist(request):
         }) 
 
 def checkout(request):
+    user = request.user
     cart = Cart(request)
     cart_items = []
     total_price = 0
@@ -69,6 +71,7 @@ def checkout(request):
         total_item_price = product.precio * quantity
         total_price += total_item_price
         cart_items.append({
+            'user': user,
             'product': product,
             'quantity': quantity,
             'total_item_price': total_item_price,

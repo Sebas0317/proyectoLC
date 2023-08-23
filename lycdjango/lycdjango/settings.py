@@ -153,3 +153,13 @@ CKEDITOR_CONFIGS = {
         'width': 900,
     },
 }
+
+PAYPAL_CLIENT_ID = 'AYDK3cPK2HdZQKJCsbyiRjk717_Wvc0sugQeC9FlXEVknSfblr1aknwzkc6pU5LyRgymuh71QgrObGym'
+PAYPAL_CLIENT_SECRET = 'EMvCw8isi-BlBXiIAifOAmQZwp0YRKRcQhcAn1QU-kobstZ1a4opomulmtiRUce2ALeOTWd_7TZuz1bH'
+PAYPAL_MODE = 'sandbox'  # Puede ser 'live' en producción
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = {
+    'same-origin': "'self'",
+    'unsafe-none': None,
+    'same-origin-allow-popups': "'self' allow-popups",
+}

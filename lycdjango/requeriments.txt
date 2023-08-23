@@ -1,0 +1,11 @@
+paypal
+
+pip install paypalrestsdk
+
+admin interface
+
+Pip install django-admin-interface
+
+manejo de static folds
+
+pip install whitenoise

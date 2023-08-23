@@ -103,7 +103,11 @@
                     </div>
                     <div class="cart-btn">
                         <button>Actualizar carrito</button>
-                        <button>Checkout</button>
+                        <form method="post" action="{% url 'checkout' %}">
+                          {% csrf_token %}
+                          <button type="submit">Checkout</button>
+                      </form>
+                      
                     </div>
                 </div>
             </div>

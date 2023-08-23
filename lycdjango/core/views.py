@@ -59,7 +59,32 @@ def productlist(request):
         }) 
 
 def checkout(request):
-        return render(request, "core/checkout.html")
+    cart = Cart(request)
+    cart_items = []
+    total_price = 0
+
+    for product_id, item_data in cart.cart.items():
+        product = get_object_or_404(Producto, id=int(product_id))
+        quantity = item_data['quantity']
+        total_item_price = product.precio * quantity
+        total_price += total_item_price
+        cart_items.append({
+            'product': product,
+            'quantity': quantity,
+            'total_item_price': total_item_price,
+        })
+
+    gastos_envio = GastosEnvio.objects.first()
+    subtotal = total_price
+    total = total_price + gastos_envio.monto
+
+    return render(request, "core/checkout.html", {
+        'cart_items': cart_items,
+        'total_price': total_price,
+        'gastos_envio': gastos_envio,
+        'subtotal': subtotal,
+        'total': total,
+    })
 def myaccount(request):
         return render(request, "core/my-account.html")
 def wishlist(request):

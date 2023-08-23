@@ -210,11 +210,14 @@
           <div class="checkout-inner">
             <div class="checkout-summary">
               <h1>Total del Carrito</h1>
-              <p>Nombre del Producto<span>$COP</span></p>
-              <p class="sub-total">Sub Total<span>$COP</span></p>
-              <p class="ship-cost">Costo de Envio<span>$COP</span></p>
-              <h2>Total de Compra<span>$COP</span></h2>
-            </div>
+              {% for item in cart_items %}
+                  <p>{{ item.product.nombre }}<span>${{ item.total_item_price }}</span></p>
+              {% endfor %}
+              <p class="sub-total">Sub Total<span>${{ subtotal }}</span></p>
+              <p class="ship-cost">Costo de Envio<span>${{ gastos_envio.monto }}</span></p>
+              <h2>Total de Compra<span>${{ total }}</span></h2>
+          </div>
+          
 
             <div class="checkout-payment">
               <div class="payment-methods">

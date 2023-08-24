@@ -8,6 +8,7 @@ from politicas.models import GastosEnvio
 # Importaciones del proyecto
 from productos.models import Producto
 from .cart import Cart
+from .wishlist import Wish
 from politicas.models import Cupon
 
 # Importaciones de Python
@@ -98,6 +99,13 @@ def admin(request):
         return render(request, "core/admin.html")
 def regis(request):
         return render(request, "core/regis.html")
+    
+"""
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+                       CART
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+"""
 
 def product_cart(request):
     cart = Cart(request)
@@ -180,7 +188,7 @@ def remove_from_cart(request, product_id):
             })
     else:
         return redirect('core/cart.html')
-    
+
 def update_cart_quantity(request):
     if request.method == 'POST':
         product_id = request.POST.get('product_id')
@@ -209,3 +217,45 @@ def add_to_cart_product_list(request, product_id):
     # Devolver una respuesta JSON con el resultado
     return JsonResponse({'added_to_cart': added_to_cart})
     
+"""
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+                        WISH LIST
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+"""
+
+def wish_cart(request):
+    wish_list = Wish(request)
+    wish_items = []
+
+    for product_id, item_data in wish_list.wishlist.items():
+        product = get_object_or_404(Producto, id=int(product_id))
+        wish_items.append({
+            'product': product,
+        })
+
+    return render(request, "core/wishlist.html", {
+        'wish_items': wish_items,
+    })
+
+
+def add_to_wish(request, product_id):
+    wish_list = Wish(request)
+    product = get_object_or_404(Producto, pk=product_id)
+    quantity = int(request.POST.get('quantity', 1))
+    wish_list.add(product=product, quantity=quantity)
+
+    messages.success(request, 'El producto se ha añadido a la lista de deseos correctamente.')
+
+    return redirect(request.META.get('HTTP_REFERER', 'home'))  # Redirige a la página anterior o la página de inicio si no hay referencia
+
+
+def remove_from_wish(request, product_id):
+    wish_list = Wish(request)
+    product = wish_list.get_product(product_id)
+    wish_list.remove(product_id)
+
+    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+        return JsonResponse({'success': True})
+    else:
+        return redirect('core:wishlist')  # Cambiado el redireccionamiento a la página de la lista de deseos

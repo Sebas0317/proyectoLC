@@ -3,6 +3,7 @@ from django.urls import path, include
 from django.conf.urls.static import static, settings
 from core import views as core_views
 from productos import views as productos_views
+from pedidos import views as pedidos_views
 
 urlpatterns = [
     # Vistas generales
@@ -11,7 +12,7 @@ urlpatterns = [
     path('contact/', core_views.contact, name="contact"),
     path('user_admin/', core_views.admin, name="admin"),
     path('my-account/', core_views.myaccount, name="my-account"),
-
+    path('pedido/', pedidos_views.pedidos_view, name="pedidos_view"),
     # Detalles de productos
     path('product-detail/<int:producto_id>/', core_views.product_detail, name='product_detail'),
 

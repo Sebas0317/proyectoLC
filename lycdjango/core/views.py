@@ -152,30 +152,13 @@ def product_cart(request):
 def add_to_cart(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Producto, pk=product_id)
-    quantity = int(request.POST.get('quantity', 1))  # Obtener la cantidad del campo de entrada
+    quantity = int(request.POST.get('quantity', 1))
     cart.add(product=product, quantity=quantity)
 
-    # Agregar el mensaje flash
     messages.success(request, 'El producto se ha añadido al carrito correctamente.')
 
-    # Verificar si la solicitud proviene de la página de detalles del producto
     referer = request.META.get('HTTP_REFERER', '/')
-    if 'product_detail' in referer:
-        return redirect(referer)  # Redirigir a la página de detalles del producto
-    else:
-        return redirect('product_detail', producto_id=product_id)  # Redirigir a la página de inicio o a la página del carrito.
-    
-def add_to_cart_home(request, product_id):
-    cart = Cart(request)
-    product = get_object_or_404(Producto, pk=product_id)
-    quantity = 1  # Establecer la cantidad
-    cart.add(product=product, quantity=quantity)
-
-    # Agregar el mensaje flash
-    messages.success(request, 'El producto se ha añadido al carrito correctamente.')
-
-    return redirect('home')  # Redirigir a la página de inicio
-
+    return redirect(referer)
 
 def remove_from_cart(request, product_id):
     cart = Cart(request)
@@ -188,7 +171,7 @@ def remove_from_cart(request, product_id):
             })
     else:
         return redirect('core/cart.html')
-
+    
 def update_cart_quantity(request):
     if request.method == 'POST':
         product_id = request.POST.get('product_id')
@@ -205,18 +188,6 @@ def update_cart_quantity(request):
         }
         
         return JsonResponse(response_data)
-    
-def add_to_cart_product_list(request, product_id):
-    cart = Cart(request)
-    product = get_object_or_404(Producto, pk=product_id)
-    quantity = int(request.POST.get('quantity', 1))  # Obtener la cantidad del campo de entrada
-
-    # Intentar agregar el producto al carrito
-    added_to_cart = cart.add(product=product, quantity=quantity)
-
-    # Devolver una respuesta JSON con el resultado
-    return JsonResponse({'added_to_cart': added_to_cart})
-    
 """
 ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
                         WISH LIST

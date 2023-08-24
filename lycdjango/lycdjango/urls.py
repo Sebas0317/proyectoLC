@@ -21,8 +21,8 @@ urlpatterns = [
     # Carrito de compras
     path('cart/', core_views.product_cart, name='cart'),
     path('add_to_cart/<int:product_id>/', core_views.add_to_cart, name='add_to_cart'),
-    path('add_to_cart_product_list/<int:product_id>/', core_views.add_to_cart_product_list, name='add_to_cart_product_list'),
-    path('add_to_cart_home/<int:product_id>/', core_views.add_to_cart_home, name='add_to_cart_home'),
+    # path('add_to_cart_product_list/<int:product_id>/', core_views.add_to_cart_product_list, name='add_to_cart_product_list'),
+    # path('add_to_cart_home/<int:product_id>/', core_views.add_to_cart_home, name='add_to_cart_home'),
     path('remove_from_cart/<int:product_id>/', core_views.remove_from_cart, name='remove_from_cart'),
     path('update_cart_quantity/', core_views.update_cart_quantity, name='update_cart_quantity'),
 

@@ -28,15 +28,20 @@ def product_list(request):
         }
         price_range = price_ranges.get(precio)
         if price_range:
-            productos = productos.filter(precio__range=price_range)
+            productos = productos.filter(precio__range=price_range).order_by('precio')
 
     paginator = Paginator(productos, 9)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    producto_aleatorio = random.choice(productos)
-
     brand_images = BrandImage.objects.all()
+
+    if productos.exists():
+        producto_aleatorio = random.choice(productos)
+        mensaje_producto = None
+    else:
+        producto_aleatorio = None
+        mensaje_producto = "No hay productos disponibles con el filtro y precio seleccionados."
 
     return render(request, 'productos/product_list.html', {
         'page_obj': page_obj,
@@ -44,4 +49,5 @@ def product_list(request):
         'filtro': filtro,
         'precio': precio,
         'brand_images': brand_images,
+        'mensaje_producto': mensaje_producto,
     })

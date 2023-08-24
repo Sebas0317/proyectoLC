@@ -46,16 +46,17 @@
                                     </td>
                                     <td>${{ item.product.precio }} COP</td>
                                     <td>
-                                        <div class="qty">
-                                            <button class="btn-minus">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                            <input type="text" value="{{ item.quantity }}" />
-                                            <button class="btn-plus">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </td>
+                                      <div class="qty">
+                                          <button class="btn-minus">
+                                              <i class="fa fa-minus"></i>
+                                          </button>
+                                          <input type="text" value="{{ item.quantity|default:'1' }}" />
+                                          <button class="btn-plus">
+                                              <i class="fa fa-plus"></i>
+                                          </button>
+                                      </div>
+                                  </td>
+                                  
                                     <td>
                                         <button class="btn-cart" data-product-id="{{ item.product.id }}">
                                             Añadir al Carrito

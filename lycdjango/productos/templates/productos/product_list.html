@@ -31,37 +31,42 @@
                   </div>
                   <div class="col-md-4">
                     <div class="product-short">
-                      <div class="dropdown">
-                        <div class="dropdown-toggle" data-toggle="dropdown">
-                          Filtrar por
-                        </div>
-                        <div class="dropdown-menu dropdown-menu-right">
-                          <a href="?filtro=" class="dropdown-item">Cualquiera</a>
-                          <a href="?filtro=reciente" class="dropdown-item">Reciente</a>
-                          <a href="?filtro=popular" class="dropdown-item">Popular</a>
-                          <a href="?filtro=masvendidos" class="dropdown-item">Mas Vendidos</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="product-price-range">
-                      <form method="get">
                         <div class="dropdown">
-                          <div class="dropdown-toggle" data-toggle="dropdown">
-                            Rango de precio
-                          </div>
-                          <div class="dropdown-menu dropdown-menu-right price-dropdown">
-                            <input type="hidden" name="filtro" value="{{ filtro }}" />
-                            <a href="{% url 'product_list' %}?filtro={{ filtro }}">Cualquier Precio</a>
-                            <a href="{% url 'product_list' %}?filtro={{ filtro }}&precio=0-20000">$0 to $20000</a>
-                            <!-- ... Rest of the price range options ... -->
-                            <a href="{% url 'product_list' %}?filtro={{ filtro }}&precio=100000">$100000+</a>
-                          </div>
+                            <div class="dropdown-toggle" data-toggle="dropdown">
+                                Filtrar por
+                            </div>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="{% url 'product_list' %}" class="dropdown-item">Cualquiera</a>
+                                <a href="{% url 'product_list' %}?filtro=reciente" class="dropdown-item">Reciente</a>
+                                <a href="{% url 'product_list' %}?filtro=popular" class="dropdown-item">Popular</a>
+                                <a href="{% url 'product_list' %}?filtro=masvendidos" class="dropdown-item">Mas Vendidos</a>
+                            </div>
                         </div>
-                      </form>
                     </div>
-                  </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="product-price-range">
+                        <form method="get">
+                            <div class="dropdown">
+                                <div class="dropdown-toggle" data-toggle="dropdown">
+                                    Rango de precio
+                                </div>
+                                <div class="dropdown-menu dropdown-menu-right price-dropdown">
+                                    <input type="hidden" name="filtro" value="{{ filtro }}" />
+                                    <a href="{% url 'product_list' %}?{{ precio_link }}" class="dropdown-item">Cualquier Precio</a>
+                                    <a href="{% url 'product_list' %}?{{ precio_link }}&precio=0-20000" class="dropdown-item">$0 to $20000</a>
+                                    <a href="{% url 'product_list' %}?{{ precio_link }}&precio=20000-40000" class="dropdown-item">$0 to $20000</a>
+                                    <a href="{% url 'product_list' %}?{{ precio_link }}&precio=40000-60000" class="dropdown-item">$0 to $20000</a>
+                                    <a href="{% url 'product_list' %}?{{ precio_link }}&precio=60000-80000" class="dropdown-item">$0 to $20000</a>
+                                    <a href="{% url 'product_list' %}?{{ precio_link }}&precio=80000-100000" class="dropdown-item">$0 to $20000</a>
+                                    <!-- ... Rest of the price range options ... -->
+                                    <a href="{% url 'product_list' %}?{{ precio_link }}&precio=100000" class="dropdown-item">$100000+</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
                 </div>
               </div>
             </div>

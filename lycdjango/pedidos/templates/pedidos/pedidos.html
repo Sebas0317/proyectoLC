@@ -22,6 +22,9 @@
             <h1>Confirmacion de pedidos</h1>
           </div>
         <div class="wishlist-page-inner">
+            <div class="pedidotxt">
+                <h3>Hola (nombre del usuario) vas a comprar los siguientes productos a continuacion: </h3>
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     {% if wish_items %}
@@ -80,6 +83,21 @@
                         <strong>No hay elementos agregados a la lista de deseos.</strong>
                     </div>
                     {% endif %}
+                    <h2>Precio total: (precio total del pedido)</h2>
+                    <div class="pedidotxtbotom">
+                    <h3>El pedido sera enviado con los siguientes datos:</h3>
+                    <ul class="list-group">
+                    <li class="list-group-item">Nombre: (nombre del usuario)</li>
+                    <li class="list-group-item">Correo: (correo del usuario)</li>
+                    <li class="list-group-item" >Direccion: (direccion del usuario)</li>
+                    <li class="list-group-item"     >Telefono: (telefono del usuario)</li>
+                </ul>
+                <div class="checkout-payment">
+                    <div class="checkout-btn">
+                      <button>Realizar Pedido</button>
+                    </div>
+                  </div>
+                </div>
                 </div>
             </div>
         </div>

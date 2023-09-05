@@ -3,94 +3,108 @@
 
 {% load static %}
 {% block content%}
- <!-- Breadcrumb Start -->
- <div class="breadcrumb-wrap">
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
     <div class="container-fluid">
-      <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'product_list' %}">Productos</a></li>
-        <li class="breadcrumb-item active">Lista de Deseos</li>
-      </ul>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'product_list' %}">Productos</a></li>
+            <li class="breadcrumb-item active">Lista de Deseos</li>
+        </ul>
     </div>
-  </div>
-  <!-- Breadcrumb End -->
+</div>
+<!-- Breadcrumb End -->
 
 <!-- Wishlist Start -->
-<div class="wishlist-page">
+<div class="cart-page">
     <div class="container-fluid">
-        <div class="section-header">
-            <h1>Confirmacion de pedidos</h1>
-        </div>
-        <div class="wishlist-page-inner">
-            <div class="pedidotxt">
-                <h3>Hola {{ nombres_form }} vas a comprar los siguientes productos a continuación:</h3>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="cart-page-inner">
                     {% if cart_items %}
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead class="thead-dark">
                                 <tr>
+
                                     <th>Producto</th>
                                     <th>Precio</th>
                                     <th>Cantidad</th>
-                                    <th>Eliminar</th>
+
+
                                 </tr>
                             </thead>
                             <tbody class="align-middle">
-                                {% for product_id, item in cart_items.items %}
+                                {% for item in cart_items %}
                                 <tr>
                                     <td>
                                         <div class="img">
                                             <a href="#">
-                                                <img src="{{ item.product.imagen.url }}" alt="{{ item.product.nombre }}" />
+
+                                                <img src="{{ item.product.imagen.url }}"
+                                                    alt="{{ item.product.nombre }}" />
+
                                             </a>
                                             <p>{{ item.product.nombre }}</p>
                                         </div>
                                     </td>
                                     <td>${{ item.product.precio }} COP</td>
-                                    <td>
-                                        <div class="qty">
-                                            <button class="btn-minus">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                            <input type="text" value="{{ item.quantity|default:'1' }}" />
-                                            <button class="btn-plus">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button class="btn-delete" data-product-id="{{ product_id }}">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </td>
+
+                                    <td class="total-price">{{ item.quantity }} </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
+
+
                     </div>
                     {% else %}
                     <div class="alert alert-info" role="alert">
-                        <strong>No hay elementos agregados a la lista de deseos.</strong>
+                        <strong>No hay elementos agregados al carrito.</strong>
                     </div>
                     {% endif %}
-                    <h2>Precio total: {{ total }}</h2>
-                    <div class="pedidotxtbotom">
-                        <h3>El pedido será enviado con los siguientes datos:</h3>
-                        <ul class="list-group">
-                            <li class="list-group-item">Nombre: {{ nombres_form }}</li>
-                            <li class="list-group-item">Correo: {{ correo }}</li>
-                            <li class="list-group-item">Dirección: {{ direccion }}</li>
-                            <li class="list-group-item">Teléfono: {{ numero_telefono }}</li>
-                        </ul>
-                        <div class="checkout-payment">
-                            <div class="checkout-btn">
-                                <button>Realizar Pedido</button>
+                </div>
+
+                <div class="pedidotxtbotom">
+                    <h3>El pedido será enviado con los siguientes datos:</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item">Nombre: {{ nombres_form }}</li>
+                        <li class="list-group-item">Correo: {{ correo }}</li>
+                        <li class="list-group-item">Dirección: {{ direccion }}</li>
+                        <li class="list-group-item">Teléfono: {{ numero_telefono }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="cart-page-inner">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="cart-summary">
+                                <div class="cart-content">
+                                    <h1>Total del Carrito</h1>
+                                    {% for item in cart_items %}
+                                    <p>
+                                      {{ item.product.nombre }}<span>${{ item.total_item_price }}</span>
+                                    </p>
+                                    {% endfor %}
+                                    <p class="sub-total">Sub Total<span>${{ subtotal }}</span></p>
+                                    <p class="ship-cost">
+                                      Costo de Envio<span>${{ gastos_envio.monto }}</span>
+                                    </p>
+                                    <h2>Total de Compra<span>${{ total }}</span></h2>
+                                </div>
+                                <div class="cart-btn">
+                                    <form method="post" action="{% url 'pedidos_view' %}">
+                                        {% csrf_token %}
+                                        <button type="submit">Realizar Pedido</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
+
                     </div>
+
                 </div>
             </div>
         </div>
@@ -98,78 +112,9 @@
 </div>
 
 
-  <!-- Wishlist End -->
-  <script>
+<!-- Wishlist End -->
+<script>
     $(document).ready(function () {
-        $(".btn-minus").on("click", function () {
-            var $input = $(this).parent().find("input");
-            var oldValue = parseInt($input.val());
-            if (oldValue > 1) {
-                $input.val(oldValue - 1);
-            }
-        });
-
-        $(".btn-plus").on("click", function () {
-            var $input = $(this).parent().find("input");
-            var oldValue = parseInt($input.val());
-            $input.val(oldValue + 1);
-        });
-
-        $(".btn-cart").on("click", function (event) {
-            event.preventDefault();
-            var productId = $(this).data("product-id");
-            var quantity = $(this).parent().prev().find("input").val();
-            addToCart(productId, quantity);
-        });
-
-        $(".btn-delete").on("click", function (event) {
-            event.preventDefault();
-            var productId = $(this).data("product-id");
-            removeFromWishlist(productId);
-        });
-
-        function addToCart(productId, quantity) {
-            var csrfToken = getCookie('csrftoken');
-            
-            $.ajax({
-                url: "/add_to_cart/" + productId + "/",
-                type: "POST",
-                data: {
-                    product_id: productId,
-                    quantity: quantity,
-                    csrfmiddlewaretoken: csrfToken
-                },
-                dataType: "json",
-                success: function (data) {
-                    // Aquí puedes mostrar un mensaje o actualizar el carrito de forma visual
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        }
-
-        function removeFromWishlist(productId) {
-            var csrfToken = getCookie('csrftoken');
-            
-            $.ajax({
-                url: "/remove_from_wishlist/" + productId + "/",
-                type: "POST",
-                data: {
-                    product_id: productId,
-                    csrfmiddlewaretoken: csrfToken
-                },
-                dataType: "json",
-                success: function (data) {
-                    // Actualizar la página o realizar alguna otra acción después de eliminar
-                    location.reload();
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        }
-
         // Funciones auxiliares para manejar el token CSRF
         function getCookie(name) {
             var cookieValue = null;
@@ -189,7 +134,7 @@
         function csrfSafeMethod(method) {
             return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
         }
-        
+
         $.ajaxSetup({
             beforeSend: function (xhr, settings) {
                 if (!csrfSafeMethod(settings.type) && !this.crossDomain) {

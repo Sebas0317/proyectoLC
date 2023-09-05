@@ -1,6 +1,6 @@
 {% extends 'core/base.html' %}
- {% block title %}Checkout{% endblock %} 
-{% load static %} 
+{% block title %}Checkout{% endblock %}
+{% load static %}
 {% block content %}
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-wrap">
@@ -23,28 +23,28 @@
           <div class="billing-address">
             <h2>Direccion de Envio</h2>
             <div class="row">
-              <div class="col-md-6">
-                <label>Nombres</label>
-                <input class="form-control" type="text" placeholder="Nombre" value="{{ user.username|default:'' }}" />
-            </div>
-           
-            <div class="col-md-6">
-                <label>Correo</label>
-                <input class="form-control" type="text" placeholder="Correo" value="{{ user.email|default:'' }}" />
-            </div>
-              <div class="col-md-6">
-                <label>Numero de Telefono</label>
-                <input class="form-control" type="text" placeholder="Numero de Telefono" value="{{ user.phone }}"/>
-              </div>
-              <div class="col-md-6">
-                <label>Direccion</label>
-                <input class="form-control" type="text" placeholder="Direccion" value="{{ user.adress }}" />
-              </div>
-
-             
-
-
-
+              <form method="post" action="{% url 'pedidos_view' %}">
+                {% csrf_token %}
+                <div class="col-md-6">
+                  <label for="nombres_form">Nombres</label>
+                  <input class="form-control" type="text" id="nombres_form" name="nombres_form" placeholder="Nombre" value="{{ user.username|default:'' }}" />
+                </div>
+                <div class="col-md-6">
+                  <label for="correo">Correo</label>
+                  <input class="form-control" type="text" id="correo" name="correo" placeholder="Correo" value="{{ user.email|default:'' }}" />
+                </div>
+                <div class="col-md-6">
+                  <label for="numero_telefono">Numero de Telefono</label>
+                  <input class="form-control" type="text" id="numero_telefono" name="numero_telefono" placeholder="Numero de Telefono" value="{{ user.phone }}" />
+                </div>
+                <div class="col-md-6">
+                  <label for="direccion">Direccion</label>
+                  <input class="form-control" type="text" id="direccion" name="direccion" placeholder="Direccion" value="{{ user.adress }}" />
+                </div>
+                <div class="checkout-btn">
+                  <button type="submit">Confirmar Compra</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -63,12 +63,6 @@
               Costo de Envio<span>${{ gastos_envio.monto }}</span>
             </p>
             <h2>Total de Compra<span>${{ total }}</span></h2>
-          </div>
-
-          <div class="checkout-payment">
-            <div class="checkout-btn" href="{% url 'pedidos_view' %}">
-              <button href="{% url 'pedidos_view' %}">Confirmar Compra</button>
-            </div>
           </div>
         </div>
       </div>

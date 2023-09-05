@@ -20,6 +20,7 @@ urlpatterns = [
     path('product_list/', productos_views.product_list, name='product_list'),
 
     # Carrito de compras
+    path('cartcopy/', core_views.cartcopy_view, name='cartcopy'),
     path('cart/', core_views.product_cart, name='cart'),
     path('add_to_cart/<int:product_id>/', core_views.add_to_cart, name='add_to_cart'),
     # path('add_to_cart_product_list/<int:product_id>/', core_views.add_to_cart_product_list, name='add_to_cart_product_list'),

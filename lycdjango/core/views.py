@@ -60,6 +60,20 @@ def productlist(request):
             'correo_empresa': correo_empresa,
         }) 
 
+def cartcopy_view(request):
+    return render(request, 'core/cartcopy.html')
+
+def myaccount(request):
+        return render(request, "core/my-account.html")
+def wishlist(request):
+        return render(request, "core/wishlist.html")
+def contact(request):
+        return render(request, "core/contact.html")
+def admin(request):
+        return render(request, "core/admin.html")
+def regis(request):
+        return render(request, "core/regis.html")
+
 def checkout(request):
     user = request.user
     cart = Cart(request)
@@ -89,17 +103,6 @@ def checkout(request):
         'subtotal': subtotal,
         'total': total,
     })
-def myaccount(request):
-        return render(request, "core/my-account.html")
-def wishlist(request):
-        return render(request, "core/wishlist.html")
-def contact(request):
-        return render(request, "core/contact.html")
-def admin(request):
-        return render(request, "core/admin.html")
-def regis(request):
-        return render(request, "core/regis.html")
-    
 """
 ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
                        CART

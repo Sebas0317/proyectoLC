@@ -15,19 +15,19 @@
   </div>
   <!-- Breadcrumb End -->
 
-  <!-- Wishlist Start -->
-  <div class="wishlist-page">
+<!-- Wishlist Start -->
+<div class="wishlist-page">
     <div class="container-fluid">
         <div class="section-header">
             <h1>Confirmacion de pedidos</h1>
-          </div>
+        </div>
         <div class="wishlist-page-inner">
             <div class="pedidotxt">
-                <h3>Hola (nombre del usuario) vas a comprar los siguientes productos a continuacion: </h3>
+                <h3>Hola {{ nombres_form }} vas a comprar los siguientes productos a continuación:</h3>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    {% if wish_items %}
+                    {% if cart_items %}
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead class="thead-dark">
@@ -35,12 +35,11 @@
                                     <th>Producto</th>
                                     <th>Precio</th>
                                     <th>Cantidad</th>
-                                    <th>Añadir al Carrito</th>
                                     <th>Eliminar</th>
                                 </tr>
                             </thead>
                             <tbody class="align-middle">
-                                {% for item in wish_items %}
+                                {% for product_id, item in cart_items.items %}
                                 <tr>
                                     <td>
                                         <div class="img">
@@ -52,24 +51,18 @@
                                     </td>
                                     <td>${{ item.product.precio }} COP</td>
                                     <td>
-                                      <div class="qty">
-                                          <button class="btn-minus">
-                                              <i class="fa fa-minus"></i>
-                                          </button>
-                                          <input type="text" value="{{ item.quantity|default:'1' }}" />
-                                          <button class="btn-plus">
-                                              <i class="fa fa-plus"></i>
-                                          </button>
-                                      </div>
-                                  </td>
-                                  
-                                    <td>
-                                        <button class="btn-cart" data-product-id="{{ item.product.id }}">
-                                            Añadir al Carrito
-                                        </button>
+                                        <div class="qty">
+                                            <button class="btn-minus">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                            <input type="text" value="{{ item.quantity|default:'1' }}" />
+                                            <button class="btn-plus">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
                                     </td>
                                     <td>
-                                        <button class="btn-delete" data-product-id="{{ item.product.id }}">
+                                        <button class="btn-delete" data-product-id="{{ product_id }}">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </td>
@@ -83,26 +76,27 @@
                         <strong>No hay elementos agregados a la lista de deseos.</strong>
                     </div>
                     {% endif %}
-                    <h2>Precio total: (precio total del pedido)</h2>
+                    <h2>Precio total: {{ total }}</h2>
                     <div class="pedidotxtbotom">
-                    <h3>El pedido sera enviado con los siguientes datos:</h3>
-                    <ul class="list-group">
-                    <li class="list-group-item">Nombre: (nombre del usuario)</li>
-                    <li class="list-group-item">Correo: (correo del usuario)</li>
-                    <li class="list-group-item" >Direccion: (direccion del usuario)</li>
-                    <li class="list-group-item"     >Telefono: (telefono del usuario)</li>
-                </ul>
-                <div class="checkout-payment">
-                    <div class="checkout-btn">
-                      <button>Realizar Pedido</button>
+                        <h3>El pedido será enviado con los siguientes datos:</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item">Nombre: {{ nombres_form }}</li>
+                            <li class="list-group-item">Correo: {{ correo }}</li>
+                            <li class="list-group-item">Dirección: {{ direccion }}</li>
+                            <li class="list-group-item">Teléfono: {{ numero_telefono }}</li>
+                        </ul>
+                        <div class="checkout-payment">
+                            <div class="checkout-btn">
+                                <button>Realizar Pedido</button>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
   <!-- Wishlist End -->
   <script>

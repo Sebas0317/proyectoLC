@@ -160,7 +160,7 @@
                 </div>
                 <div class="reviews-submit">
                   <h4>Dejanos un Comentario:</h4>
-                  <div class="row form">
+                  {% comment %} <div class="row form">
                     <div class="col-sm-6">
                       <input type="text" placeholder="Name" />
                     </div>
@@ -171,7 +171,36 @@
                       <textarea placeholder="Review"></textarea>
                     </div>
                     <div class="col-sm-12">
-                      <button>Enviar</button>
+                      <button>Enviar</button> {% endcomment %}
+
+                  <!-- ... Otro contenido de la plantilla ... -->
+
+                  <div id="reviews" class="container tab-pane fade">
+                    <div class="reviews-submitted">
+                        {% for comentario in producto.comentarios.all %}
+                        <div class="reviewer">
+                            <span id="reviewer_name">{{ comentario.autor }}</span> -
+                            <span>{{ comentario.fecha_creacion|date:"d M Y" }}</span>
+                        </div>
+                        <p>{{ comentario.texto }}</p>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="reviews-submit">
+                        <h4>Dejanos un Comentario:</h4>
+                        <form method="post" action="{% url 'comentarios' %}">
+                          {% csrf_token %}
+                          {{ comentario_form.texto }}
+                          <input type="hidden" name="producto_id" value="{{ producto.id }}">
+                          <button type="submit">Comentar</button>
+                        </form>
+                      
+                    </div>
+                  </div>
+
+                  <!-- ... Otro contenido de la plantilla ... -->
+
+
                     </div>
                   </div>
                 </div>

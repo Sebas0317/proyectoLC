@@ -19,6 +19,7 @@ urlpatterns = [
 
     # Listado de productos
     path('product_list/', productos_views.product_list, name='product_list'),
+    path('comentarios/', productos_views.crear_comentario, name='comentarios'),
 
     # Carrito de compras
     path('cartcopy/', core_views.cartcopy_view, name='cartcopy'),

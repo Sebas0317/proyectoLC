@@ -3,7 +3,10 @@ from core.cart import Cart
 from productos.models import Producto
 from .forms import DireccionEnvioForm
 from politicas.models import GastosEnvio
+# Importa el modelo Pedido desde la aplicación pedidos
+from pedidos.models import Pedido
 
+# Resto de tu vista
 def pedidos_view(request):
     cart = Cart(request)
     cart_items = []
@@ -29,35 +32,43 @@ def pedidos_view(request):
             numero_telefono = form.cleaned_data['numero_telefono']
             direccion = form.cleaned_data['direccion']
 
-            # Realiza acciones adicionales, como crear el pedido en la base de datos, enviar correos, etc.
-            
+            # Crea un objeto Pedido y guárdalo en la base de datos
+            for item in cart_items:
+                producto = item['product']
+                cantidad = item['quantity']
+                total_compra = item['total_item_price']
+
+                pedido = Pedido(
+                    nombres=nombres,
+                    correo=correo,
+                    numero_telefono=numero_telefono,
+                    direccion=direccion,
+                    producto=producto,
+                    cantidad=cantidad,
+                    total_compra=total_compra
+                )
+                pedido.save()
+
             # Limpia el carrito después de completar la compra
             # cart.clear()
 
-            # Pasa los datos del formulario, del carrito y del resumen del pedido a la plantilla de pedidos
-            context = {
-                'cart_items': cart_items,
-                'nombres_form': nombres,
-                'correo': correo,
-                'direccion': direccion,
-                'numero_telefono': numero_telefono,
-                'total_price': total_price,
-                'gastos_envio': gastos_envio,
-                'subtotal': subtotal,
-                'total': total,  # Calcula el total sumando subtotal y gastos de envío
-                # Otros datos necesarios para la plantilla de pedidos
-            }
-            return render(request, 'pedidos/pedidos.html', context)  # Muestra la página de pedidos con los datos ingresados
+            # Redirige al usuario a la página de confirmación o donde desees
+            return redirect('confirmacion')
+
     else:
         form = DireccionEnvioForm()
 
     context = {
         'cart_items': cart_items,
         'form': form,
-        'subtotal': subtotal,  # Asegúrate de incluir el subtotal aquí también
-        'gastos_envio': gastos_envio,  # Asegúrate de incluir los gastos de envío aquí también
-        'total': total,  # Asegúrate de incluir el total aquí también
+        'subtotal': subtotal,
+        'gastos_envio': gastos_envio,
+        'total': total,
         # Otros datos necesarios para la plantilla de pedidos
     }
 
     return render(request, 'pedidos/pedidos.html', context)
+
+def confirmacion_view(request):
+    # Lógica de confirmación de pedidos aquí
+    return render(request, 'pedidos/confirmacion.html')

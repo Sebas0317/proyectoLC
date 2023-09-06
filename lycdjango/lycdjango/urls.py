@@ -13,6 +13,7 @@ urlpatterns = [
     path('user_admin/', core_views.admin, name="admin"),
     path('my-account/', core_views.myaccount, name="my-account"),
     path('pedido/', pedidos_views.pedidos_view, name="pedidos_view"),
+    path('confirmacion/', pedidos_views.confirmacion_view, name="confirmacion"),
     # Detalles de productos
     path('product-detail/<int:producto_id>/', core_views.product_detail, name='product_detail'),
 

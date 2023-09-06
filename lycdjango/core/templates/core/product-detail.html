@@ -160,7 +160,7 @@
                 </div>
                 <div class="reviews-submit">
                   <h4>Dejanos un Comentario:</h4>
-                  <div class="row form">
+                  {% comment %} <div class="row form">
                     <div class="col-sm-6">
                       <input type="text" placeholder="Name" />
                     </div>
@@ -171,7 +171,22 @@
                       <textarea placeholder="Review"></textarea>
                     </div>
                     <div class="col-sm-12">
-                      <button>Enviar</button>
+                      <button>Enviar</button> {% endcomment %}
+
+                      {% for producto in page_obj %}
+                        <div class="producto">
+                            <!-- Mostrar información del producto aquí -->
+                            
+                            <!-- Formulario para comentarios -->
+                            <form method="post" action="{% url 'crear_comentario' %}">
+                                {% csrf_token %}
+                                {{ comentario_form.as_p }}
+                                <input type="hidden" name="producto_id" value="{{ producto.id }}">
+                                <button type="submit">Comentar</button>
+                            </form>
+                        </div>
+                      {% endfor %}
+
                     </div>
                   </div>
                 </div>

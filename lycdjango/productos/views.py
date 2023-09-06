@@ -1,8 +1,12 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render
-from productos.models import Producto
+from django.shortcuts import render, redirect
+from productos.models import Producto, Comentario
 from politicas.models import BrandImage
+from .forms import ComentarioForm
 import random
+
+
+
 
 def product_list(request):
     filtro = request.GET.get('filtro', '')
@@ -43,6 +47,8 @@ def product_list(request):
         producto_aleatorio = None
         mensaje_producto = "No hay productos disponibles con el filtro y precio seleccionados."
 
+    comentario_form = ComentarioForm()
+
     return render(request, 'productos/product_list.html', {
         'page_obj': page_obj,
         'producto_aleatorio': producto_aleatorio,
@@ -50,4 +56,17 @@ def product_list(request):
         'precio': precio,
         'brand_images': brand_images,
         'mensaje_producto': mensaje_producto,
+        'comentario_form': comentario_form,
     })
+
+
+
+def crear_comentario(request):
+    if request.method == 'POST':
+        comentario_form = ComentarioForm(request.POST)
+        if comentario_form.is_valid():
+            producto_id = request.POST.get('Producto_id')
+            comentario = comentario_form.save(commit=False)
+            comentario.producto_id = producto_id
+            comentario.save()
+    return redirect('product_list')  # Redirige de vuelta a la lista de productos después de agregar el comentario

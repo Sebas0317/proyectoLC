@@ -1,8 +1,8 @@
-{% extends 'core/base.html'%}
+{% extends 'core/base.html' %}
 {% block title %}Lista de productos{% endblock %}
 
 {% load static %}
-{% block content%}
+{% block content %}
  <!-- Breadcrumb Start -->
  <div class="breadcrumb-wrap">
     <div class="container-fluid">
@@ -28,7 +28,6 @@
                                 <tr>
                                     <th>Producto</th>
                                     <th>Precio</th>
-                                    <th>Cantidad</th>
                                     <th>Añadir al Carrito</th>
                                     <th>Eliminar</th>
                                 </tr>
@@ -46,21 +45,9 @@
                                     </td>
                                     <td>${{ item.product.precio }} COP</td>
                                     <td>
-                                      <div class="qty">
-                                          <button class="btn-minus">
-                                              <i class="fa fa-minus"></i>
-                                          </button>
-                                          <input type="text" value="{{ item.quantity|default:'1' }}" />
-                                          <button class="btn-plus">
-                                              <i class="fa fa-plus"></i>
-                                          </button>
-                                      </div>
-                                  </td>
-                                  
-                                    <td>
-                                        <button class="btn-cart" data-product-id="{{ item.product.id }}">
+                                        <a href="{% url 'move_to_cart' item.product.id %}" class="btn-cart" data-product-id="{{ item.product.id }}">
                                             Añadir al Carrito
-                                        </button>
+                                        </a>
                                     </td>
                                     <td>
                                         <button class="btn-delete" data-product-id="{{ item.product.id }}">
@@ -86,25 +73,9 @@
   <!-- Wishlist End -->
   <script>
     $(document).ready(function () {
-        $(".btn-minus").on("click", function () {
-            var $input = $(this).parent().find("input");
-            var oldValue = parseInt($input.val());
-            if (oldValue > 1) {
-                $input.val(oldValue - 1);
-            }
-        });
-
-        $(".btn-plus").on("click", function () {
-            var $input = $(this).parent().find("input");
-            var oldValue = parseInt($input.val());
-            $input.val(oldValue + 1);
-        });
-
-        $(".btn-cart").on("click", function (event) {
-            event.preventDefault();
+        $(".btn-cart").on("click", function () {
             var productId = $(this).data("product-id");
-            var quantity = $(this).parent().prev().find("input").val();
-            addToCart(productId, quantity);
+            addToCart(productId, 1); // 1 es la cantidad fija al mover a carrito
         });
 
         $(".btn-delete").on("click", function (event) {
@@ -115,28 +86,14 @@
 
         function addToCart(productId, quantity) {
             var csrfToken = getCookie('csrftoken');
-            
-            $.ajax({
-                url: "/add_to_cart/" + productId + "/",
-                type: "POST",
-                data: {
-                    product_id: productId,
-                    quantity: quantity,
-                    csrfmiddlewaretoken: csrfToken
-                },
-                dataType: "json",
-                success: function (data) {
-                    // Aquí puedes mostrar un mensaje o actualizar el carrito de forma visual
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
+
+            // En lugar de usar AJAX, simplemente redirige al usuario a la vista 'add_to_cart'.
+            window.location.href = "/add_to_cart/" + productId + "/?quantity=" + quantity + "&csrfmiddlewaretoken=" + csrfToken;
         }
 
         function removeFromWishlist(productId) {
             var csrfToken = getCookie('csrftoken');
-            
+
             $.ajax({
                 url: "/remove_from_wishlist/" + productId + "/",
                 type: "POST",
@@ -146,8 +103,8 @@
                 },
                 dataType: "json",
                 success: function (data) {
-                    // Actualizar la página o realizar alguna otra acción después de eliminar
-                    location.reload();
+                    // Eliminar el elemento de la lista de deseos de la página sin recargarla
+                    $("button[data-product-id='" + productId + "']").closest("tr").remove();
                 },
                 error: function (error) {
                     console.log(error);
@@ -174,7 +131,7 @@
         function csrfSafeMethod(method) {
             return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
         }
-        
+
         $.ajaxSetup({
             beforeSend: function (xhr, settings) {
                 if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
@@ -184,5 +141,6 @@
         });
     });
 </script>
+
 
 {% endblock %}

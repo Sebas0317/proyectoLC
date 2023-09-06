@@ -191,6 +191,25 @@ def update_cart_quantity(request):
         }
         
         return JsonResponse(response_data)
+    
+
+def move_to_cart(request, product_id):
+    wish_list = Wish(request)
+    cart = Cart(request)
+    product = get_object_or_404(Producto, id=product_id)
+    
+    # Verifica si el producto está en la lista de deseos
+    if str(product_id) in wish_list.wishlist:
+        # Obtiene la cantidad del producto en la lista de deseos
+        quantity = wish_list.wishlist[str(product_id)]['quantity']
+        # Agrega el producto al carrito con la cantidad correspondiente
+        cart.add(product=product, quantity=quantity)
+
+    # Redirige al usuario de vuelta a la lista de deseos o a donde desees
+    return redirect('wishlist')  # Ajusta el nombre de la vista de la lista de deseos si es diferente
+
+
+
 """
 ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
                         WISH LIST

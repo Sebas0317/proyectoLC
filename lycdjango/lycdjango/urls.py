@@ -29,6 +29,9 @@ urlpatterns = [
     # path('add_to_cart_home/<int:product_id>/', core_views.add_to_cart_home, name='add_to_cart_home'),
     path('remove_from_cart/<int:product_id>/', core_views.remove_from_cart, name='remove_from_cart'),
     path('update_cart_quantity/', core_views.update_cart_quantity, name='update_cart_quantity'),
+    
+    path('move_to_cart/<int:product_id>/', core_views.move_to_cart, name='move_to_cart'),
+
 
     # Lista de deseos
     path('wishlist/', core_views.wish_cart, name='wishlist'),

@@ -7,14 +7,16 @@ from .models import Comentario
 #         fields = ['reviewer_name', 'email', 'text']
 
 
+
+
 class ComentarioForm(forms.ModelForm):
     class Meta:
         model = Comentario
-        fields = ['texto']  # Los campos que deseas incluir en el formulario
+        fields = ['texto']  # Debe incluir el campo 'texto' en los campos del formulario
 
     def __init__(self, *args, **kwargs):
         super(ComentarioForm, self).__init__(*args, **kwargs)
-        self.fields['texto'].widget = forms.Textarea(attrs={'rows': 4})  # Opcional: Cambia el widget del campo de texto
+        self.fields['texto'].widget = forms.Textarea(attrs={'rows': 4, 'placeholder': 'Escribe tu comentario aquí'})  # Agrega el widget Textarea y un placeholder opcional
 
     def clean_texto(self):
         texto = self.cleaned_data.get('texto')

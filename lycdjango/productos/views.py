@@ -65,7 +65,7 @@ def crear_comentario(request):
     if request.method == 'POST':
         comentario_form = ComentarioForm(request.POST)
         if comentario_form.is_valid():
-            producto_id = request.POST.get('Producto_id')
+            producto_id = request.POST.get('producto_id')
             comentario = comentario_form.save(commit=False)
             comentario.producto_id = producto_id
             comentario.save()

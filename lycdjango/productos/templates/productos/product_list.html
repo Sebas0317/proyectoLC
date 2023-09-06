@@ -196,7 +196,7 @@
                     {% else %}
                     <a href="{% url 'login' %}"><i class="fa fa-user"></i></a>
                     {% endif %}
-                    <a href="#"><i class="fa fa-heart"></i></a>
+                    <a href="{% url 'add_to_wishlist' producto.id %}" class="add-to-wishlist" data-product-id="{{ product.id }}">
                     <a href="#"><i class="fa fa-search"></i></a>
                   </div>
                 </div>

@@ -1,0 +1,149 @@
+{% extends 'core/base.html'%}
+{% block title %}Lista de productos{% endblock %}
+
+{% load static %}
+{% block content%}
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'product_list' %}">Productos</a></li>
+            <li class="breadcrumb-item active">Lista de Deseos</li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Wishlist Start -->
+<div class="cart-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="cart-page-inner">
+                    {% if cart_items %}
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="thead-dark">
+                                <tr>
+
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody class="align-middle">
+                                {% for item in cart_items %}
+                                <tr>
+                                    <td>
+                                        <div class="img">
+                                            <a href="#">
+
+                                                <img src="{{ item.product.imagen.url }}"
+                                                    alt="{{ item.product.nombre }}" />
+
+                                            </a>
+                                            <p>{{ item.product.nombre }}</p>
+                                        </div>
+                                    </td>
+                                    <td>${{ item.product.precio }} COP</td>
+
+                                    <td class="total-price">{{ item.quantity }} </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info" role="alert">
+                        <strong>No hay elementos agregados al carrito.</strong>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="pedidotxtbotom">
+                    <h3>El pedido será enviado con los siguientes datos:</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item">Nombre: {{ nombres_form }}</li>
+                        <li class="list-group-item">Correo: {{ correo }}</li>
+                        <li class="list-group-item">Dirección: {{ direccion }}</li>
+                        <li class="list-group-item">Teléfono: {{ numero_telefono }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="cart-page-inner">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="cart-summary">
+                                <div class="cart-content">
+                                    <h1>Total del Carrito</h1>
+                                    {% for item in cart_items %}
+                                    <p>
+                                      {{ item.product.nombre }}<span>${{ item.total_item_price }}</span>
+                                    </p>
+                                    {% endfor %}
+                                    <p class="sub-total">Sub Total<span>${{ subtotal }}</span></p>
+                                    <p class="ship-cost">
+                                      Costo de Envio<span>${{ gastos_envio.monto }}</span>
+                                    </p>
+                                    <h2>Total de Compra<span>${{ total }}</span></h2>
+                                </div>
+                                <div class="cart-btn">
+                                    <button  href="{% url 'checkout' %}">Actualizar Direccion</button>
+                                    <form method="post" action="{% url 'confirmacion_view' %}">
+                                        {% csrf_token %}
+                                        <button type="submit">Realizar Pedido</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Wishlist End -->
+<script>
+    $(document).ready(function () {
+        // Funciones auxiliares para manejar el token CSRF
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === name + '=') {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        function csrfSafeMethod(method) {
+            return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
+                }
+            }
+        });
+    });
+</script>
+
+{% endblock %}

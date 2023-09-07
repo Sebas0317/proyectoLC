@@ -60,6 +60,20 @@ def productlist(request):
             'correo_empresa': correo_empresa,
         }) 
 
+def cartcopy_view(request):
+    return render(request, 'core/cartcopy.html')
+
+def myaccount(request):
+        return render(request, "core/my-account.html")
+def wishlist(request):
+        return render(request, "core/wishlist.html")
+def contact(request):
+        return render(request, "core/contact.html")
+def admin(request):
+        return render(request, "core/admin.html")
+def regis(request):
+        return render(request, "core/regis.html")
+
 def checkout(request):
     user = request.user
     cart = Cart(request)
@@ -89,17 +103,6 @@ def checkout(request):
         'subtotal': subtotal,
         'total': total,
     })
-def myaccount(request):
-        return render(request, "core/my-account.html")
-def wishlist(request):
-        return render(request, "core/wishlist.html")
-def contact(request):
-        return render(request, "core/contact.html")
-def admin(request):
-        return render(request, "core/admin.html")
-def regis(request):
-        return render(request, "core/regis.html")
-    
 """
 ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
                        CART
@@ -188,6 +191,25 @@ def update_cart_quantity(request):
         }
         
         return JsonResponse(response_data)
+    
+
+def move_to_cart(request, product_id):
+    wish_list = Wish(request)
+    cart = Cart(request)
+    product = get_object_or_404(Producto, id=product_id)
+    
+    # Verifica si el producto está en la lista de deseos
+    if str(product_id) in wish_list.wishlist:
+        # Obtiene la cantidad del producto en la lista de deseos
+        quantity = wish_list.wishlist[str(product_id)]['quantity']
+        # Agrega el producto al carrito con la cantidad correspondiente
+        cart.add(product=product, quantity=quantity)
+
+    # Redirige al usuario de vuelta a la lista de deseos o a donde desees
+    return redirect('wishlist')  # Ajusta el nombre de la vista de la lista de deseos si es diferente
+
+
+
 """
 ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
                         WISH LIST

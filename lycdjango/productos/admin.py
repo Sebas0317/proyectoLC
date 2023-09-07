@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Producto, Especificacion, TipoProducto
+from .models import Producto, Especificacion, TipoProducto, Comentario
 
 class EspecificacionInline(admin.TabularInline):
     model = Especificacion
@@ -20,5 +20,9 @@ class ProductoAdmin(admin.ModelAdmin):
 class TipoProductoAdmin(admin.ModelAdmin):
     list_display = ('nombre',)
     search_fields = ('nombre',)
+
+@admin.register(Comentario)
+class comentarios(admin.ModelAdmin):
+    list_display = ('autor','texto')
 
 admin.site.register(TipoProducto, TipoProductoAdmin)

@@ -3,6 +3,7 @@ from django.urls import path, include
 from django.conf.urls.static import static, settings
 from core import views as core_views
 from productos import views as productos_views
+from pedidos import views as pedidos_views
 
 urlpatterns = [
     # Vistas generales
@@ -11,20 +12,26 @@ urlpatterns = [
     path('contact/', core_views.contact, name="contact"),
     path('user_admin/', core_views.admin, name="admin"),
     path('my-account/', core_views.myaccount, name="my-account"),
-
+    path('pedido/', pedidos_views.pedidos_view, name="pedidos_view"),
+    path('confirmacion/', pedidos_views.confirmacion_view, name="confirmacion"),
     # Detalles de productos
     path('product-detail/<int:producto_id>/', core_views.product_detail, name='product_detail'),
 
     # Listado de productos
     path('product_list/', productos_views.product_list, name='product_list'),
+    path('comentarios/', productos_views.crear_comentario, name='comentarios'),
 
     # Carrito de compras
+    path('cartcopy/', core_views.cartcopy_view, name='cartcopy'),
     path('cart/', core_views.product_cart, name='cart'),
     path('add_to_cart/<int:product_id>/', core_views.add_to_cart, name='add_to_cart'),
     # path('add_to_cart_product_list/<int:product_id>/', core_views.add_to_cart_product_list, name='add_to_cart_product_list'),
     # path('add_to_cart_home/<int:product_id>/', core_views.add_to_cart_home, name='add_to_cart_home'),
     path('remove_from_cart/<int:product_id>/', core_views.remove_from_cart, name='remove_from_cart'),
     path('update_cart_quantity/', core_views.update_cart_quantity, name='update_cart_quantity'),
+    
+    path('move_to_cart/<int:product_id>/', core_views.move_to_cart, name='move_to_cart'),
+
 
     # Lista de deseos
     path('wishlist/', core_views.wish_cart, name='wishlist'),

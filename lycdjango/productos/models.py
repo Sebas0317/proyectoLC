@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User  #asociar comentarios a usuarios
 
 # import uuid
 
@@ -32,3 +33,12 @@ class Especificacion(models.Model):
     def __str__(self):
         return f"{self.nombre}: {self.valor}"
     
+#comentarios
+class Comentario(models.Model):
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    autor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)  #asociar comentarios a usuarios
+    texto = models.TextField()
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comentario por {self.autor} en {self.producto.nombre}"

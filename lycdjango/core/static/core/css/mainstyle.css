@@ -103,7 +103,6 @@ h2 {
 .btn {
     color: #003171;
     background: #ffffff;
-    border: 1px solid #003171;
 }
 
 .btn:hover,
@@ -810,13 +809,13 @@ h2 {
 .product-item .product-price .btn {
     float: right;
     border: none;
-    color: #000000;
-    background: #003171;
+    color: #ffffff;
+    background: #0084ff;
 }
 
 .product-item:hover .product-price .btn,
 .product-item .product-price .btn:hover {
-    color: #003171;
+    color: #0084ff;
     background: #ffffff;
 }
 

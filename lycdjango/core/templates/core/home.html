@@ -14,28 +14,28 @@
                 <a class="nav-link" href="#"><i class="fa fa-home"></i>Inicio</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa fa-shopping-bag"></i>Populares</a>
+                <a class="nav-link" href="{% url 'product_list' %}?filtro=Popular"><i class="fa fa-shopping-bag"></i>Populares</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa fa-plus-square"></i>Nuevos productos</a>
+                <a class="nav-link" href="{% url 'product_list' %}?filtro=Reciente"><i class="fa fa-plus-square"></i>Nuevos productos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-hand-sparkles"></i>Cuidado de Uñas</a>
+                <a class="nav-link" href="{% url 'product_list' %}?categoria=Cuidado%20de%20Uñas"><i class="fas fa-hand-sparkles"></i>Cuidado de Uñas</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-user"></i></i></i>Cuidado de Cabello</a>
+                <a class="nav-link" href="{% url 'product_list' %}?categoria=Cuidado%20de%20Cabello"><i class="fas fa-user"></i></i></i>Cuidado de Cabello</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-child"></i></i></i>Cuidado de la Piel</a>
+                <a class="nav-link" href="{% url 'product_list' %}?categoria=Cuidado%20de%20la%20Piel"><i class="fas fa-child"></i></i></i>Cuidado de la Piel</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-laugh-wink"></i></i>Cuidado de de Labios</a>
+                <a class="nav-link" href="{% url 'product_list' %}?categoria=Cuidado%20de%20Labios"><i class="fas fa-laugh-wink"></i></i>Cuidado de de Labios</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-eye"></i></i>Maquillaje para Ojos</a>
+                <a class="nav-link" href="{% url 'product_list' %}?categoria=Maquillaje%20para%20ojos"><i class="fas fa-eye"></i></i>Maquillaje para Ojos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-paint-brush"></i></i>Electrodomesticos</a>
+                <a class="nav-link" href="{% url 'product_list' %}?categoria=Electrodomesticos"><i class="fas fa-paint-brush"></i></i>Electrodomesticos</a>
               </li>
             </ul>
           </nav>

@@ -6,10 +6,10 @@ class EspecificacionInline(admin.TabularInline):
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'nombre', 'precio', 'cantidad_disponible', 'fecha_carga', 'fecha_actualizacion', 'get_tipo')
+    list_display = ('id', 'nombre', 'precio', 'cantidad_disponible', 'fecha_carga', 'fecha_actualizacion', 'tipo')
     list_filter = ('precio', 'cantidad_disponible', 'fecha_carga', 'fecha_actualizacion', 'tipo')
     search_fields = ('nombre', 'tipo__nombre')
-    list_editable = ('nombre', 'precio', 'cantidad_disponible',)
+    list_editable = ('nombre', 'precio', 'cantidad_disponible', 'tipo')
     inlines = [EspecificacionInline]
 
     def get_tipo(self, obj):

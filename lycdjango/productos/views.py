@@ -6,18 +6,16 @@ from .forms import ComentarioForm
 import random   
 
 def product_list(request):
+    productos = Producto.objects.all()
     filtro = request.GET.get('filtro', '')
     precio = request.GET.get('precio', '')
     categoria = request.GET.get('categoria', '')  # Corregido aquí
 
-
-    productos = Producto.objects.all()
-
-    if filtro == 'reciente':
+    if filtro == 'Reciente':
         productos = productos.order_by('-fecha_carga')
-    elif filtro == 'popular':
-        productos = random.sample(list(productos), len(productos))
-    elif filtro == 'masvendidos':
+    elif filtro == 'Popular':
+        productos = productos.order_by('?')
+    elif filtro == 'Mas%20Vendidos':
         productos = productos.order_by('-cantidad_disponible')
 
     if precio:

@@ -32,14 +32,14 @@
                       <div class="col-md-4">
                           <div class="product-short">
                               <div class="dropdown">
-                                  <div class="dropdown-toggle" data-toggle="dropdown">
+                                  <div id="category-dropdown-btn" class="dropdown-toggle" data-toggle="dropdown">
                                       Filtrar por
                                   </div>
                                   <div class="dropdown-menu dropdown-menu-right">
                                       <a href="?categoria={{ categoria }}" class="dropdown-item">Cualquiera</a>
-                                      <a href="?filtro=reciente&categoria={{ categoria }}" class="dropdown-item">Reciente</a>
-                                      <a href="?filtro=popular&categoria={{ categoria }}" class="dropdown-item">Popular</a>
-                                      <a href="?filtro=masvendidos&categoria={{ categoria }}" class="dropdown-item">Más Vendidos</a>
+                                      <a href="?filtro=Reciente&categoria={{ categoria }}" class="dropdown-item">Reciente</a>
+                                      <a href="?filtro=Popular&categoria={{ categoria }}" class="dropdown-item">Popular</a>
+                                      <a href="?filtro=Mas%20Vendidos&categoria={{ categoria }}" class="dropdown-item">Más Vendidos</a>
                                   </div>
                               </div>
                           </div>
@@ -48,7 +48,7 @@
                           <div class="product-price-range">
                               <form method="get">
                                   <div class="dropdown">
-                                      <div class="dropdown-toggle" data-toggle="dropdown">
+                                      <div class="dropdown-toggle" id="price-dropdown-btn" data-toggle="dropdown">
                                           Rango de precio
                                       </div>
                                       <div class="dropdown-menu dropdown-menu-right price-dropdown">
@@ -261,5 +261,22 @@
       justify-content: center;
     } */
 </style>
+
+<script>
+  $(document).ready(function(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const filtroParam = urlParams.get('filtro');
+    const precioParam = urlParams.get('precio');
+
+    if (filtroParam) {
+      $('.category-dropdown-btn').text('Filtrar por: ' + filtroParam);
+    }
+
+    if (precioParam) {
+      $('#price-dropdown-btn').text('Rango de precio: ' + precioParam);
+    }
+  });
+</script>
+
 
 {% endblock %}

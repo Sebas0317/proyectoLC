@@ -29,7 +29,21 @@
   <link rel="stylesheet" href="{% static 'lib/slick/slick.css' %}" type="text/css">
   <link rel="stylesheet" href="{% static 'lib/slick/slick-theme.css' %}" type="text/css">
   
-  
+<style>
+  .cart {
+    color: #003171;
+    background: #ffffff;
+    border-color: #003171;
+  }
+
+  .wishlist {
+    color: #003171;
+    background: #ffffff;
+    border-color: #003171;
+  }
+
+</style>
+
   
 </head>
 
@@ -120,12 +134,12 @@
                       <i class="fa fa-heart"></i>
                       <span>({{ request.session.wishlist|length }})</span>
                   </a>
-                  <a href="{% url 'cart' %}" class="btn cart">
+                  <a href="{% url 'cart' %}" class="btn cart" id="cart">
                       <i class="fa fa-shopping-cart"></i>
                       <span>({{ request.session.cart|length }})</span>
                   </a>
                   {% else %}
-                  <a href="{% url 'login' %}" class="btn wishlist">
+                  <a href="{% url 'login' %}" class="btn wishlist" id="wishlist">
                       <i class="fa fa-heart"></i>
                       <span>({{ request.session.wishlist|length }})</span>
                   </a>

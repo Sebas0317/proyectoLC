@@ -5,144 +5,157 @@
 {% load static %}
 
 {% block content %}
-   
     
-<hr> </hr>
-    </head>
-    <body>
-        <form action="" method="POST" id="contenedor">
-            <center><h2>Contactanos</h2></center>
-            {% csrf_token %}
-            <div class="form-group">
-                <label>Nombre *</label>
-                <div class="input-group">
-                    {{ form.nombre }}
-                </div>
-                <div>
-                    {{ form.nombre.errors }}
-                </div>
+<hr></hr>
+</head>
+<body>
+    <form action="" method="POST" id="contenedor">
+        <center><h2>Contactanos</h2></center>
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Nombre *</label>
+            <div class="input-group">
+                {{ form.nombre }}
             </div>
-    
-            <div class="form-group">
-                <label>Email *</label>
-                <div class="input-group">
-                    {{ form.correo }}
+            <div>
+                {{ form.nombre.errors }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Email *</label>
+            <div class="input-group">
+                {{ form.correo }}
+            </div>
+            <div>
+                {{ form.correo.errors }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Mensaje *</label>
+            <div class="input-group">
+                {{ form.mensaje }}
+            </div>
+            <div>
+                {{ form.mensaje.errors }}
+            </div>
+        </div>
+
+        <div class="text-center">
+            <input type="submit" value="Enviar" id="botonF">
+        </div>
+
+        <div class="row m-5">
+            {% if 'ok' in request.GET %}
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <!-- Contenido del mensaje de éxito -->
+                    Mensaje enviado con éxito.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
                 </div>
-                <div>
-                    {{ form.correo.errors }}
+            {% endif %}
+        </div>
+
+        <div class="row m-5">
+            {% if 'fail' in request.GET %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <!-- Contenido del mensaje de error -->
+                    Error al enviar el mensaje.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
                 </div>
-            </div>
-    
-            <div class="form-group">
-                <label>Mensaje *</label>
-                <div class="input-group">
-                    {{ form.mensaje }}
-                </div>
-                <div>
-                    {{ form.mensaje.errors }}
-                </div>
-            </div>
-    
-            <div class="text-center">
-                <input type="submit" value="Enviar" id="botonF">
-            </div>
-    
-            <div class="row m-5">
-                {% if 'ok' in request.GET %}
-                    <div class="alert alert-info alert-dismissible fade show" role="alert">
-                        <!-- Contenido del mensaje de éxito -->
-                    </div>
-                {% endif %}
-            </div>
-    
-            <div class="row m-5">
-                {% if 'fail' in request.GET %}
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <!-- Contenido del mensaje de error -->
-                    </div>
-                {% endif %}
-            </div>
-        </form>
-    </body>
-    
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #ffffff;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-        }
-        #contenedor {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #003171;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-        .input-group input[type="text"],
-        .input-group input[type="email"],
-        .input-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ffffff;
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: #ffffff;
-        }
-        .input-group input[type="text"]::placeholder,
-        .input-group input[type="email"]::placeholder,
-        .input-group textarea::placeholder {
-            color: #ffffff;
-        }
-        input[type="submit"] {
-            background-color: #ffffff;
-            color: #003171;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #70a4e7;
-            color: #ffffff;
-        }
-        .alert {
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-        .alert-info {
-            background-color: #003171;
-        }
-        .alert-danger {
-            background-color: #d9534f;
-        }
-        .btn-close {
-            padding: 0;
-            background-color: transparent;
-            border: none;
-        }
-    
-        .close{
-            display: none;
-        }
-    </style>
-    
-    <script>
-        const alert = document.querySelector('.alert');
-        const btn = document.querySelector('.btn-close');
-        btn.addEventListener('click', () =>{
-            alert.classList.add("close");
+            {% endif %}
+        </div>
+    </form>
+</body>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #ffffff;
+        color: #ffffff;
+        margin: 0;
+        padding: 0;
+    }
+    #contenedor {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #003171;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+    .input-group input[type="text"],
+    .input-group input[type="email"],
+    .input-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ffffff;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+    }
+    .input-group input[type="text"]::placeholder,
+    .input-group input[type="email"]::placeholder,
+    .input-group textarea::placeholder {
+        color: #ffffff;
+    }
+    input[type="submit"] {
+        background-color: #ffffff;
+        color: #003171;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #70a4e7;
+        color: #ffffff;
+    }
+    .alert {
+        padding: 20px; /* Aumenta el padding para hacer el área del mensaje más grande */
+        font-size: 18px; /* Aumenta el tamaño del texto */
+        border-radius: 10px; /* Mayor radio para esquinas redondeadas */
+        margin-bottom: 20px;
+
+    }
+    .alert-info {
+        background-color: #003171;
+        color: #ffffff; /* Cambia el color del texto para que sea legible */
+        margin-left: 100px
+    }
+    .alert-danger {
+        background-color: #d9534f;
+        color: #ffffff; /* Cambia el color del texto para que sea legible */
+        margin-left: 100px
+    }
+    .btn-close {
+        padding: 0;
+        background-color: transparent;
+        border: none;
+    }
+
+    .close {
+        display: none;
+    }
+</style>
+
+<script>
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => {
+        const btn = alert.querySelector('.btn-close');
+        setTimeout(() => {
+            alert.style.display = 'none';
+        }, 4000); // Oculta la alerta después de 4 segundos
+        btn.addEventListener('click', () => {
+            alert.style.display = 'none';
         });
-    </script>
+    });
+</script>
 {% endblock %}

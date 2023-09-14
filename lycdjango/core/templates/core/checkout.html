@@ -21,9 +21,9 @@
       <div class="col-lg-8">
         <div class="checkout-inner">
           <div class="billing-address">
-            <h2>Direccion de Envio</h2>
+            <h2>Dirección de Envío</h2>
             <div class="row">
-              <form method="post" action="{% url 'pedidos_view' %}">
+              <form method="post" action="{% url 'pedidos_view' %}" id="formulario_form">
                 {% csrf_token %}
                 <div class="col-md-6">
                   <label for="nombres_form">Nombres</label>
@@ -34,14 +34,14 @@
                   <input class="form-control" type="text" id="correo" name="correo" placeholder="Correo" value="{{ user.email|default:'' }}" />
                 </div>
                 <div class="col-md-6">
-                  <label for="numero_telefono">Numero de Telefono</label>
-                  <input class="form-control" type="text" id="numero_telefono" name="numero_telefono" placeholder="Numero de Telefono" value="{{ user.phone }}" />
+                  <label for="numero_telefono">Número de Teléfono</label>
+                  <input class="form-control" type="text" id="numero_telefono" name="numero_telefono" placeholder="Número de Teléfono" value="{{ user.phone }}" />
                 </div>
                 <div class="col-md-6">
-                  <label for="direccion">Direccion</label>
-                  <input class="form-control" type="text" id="direccion" name="direccion" placeholder="Direccion" value="{{ user.adress }}" />
+                  <label for="direccion">Dirección</label>
+                  <input class="form-control" type="text" id="direccion" name="direccion" placeholder="Dirección" value="{{ user.adress }}" />
                 </div>
-                <div class="checkout-btn">
+                <div class="checkout-btn" id="boton_confirmar">
                   <button type="submit">Confirmar Compra</button>
                 </div>
               </form>
@@ -60,7 +60,7 @@
             {% endfor %}
             <p class="sub-total">Sub Total<span>${{ subtotal }}</span></p>
             <p class="ship-cost">
-              Costo de Envio<span>${{ gastos_envio.monto }}</span>
+              Costo de Envío<span>${{ gastos_envio.monto }}</span>
             </p>
             <h2>Total de Compra<span>${{ total }}</span></h2>
           </div>
@@ -70,4 +70,109 @@
   </div>
 </div>
 <!-- Checkout End -->
+
+<style>
+  /* Estilos para Breadcrumb */
+
+  #boton_confirmar{
+    margin-left: -90px;
+  }
+
+  #formulario_form{
+    margin-left: 280px;
+  }
+
+  .breadcrumb-wrap {
+    background-color: #f8f9fa;
+    padding: 10px 0;
+  }
+
+  .breadcrumb {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .breadcrumb-item {
+    display: inline;
+    margin-right: 5px;
+  }
+
+  .breadcrumb-item a {
+    color: #003171;
+    text-decoration: none;
+  }
+
+  .breadcrumb-item.active {
+    color: #000;
+  }
+
+  /* Estilos para Checkout */
+  .checkout {
+    padding: 30px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .checkout-inner {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    text-align: center; /* Centrar el contenido */
+  }
+
+  .billing-address h2 {
+    font-size: 28px; /* Tamaño de fuente más grande */
+    margin-bottom: 20px;
+  }
+
+  .billing-address label {
+    font-size: 20px; /* Tamaño de fuente más grande */
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .form-control {
+    font-size: 18px; /* Tamaño de fuente más grande */
+    margin-bottom: 20px; /* Espacio entre campos de entrada */
+    width: 200px; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    margin-left: -50px
+  }
+
+  .checkout-btn button {
+    background-color: #003171;
+    color: white;
+    border: none;
+    padding: 15px 30px; /* Espaciado interno más grande */
+    font-size: 24px; /* Tamaño de fuente más grande */
+    cursor: pointer;
+    display: block;
+    margin: 0 auto; /* Centrar el botón */
+  }
+
+  /* Estilos para el resumen del carrito */
+  .checkout-summary {
+    margin-top: 20px;
+  }
+
+  .checkout-summary h1 {
+    font-size: 28px; /* Tamaño de fuente más grande */
+    margin-bottom: 20px;
+  }
+
+  .checkout-summary p {
+    font-size: 20px; /* Tamaño de fuente más grande */
+  }
+
+  .sub-total span,
+  .ship-cost span,
+  .checkout-summary h2 span {
+    font-weight: bold;
+  }
+
+  /* Añade más estilos personalizados según sea necesario */
+</style>
+
 {% endblock %}

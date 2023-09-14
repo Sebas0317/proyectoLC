@@ -71,6 +71,9 @@ def pedidos_view(request):
 
 def confirmacion_view(request):
     # Lógica de confirmación de pedidos aquí
+    # carrito = Cart.objects.all()
+    # context = {'carrito': carrito}
+    # return render(request, 'pedidos/confirmacion.html', context)
     pedido = Pedido.objects.all()
     context = {'pedido': pedido}
     return render(request, 'pedidos/confirmacion.html', context)

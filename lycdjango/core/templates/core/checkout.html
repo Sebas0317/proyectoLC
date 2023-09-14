@@ -21,7 +21,7 @@
       <div class="col-lg-8">
         <div class="checkout-inner">
           <div class="billing-address">
-            <h2>Dirección de Envío</h2>
+            <h2>Dirección de Envío</h2 id="titulo">
             <div class="row">
               <form method="post" action="{% url 'pedidos_view' %}" id="formulario_form">
                 {% csrf_token %}
@@ -34,7 +34,7 @@
                   <input class="form-control" type="text" id="correo" name="correo" placeholder="Correo" value="{{ user.email|default:'' }}" />
                 </div>
                 <div class="col-md-6">
-                  <label for="numero_telefono">Número de Teléfono</label>
+                  <label for="numero_telefono" id="num_tel">Número de Teléfono</label>
                   <input class="form-control" type="text" id="numero_telefono" name="numero_telefono" placeholder="Número de Teléfono" value="{{ user.phone }}" />
                 </div>
                 <div class="col-md-6">
@@ -74,12 +74,19 @@
 <style>
   /* Estilos para Breadcrumb */
 
+
+
+  #num_tel{
+    width: 400px;
+    margin-left: -131px;
+  }
+
   #boton_confirmar{
-    margin-left: -90px;
+    margin-left: -117px;
   }
 
   #formulario_form{
-    margin-left: 280px;
+    margin-left: 70px;
   }
 
   .breadcrumb-wrap {
@@ -136,7 +143,7 @@
   .form-control {
     font-size: 18px; /* Tamaño de fuente más grande */
     margin-bottom: 20px; /* Espacio entre campos de entrada */
-    width: 200px; /* Ancho completo */
+    width: 250px; /* Ancho completo */
     padding: 10px; /* Espaciado interno */
     margin-left: -50px
   }
@@ -171,6 +178,12 @@
   .checkout-summary h2 span {
     font-weight: bold;
   }
+  .checkout .billing-address h2,
+.checkout .shipping-address h2 {
+    font-size: 25px;
+    margin-bottom: 20px;
+    margin-left: -443px;
+}
 
   /* Añade más estilos personalizados según sea necesario */
 </style>

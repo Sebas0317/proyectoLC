@@ -65,10 +65,12 @@
                     <div class="pedidotxtbotom">
                         <h3>El pedido será enviado con los siguientes datos:</h3>
                         <ul class="list-group">
-                            <li class="list-group-item">Nombre: {{ nombres_form }}</li>
-                            <li class="list-group-item">Correo: {{ correo }}</li>
-                            <li class="list-group-item">Dirección: {{ direccion }}</li>
-                            <li class="list-group-item">Teléfono: {{ numero_telefono }}</li>
+                            {% for i in pedido %}
+                                <li class="list-group-item">Nombre: {{ i.nombres }}</li>
+                                <li class="list-group-item">Correo: {{ i.correo }}</li>
+                                <li class="list-group-item">Dirección: {{ i.direccion }}</li>
+                                <li class="list-group-item">Teléfono: {{ i.numero_telefono }}</li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>

@@ -46,7 +46,8 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('registration.urls')),
 
-    # Espacio reservado para futuros cambios
+    #app contacto
+    path('contacto/', include('contact.urls')),
 ]
 
 # Rutas para archivos multimedia

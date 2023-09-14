@@ -1,24 +1,21 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
-from productos.models import Producto, Comentario
+from productos.models import Producto, TipoProducto
 from politicas.models import BrandImage
 from .forms import ComentarioForm
-import random
-
-
-
+import random   
 
 def product_list(request):
+    productos = Producto.objects.all()
     filtro = request.GET.get('filtro', '')
     precio = request.GET.get('precio', '')
+    categoria = request.GET.get('categoria', '')  # Corregido aquí
 
-    productos = Producto.objects.all()
-
-    if filtro == 'reciente':
+    if filtro == 'Reciente':
         productos = productos.order_by('-fecha_carga')
-    elif filtro == 'popular':
-        productos = random.sample(list(productos), len(productos))
-    elif filtro == 'masvendidos':
+    elif filtro == 'Popular':
+        productos = productos.order_by('?')
+    elif filtro == 'Mas%20Vendidos':
         productos = productos.order_by('-cantidad_disponible')
 
     if precio:
@@ -33,6 +30,10 @@ def product_list(request):
         price_range = price_ranges.get(precio)
         if price_range:
             productos = productos.filter(precio__range=price_range).order_by('precio')
+
+    # Filtrar por categoría
+    if categoria:
+        productos = productos.filter(tipo__nombre=categoria)
 
     paginator = Paginator(productos, 9)
     page_number = request.GET.get('page')
@@ -52,13 +53,13 @@ def product_list(request):
     return render(request, 'productos/product_list.html', {
         'page_obj': page_obj,
         'producto_aleatorio': producto_aleatorio,
+        'categoria': categoria,  
         'filtro': filtro,
         'precio': precio,
         'brand_images': brand_images,
         'mensaje_producto': mensaje_producto,
         'comentario_form': comentario_form,
     })
-
 
 
 def crear_comentario(request):

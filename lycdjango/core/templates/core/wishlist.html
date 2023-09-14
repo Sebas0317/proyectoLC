@@ -45,9 +45,9 @@
                                     </td>
                                     <td>${{ item.product.precio }} COP</td>
                                     <td>
-                                        <a href="{% url 'move_to_cart' item.product.id %}" class="btn-cart" data-product-id="{{ item.product.id }}">
-                                            Añadir al Carrito
-                                        </a>
+                                        <a class="btn" href="{% url 'move_to_cart' item.product.id %}" %}">
+                                            <i class="fa fa-shopping-cart"></i>Añadir al Carrito
+                                          </a>
                                     </td>
                                     <td>
                                         <button class="btn-delete" data-product-id="{{ item.product.id }}">

@@ -1,11 +1,15 @@
 {% extends 'core/base.html' %} 
-{% block title %}Detalle del producto{% endblock%} 
-{% load static %} {% block content %}
+
+{% block title %}Detalle del producto{% endblock %} 
+
+{% load static %} 
+
+{% block content %}
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-wrap">
   <div class="container-fluid">
     <ul class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'home' %}">Incio</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
       <li class="breadcrumb-item"><a href="{% url 'product_list' %}">Productos</a></li>
       <li class="breadcrumb-item active">Detalles de Producto</li>
     </ul>
@@ -94,7 +98,7 @@
                   </div>
                  
                   <div class="action">
-                    <a class="btn" href="{% url 'add_to_cart' producto.id %}">
+                    <a class="btn add-to-cart-link" data-product-id="{{ producto.id }}" href="{% url 'add_to_cart' producto.id %}">
                       <i class="fa fa-shopping-cart"></i>Añadir al Carrito
                     </a>
                     <a class="btn" href="#">
@@ -106,7 +110,7 @@
             </div>
           </div>
         </div>
-
+  
         <div class="row product-detail-bottom">
           <div class="col-lg-12">
             <ul class="nav nav-pills nav-justified">
@@ -115,7 +119,7 @@
                   class="nav-link active"
                   data-toggle="pill"
                   href="#description"
-                  >Descripcion</a
+                  >Descripción</a
                 >
               </li>
               <li class="nav-item">
@@ -132,7 +136,7 @@
 
             <div class="tab-content">
               <div id="description" class="container tab-pane active">
-                <h4>Descripcion Del Producto</h4>
+                <h4>Descripción Del Producto</h4>
                 <p>{{ producto.descripcion }}</p>
               </div>
 
@@ -159,50 +163,8 @@
                   </p>
                 </div>
                 <div class="reviews-submit">
-                  <h4>Dejanos un Comentario:</h4>
-                  {% comment %} <div class="row form">
-                    <div class="col-sm-6">
-                      <input type="text" placeholder="Name" />
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="email" placeholder="Email" />
-                    </div>
-                    <div class="col-sm-12">
-                      <textarea placeholder="Review"></textarea>
-                    </div>
-                    <div class="col-sm-12">
-                      <button>Enviar</button> {% endcomment %}
-
-                  <!-- ... Otro contenido de la plantilla ... -->
-
-                  <div id="reviews" class="container tab-pane fade">
-                    <div class="reviews-submitted">
-                        {% for comentario in producto.comentarios.all %}
-                        <div class="reviewer">
-                            <span id="reviewer_name">{{ comentario.autor }}</span> -
-                            <span>{{ comentario.fecha_creacion|date:"d M Y" }}</span>
-                        </div>
-                        <p>{{ comentario.texto }}</p>
-                        {% endfor %}
-                    </div>
-                    
-                    <div class="reviews-submit">
-                        <h4>Dejanos un Comentario:</h4>
-                        <form method="post" action="{% url 'comentarios' %}">
-                          {% csrf_token %}
-                          {{ comentario_form.texto }}
-                          <input type="hidden" name="producto_id" value="{{ producto.id }}">
-                          <button type="submit">Comentar</button>
-                        </form>
-                      
-                    </div>
-                  </div>
-
-                  <!-- ... Otro contenido de la plantilla ... -->
-
-
-                    </div>
-                  </div>
+                  <h4>Déjanos un Comentario:</h4>
+                  <!-- Tu formulario de comentarios aquí -->
                 </div>
               </div>
             </div>
@@ -227,11 +189,11 @@
                   </a>
                   <div class="product-action">
                     {% if user.is_authenticated %}
-                    <a href="{% url 'add_to_cart' producto.id %}"><i class="fa fa-cart-plus"></i></a>
+                    <a href="{% url 'add_to_cart' producto_relacionado.id %}"><i class="fa fa-cart-plus"></i></a>
                     {% else %}
                     <a href="{% url 'login' %}"><i class="fa fa-user"></i></a>
                     {% endif %}
-                    <a href="{% url 'add_to_wishlist' producto.id %}" class="add-to-wishlist" data-product-id="{{ product.id }}">
+                    <a href="{% url 'add_to_wishlist' producto_relacionado.id %}" class="add-to-wishlist" data-product-id="{{ producto_relacionado.id }}">
                       <i class="fa fa-heart"></i>
                   </a>
                     <a href="#"><i class="fa fa-search"></i></a>
@@ -260,35 +222,29 @@
         <div class="sidebar-widget category">
           <h2 class="title">Categoria</h2>
           <nav class="navbar bg-light">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="#"
-                  ><i class="fa fa-female"></i>Moda y Belleza</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"
-                  ><i class="fa fa-child"></i>Ropa para bebes y niños</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"
-                  ><i class="fa fa-tshirt"></i>Ropa para mujeres y hombres</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"
-                  ><i class="fa fa-mobile-alt"></i>Joyeria y accesorios</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"
-                  ><i class="fa fa-microchip"></i>Electronicos</a
-                >
-              </li>
-            </ul>
+              <ul class="navbar-nav">
+                  <li class="nav-item">
+                      <a class="nav-link" href="?categoria=Maquillaje%20para%20ojos"><i class="fas fa-eye"></i> Maquillaje de ojos</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="?categoria=Cuidado%20de%20la%20Piel"><i class="fa fa-child"></i> Productos para la piel</a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="?categoria=Cuidado%20de%20Uñas"><i class="fa fa-child"></i> Productos para las Uñas</a>
+                </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="?categoria=Cuidado%20de%20Cabello"><i class="fas fa-user"></i> Cuidado para cabello</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="?categoria=Cuidado%20de%20Labios"><i class="fas fa-laugh-wink"></i> Cuidado de labios</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="?categoria=Electrodomesticos"><i class="fas fa-paint-brush"></i></i>Electrodomesticos</a>
+                  </li>
+              </ul>
           </nav>
-        </div>
+      </div>
 
         <div class="sidebar-widget widget-slider">
           <div class="sidebar-slider normal-slider">
@@ -303,11 +259,11 @@
                 </a>
                 <div class="product-action">
                   {% if user.is_authenticated %}
-                  <a href="{% url 'add_to_cart' producto.id %}"><i class="fa fa-cart-plus"></i></a>
+                  <a href="{% url 'add_to_cart' producto_aleatorio.id %}"><i class="fa fa-cart-plus"></i></a>
                 {% else %}
                   <a href="{% url 'login' %}"><i class="fa fa-user"></i></a>
                 {% endif %}
-                <a href="{% url 'add_to_wishlist' producto.id %}" class="add-to-wishlist" data-product-id="{{ product.id }}">
+                <a href="{% url 'add_to_wishlist' producto_aleatorio.id %}" class="add-to-wishlist" data-product-id="{{ producto_aleatorio.id }}">
                   <i class="fa fa-heart"></i>
               </a>
                   <a href="#"><i class="fa fa-search"></i></a>
@@ -323,34 +279,6 @@
           {% endfor %}
           </div>
         </div>
-
-        <div class="sidebar-widget brands">
-          <h2 class="title">Nuestras Marcas</h2>
-          <ul>
-            <li><a href="#">Nulla </a><span>(45)</span></li>
-            <li><a href="#">Curabitur </a><span>(34)</span></li>
-            <li><a href="#">Nunc </a><span>(67)</span></li>
-            <li><a href="#">Ullamcorper</a><span>(74)</span></li>
-            <li><a href="#">Fusce </a><span>(89)</span></li>
-            <li><a href="#">Sagittis</a><span>(28)</span></li>
-          </ul>
-        </div>
-
-        <div class="sidebar-widget tag">
-          <h2 class="title">Etiquetas</h2>
-          <a href="#">Lorem ipsum</a>
-          <a href="#">Vivamus</a>
-          <a href="#">Phasellus</a>
-          <a href="#">pulvinar</a>
-          <a href="#">Curabitur</a>
-          <a href="#">Fusce</a>
-          <a href="#">Sem quis</a>
-          <a href="#">Mollis metus</a>
-          <a href="#">Sit amet</a>
-          <a href="#">Vel posuere</a>
-          <a href="#">orci luctus</a>
-          <a href="#">Nam lorem</a>
-        </div>
       </div>
       <!-- Side Bar End -->
     </div>
@@ -360,7 +288,6 @@
 <!-- Product Detail End -->
 
 <!-- Brand Start -->
-
 <div class="brand">
   <div class="container-fluid">
     <div class="brand-slider">
@@ -434,5 +361,4 @@
     });
   });
 </script>
-
-{% endblock%}
+{% endblock %}

@@ -116,6 +116,18 @@
                                 </div> {% endcomment %}
                                 <div class="cart-btn">
                                     <button  href="{% url 'checkout' %}">Actualizar Dirección</button>
+                                    
+
+                                    <div class="form-buttons">
+
+                                        {% for i in pedido %}
+                                            <input type="email" name="correo"  required  class="form-control" value="{{ i.correo }}">
+                                            
+                                        {% endfor %}
+
+                                        <input type="submit" value="Send" class="btn btn-primary">
+                                        <a href="{% url 'checkout' %}" class="btn btn-outline">Cancel</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -13,7 +13,7 @@ from politicas.models import Cupon
 
 # Importaciones de Python
 import random   
-from politicas.models import CorreoEmpresa,BrandImage,Copyright
+from politicas.models import CorreoEmpresa,BrandImage
 
 
 def home(request):

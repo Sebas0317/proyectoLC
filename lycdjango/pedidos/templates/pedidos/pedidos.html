@@ -96,7 +96,7 @@
                                 </div>
                                 <div class="cart-btn">
                                     <button  href="{% url 'checkout' %}">Actualizar Direccion</button>
-                                    <form method="post" action="{% url 'confirmacion_view' %}">
+                                    <form method="post" action="{% url 'confirmacion' %}">
                                         {% csrf_token %}
                                         <button type="submit">Realizar Pedido</button>
                                     </form>

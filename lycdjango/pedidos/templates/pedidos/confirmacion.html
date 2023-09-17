@@ -65,10 +65,18 @@
                     <div class="pedidotxtbotom">
                         <h3>El pedido será enviado con los siguientes datos:</h3>
                         <ul class="list-group">
-                            <li class="list-group-item">Nombre: {{ nombres_form }}</li>
-                            <li class="list-group-item">Correo: {{ correo }}</li>
-                            <li class="list-group-item">Dirección: {{ direccion }}</li>
-                            <li class="list-group-item">Teléfono: {{ numero_telefono }}</li>
+                            {% if pedido %}
+
+                                {% for i in pedido %}
+                                    <li class="list-group-item">Nombre: {{ i.nombres }}</li>
+                                    <li class="list-group-item">Correo: {{ i.correo }}</li>
+                                    <li class="list-group-item">Dirección: {{ i.direccion }}</li>
+                                    <li class="list-group-item">Teléfono: {{ i.numero_telefono }}</li>
+                                {% endfor %}
+
+                            {% else %}
+                            {% endif %}
+
                         </ul>
                     </div>
                 </div>
@@ -80,6 +88,21 @@
                             <div class="cart-summary">
                                 <div class="cart-content">
                                     <h1>Total del Carrito</h1>
+                                    {% for i in pedido %}
+                                        <p>
+                                        <span>${{ i.total_compra }}</span>
+                                        </p>
+                                        
+                                        <p class="sub-total">Sub Total<span></span></p>
+                                        <p class="ship-cost">
+                                        Costo de Envío<span>${{ gastos_envio.monto }} 15.000</span>
+                                        </p>
+                                        <h2>Total de Compra<span>${{ i.total_compra }}</span></h2>
+                                    {% endfor %}
+                                </div>
+
+                                {% comment %} <div class="cart-content">
+                                    <h1>Total del Carrito</h1>
                                     {% for item in cart_items %}
                                     <p>
                                       {{ item.product.nombre }}<span>${{ item.total_item_price }}</span>
@@ -90,9 +113,21 @@
                                       Costo de Envío<span>${{ gastos_envio.monto }}</span>
                                     </p>
                                     <h2>Total de Compra<span>${{ total }}</span></h2>
-                                </div>
+                                </div> {% endcomment %}
                                 <div class="cart-btn">
                                     <button  href="{% url 'checkout' %}">Actualizar Dirección</button>
+                                    
+
+                                    <div class="form-buttons">
+
+                                        {% for i in pedido %}
+                                            <input type="email" name="correo"  required  class="form-control" value="{{ i.correo }}">
+                                            
+                                        {% endfor %}
+
+                                        <input type="submit" value="Send" class="btn btn-primary">
+                                        <a href="{% url 'checkout' %}" class="btn btn-outline">Cancel</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

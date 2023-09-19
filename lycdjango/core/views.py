@@ -14,6 +14,8 @@ from politicas.models import Cupon
 # Importaciones de Python
 import random   
 from politicas.models import CorreoEmpresa,BrandImage
+# Importa tu formulario en las vistas
+
 
 
 def home(request):
@@ -23,7 +25,7 @@ def home(request):
     productos_aleatorios = productos_aleatorios[:8]  # Mostrar 4 productos aleatorios
     
     correo_empresa = CorreoEmpresa.objects.first()  # Obtén el primer registro de CorreoEmpresa
-    copy = Copyright.objects.first() # obten los derechos de autor
+    # copy = Copyright.objects.first() # obten los derechos de autor
 
     brand_images = BrandImage.objects.all()  # Obtén todas las imágenes de marca disponibles
     
@@ -60,8 +62,7 @@ def productlist(request):
             'correo_empresa': correo_empresa,
         }) 
 
-def cartcopy_view(request):
-    return render(request, 'core/cartcopy.html')
+
 
 def myaccount(request):
         return render(request, "core/my-account.html")
@@ -74,35 +75,7 @@ def admin(request):
 def regis(request):
         return render(request, "core/regis.html")
 
-def checkout(request):
-    user = request.user
-    cart = Cart(request)
-    cart_items = []
-    total_price = 0
 
-    for product_id, item_data in cart.cart.items():
-        product = get_object_or_404(Producto, id=int(product_id))
-        quantity = item_data['quantity']
-        total_item_price = product.precio * quantity
-        total_price += total_item_price
-        cart_items.append({
-            'user': user,
-            'product': product,
-            'quantity': quantity,
-            'total_item_price': total_item_price,
-        })
-
-    gastos_envio = GastosEnvio.objects.first()
-    subtotal = total_price
-    total = total_price + gastos_envio.monto
-
-    return render(request, "core/checkout.html", {
-        'cart_items': cart_items,
-        'total_price': total_price,
-        'gastos_envio': gastos_envio,
-        'subtotal': subtotal,
-        'total': total,
-    })
 """
 ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
                        CART

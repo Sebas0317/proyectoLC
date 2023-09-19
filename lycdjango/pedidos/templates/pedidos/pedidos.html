@@ -1,149 +1,233 @@
-{% extends 'core/base.html'%}
-{% block title %}Lista de productos{% endblock %}
-
-{% load static %}
-{% block content%}
+{% extends 'core/base.html'%} {% block title %}Lista de productos{% endblock %}
+{% load static %} {% block content%}
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-wrap">
-    <div class="container-fluid">
-        <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'product_list' %}">Productos</a></li>
-            <li class="breadcrumb-item active">Lista de Deseos</li>
-        </ul>
-    </div>
+  <div class="container-fluid">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+      <li class="breadcrumb-item">
+        <a href="{% url 'product_list' %}">Productos</a>
+      </li>
+      <li class="breadcrumb-item active">Lista de Deseos</li>
+    </ul>
+  </div>
 </div>
 <!-- Breadcrumb End -->
 
 <!-- Wishlist Start -->
 <div class="cart-page">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="cart-page-inner">
-                    {% if cart_items %}
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead class="thead-dark">
-                                <tr>
-
-                                    <th>Producto</th>
-                                    <th>Precio</th>
-                                    <th>Cantidad</th>
-
-
-                                </tr>
-                            </thead>
-                            <tbody class="align-middle">
-                                {% for item in cart_items %}
-                                <tr>
-                                    <td>
-                                        <div class="img">
-                                            <a href="#">
-
-                                                <img src="{{ item.product.imagen.url }}"
-                                                    alt="{{ item.product.nombre }}" />
-
-                                            </a>
-                                            <p>{{ item.product.nombre }}</p>
-                                        </div>
-                                    </td>
-                                    <td>${{ item.product.precio }} COP</td>
-
-                                    <td class="total-price">{{ item.quantity }} </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-
-
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="cart-page-inner">
+          {% if cart_items %}
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Producto</th>
+                  <th>Precio</th>
+                  <th>Cantidad</th>
+                </tr>
+              </thead>
+              <tbody class="align-middle">
+                {% for item in cart_items %}
+                <tr>
+                  <td>
+                    <div class="img">
+                      <a href="#">
+                        <img
+                          src="{{ item.product.imagen.url }}"
+                          alt="{{ item.product.nombre }}"
+                        />
+                      </a>
+                      <p>{{ item.product.nombre }}</p>
                     </div>
-                    {% else %}
-                    <div class="alert alert-info" role="alert">
-                        <strong>No hay elementos agregados al carrito.</strong>
-                    </div>
-                    {% endif %}
-                </div>
+                  </td>
+                  <td>${{ item.product.precio }} COP</td>
 
-                <div class="pedidotxtbotom">
-                    <h3>El pedido será enviado con los siguientes datos:</h3>
-                    <ul class="list-group">
-                        <li class="list-group-item">Nombre: {{ nombres_form }}</li>
-                        <li class="list-group-item">Correo: {{ correo }}</li>
-                        <li class="list-group-item">Dirección: {{ direccion }}</li>
-                        <li class="list-group-item">Teléfono: {{ numero_telefono }}</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="cart-page-inner">
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <div class="cart-summary">
-                                <div class="cart-content">
-                                    <h1>Total del Carrito</h1>
-                                    {% for item in cart_items %}
-                                    <p>
-                                      {{ item.product.nombre }}<span>${{ item.total_item_price }}</span>
-                                    </p>
-                                    {% endfor %}
-                                    <p class="sub-total">Sub Total<span>${{ subtotal }}</span></p>
-                                    <p class="ship-cost">
-                                      Costo de Envio<span>${{ gastos_envio.monto }}</span>
-                                    </p>
-                                    <h2>Total de Compra<span>${{ total }}</span></h2>
-                                </div>
-                                <div class="cart-btn">
-                                    <button  href="{% url 'checkout' %}">Actualizar Direccion</button>
-                                    <form method="post" action="{% url 'confirmacion' %}">
-                                        {% csrf_token %}
-                                        <button type="submit">Realizar Pedido</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
+                  <td class="total-price">{{ item.quantity }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <div class="alert alert-info" role="alert">
+            <strong>No hay elementos agregados al carrito.</strong>
+          </div>
+          {% endif %}
         </div>
+
+        <!-- ... -->
+        <div class="pedidotxtbotom">
+          <h3>El pedido será enviado con los siguientes datos:</h3>
+          <ul class="list-group">
+            <li class="list-group-item">Nombre: {{ nombres_form }}</li>
+            <li class="list-group-item">Correo: {{ correo }}</li>
+            <li class="list-group-item">Dirección: {{ direccion }}</li>
+            <li class="list-group-item">Teléfono: {{ numero_telefono }}</li>
+          </ul>
+        </div>
+        <!-- ... -->
+      </div>
+      <div class="col-lg-4">
+        <div class="cart-page-inner">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="cart-summary">
+                <div class="cart-content">
+                  <h1>Total del Carrito</h1>
+                  {% for item in cart_items %}
+                  <p>
+                    {{ item.product.nombre }}<span
+                      >${{ item.total_item_price }}</span
+                    >
+                  </p>
+                  {% endfor %}
+                  <p class="sub-total">Sub Total<span>${{ subtotal }}</span></p>
+                  <p class="ship-cost">
+                    Costo de Envio<span>${{ gastos_envio.monto }}</span>
+                  </p>
+                  <h2>Total de Compra<span>${{ total }}</span></h2>
+                </div>
+                <div class="cart-btn">
+                  <button href="{% url 'checkout' %}">
+                    Actualizar Direccion
+                  </button>
+
+                  <!-- ... (tu código actual) -->
+                  <button
+                    type="submit"
+                    data-toggle="modal"
+                    data-target="#pedidoModal"
+                    id="enviarCorreoBtn"
+                  >
+                    Realizar Pedido
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="pedidoModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="pedidoModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="pedidoModalLabel">¡Pedido Realizado!</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">Por favor, revisa tu correo.</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cerrar
+        </button>
+        <a href="{% url 'home' %}" class="btn btn-primary">Ir al Home</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Wishlist End -->
 <script>
-    $(document).ready(function () {
-        // Funciones auxiliares para manejar el token CSRF
-        function getCookie(name) {
-            var cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === name + '=') {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      var cookies = document.cookie.split(";");
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
         }
+      }
+    }
+    return cookieValue;
+  }
 
-        function csrfSafeMethod(method) {
-            return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
-        }
+  function csrfSafeMethod(method) {
+    return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
+  }
 
-        $.ajaxSetup({
-            beforeSend: function (xhr, settings) {
-                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                    xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
-                }
-            }
+  $.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+      }
+    },
+  });
+  $("#enviarCorreoBtn").click(function () {
+    $.ajax({
+      url: "/enviar_email/",
+      type: "GET",
+      data: {
+        cart_items: cart_items,
+        nombres: nombres,
+        correo: correo,
+        numero_telefono: numero_telefono,
+        direccion: direccion,
+      },
+      success: function (data) {
+        alert("Correo enviado con éxito");
+      },
+      error: function (data) {
+        alert("Error al enviar el correo");
+      },
+    });
+  });
+
+
+  function abrirModal() {
+    $("#pedidoModal").modal("show");
+  }
+
+  $(document).ready(function () {
+    // Agrega un escuchador de eventos al formulario
+    $("form").submit(function (e) {
+      e.preventDefault(); // Previene el envío del formulario
+      // Realiza el envío del formulario
+      fetch(this.action, {
+        method: this.method,
+        body: new FormData(this),
+        headers: {
+          "X-CSRFToken": this.querySelector("[name=csrfmiddlewaretoken]").value,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Una vez que se haya completado el envío, abre el modal
+          abrirModal();
+          // ...
+          // Enviar correo después de que el modal se haya cerrado
+          $("#pedidoModal").on("hidden.bs.modal", function () {
+            send_email();
+          });
         });
     });
+
+    // Agrega un escuchador de eventos al botón de enviar correo
+    
+  });
 </script>
 
 {% endblock %}

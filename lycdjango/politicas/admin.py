@@ -44,9 +44,9 @@ class BrandImageAdmin(admin.ModelAdmin):
     display_image.short_description = 'Image'
     form = BrandImageForm  # Usa el formulario personalizado
 
-@admin.register(Polprivacidad)
-class politica_privacidad(admin.ModelAdmin):
-    list_display = ('titulo', '')
+# @admin.register(Polprivacidad)
+# class politica_privacidad(admin.ModelAdmin):
+#     list_display = ('titulo', '')
 
 @admin.register(Acercade)
 class sobre_nosotros(admin.ModelAdmin):
@@ -68,4 +68,4 @@ class politica_envio(admin.ModelAdmin):
 class politica_devolucion(admin.ModelAdmin):
     list_display = ('titulo', 'contenido')
 
-admin.site.register(Copyright)
+

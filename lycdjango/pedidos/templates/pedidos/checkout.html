@@ -27,19 +27,19 @@
                 {% csrf_token %}
                 <div class="col-md-6">
                   <label for="nombres_form">Nombres</label>
-                  <input class="form-control" type="text" id="nombres_form" name="nombres_form" placeholder="Nombre" value="{{ user.username|default:'' }}" />
+                  <input class="form-control" type="text" id="nombres_form" name="nombres_form" placeholder="Nombre" value="{{ user.username|default:'' }}" required/>
                 </div>
                 <div class="col-md-6">
                   <label for="correo">Correo</label>
-                  <input class="form-control" type="text" id="correo" name="correo" placeholder="Correo" value="{{ user.email|default:'' }}" />
+                  <input class="form-control" type="text" id="correo" name="correo" placeholder="Correo" value="{{ user.email|default:'' }}" required />
                 </div>
                 <div class="col-md-6">
                   <label for="numero_telefono" id="num_tel">Número de Teléfono</label>
-                  <input class="form-control" type="text" id="numero_telefono" name="numero_telefono" placeholder="Número de Teléfono" value="{{ user.phone }}" />
+                  <input class="form-control" type="text" id="numero_telefono" name="numero_telefono" placeholder="Número de Teléfono" value="{{ user.phone }}" required />
                 </div>
                 <div class="col-md-6">
                   <label for="direccion">Dirección</label>
-                  <input class="form-control" type="text" id="direccion" name="direccion" placeholder="Dirección" value="{{ user.adress }}" />
+                  <input class="form-control" type="text" id="direccion" name="direccion" placeholder="Dirección" value="{{ user.adress }}" required />
                 </div>
                 <div class="checkout-btn" id="boton_confirmar">
                   <button type="submit">Confirmar Compra</button>

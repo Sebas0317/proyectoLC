@@ -9,3 +9,6 @@ Pip install django-admin-interface
 manejo de static folds
 
 pip install whitenoise
+
+manejo de correos
+pip install secure-smtplib

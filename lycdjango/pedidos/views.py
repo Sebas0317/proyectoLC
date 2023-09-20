@@ -4,6 +4,8 @@ from productos.models import Producto
 from .forms import DireccionEnvioForm
 from politicas.models import GastosEnvio
 from django.core.mail import send_mail
+from django.utils.html import strip_tags
+from django.template.loader import render_to_string
 
 
 def pedidos_view(request):
@@ -52,17 +54,38 @@ def pedidos_view(request):
     return render(request, 'pedidos/pedidos.html', context)
 
 
-def send_email(request,cart_items, nombres, correo, numero_telefono, direccion):
-    # Enviar correo
-    subject = 'Confirmación de pedido'
-    message = f'Ud ha comprado los siguientes artículos:\n'
-    for item in cart_items:
-        message += f'{item["product"].nombre} - Cantidad: {item["quantity"]}\n'
-    message += f'\nLos artículos han sido enviados con los siguientes datos:\n'
-    message += f'Nombres: {nombres}\nCorreo: {correo}\nTeléfono: {numero_telefono}\nDirección: {direccion}'
+# def send_email(request,cart_items, nombres, correo, numero_telefono, direccion):
+#     # Enviar correo
+#     subject = 'Confirmación de pedido'
+#     message = f'Ud ha comprado los siguientes artículos:\n'
+#     for item in cart_items:
+#         message += f'{item["product"].nombre} - Cantidad: {item["quantity"]}\n'
+#     message += f'\nLos artículos han sido enviados con los siguientes datos:\n'
+#     message += f'Nombres: {nombres}\nCorreo: {correo}\nTeléfono: {numero_telefono}\nDirección: {direccion}'
 
-    send_mail(subject, message, 'comercializadoralyc99@gmail.com', [correo])
-    return render(request, 'pedidos/pedidos.html')
+#     send_mail(subject, message, 'comercializadoralyc99@gmail.com', [correo])
+#     return render(request, 'pedidos/pedidos.html')
+
+
+def send_mail(**kwargs):
+    asunto="Gracias por el pedido"
+    mensaje=render_to_string("pedidos/confirmacion.html",{
+        'cart_items': kwargs.get('cart_items'),
+        'form': kwargs.get('form'),
+        'subtotal': kwargs.get('subtotal'),
+        'gastos_envio': kwargs.get('gastos_envio'),
+        'total': kwargs.get('total'),
+        'nombres_form': kwargs.get('nombres'),
+        'correo': kwargs.get('correo'),
+        'numero_telefono': kwargs.get('numero_telefono'),
+        'direccion': kwargs.get('direccion')
+        })
+
+    mensaje_texto=strip_tags(mensaje) ##variable que es igual a la otra variable de mensaje pero ingnorando las etiquetas html de la ubucacion del archivo
+    from_email="comercializadoralyc99@gmail.com"
+    to=kwargs.get("correo")
+    #to="victordanielmar91@gmail.com"
+    send_mail(asunto,mensaje_texto,from_email,[to], html_message=mensaje)
 
 
 def checkout(request):

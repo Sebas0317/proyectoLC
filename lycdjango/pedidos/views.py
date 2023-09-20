@@ -8,7 +8,7 @@ from django.utils.html import strip_tags
 from django.template.loader import render_to_string
 
 
-def pedidos_view(request):
+def pedidos(request):
     cart = Cart(request)
     cart_items = []
     for product_id, item in cart.cart.items():
@@ -50,6 +50,8 @@ def pedidos_view(request):
         'numero_telefono': numero_telefono,
         'direccion': direccion,
     }
+    send_email(context)
+
 
     return render(request, 'pedidos/pedidos.html', context)
 
@@ -67,7 +69,7 @@ def pedidos_view(request):
 #     return render(request, 'pedidos/pedidos.html')
 
 
-def send_mail(**kwargs):
+def send_email(self,**kwargs):
     asunto="Gracias por el pedido"
     mensaje=render_to_string("pedidos/confirmacion.html",{
         'cart_items': kwargs.get('cart_items'),
@@ -75,7 +77,7 @@ def send_mail(**kwargs):
         'subtotal': kwargs.get('subtotal'),
         'gastos_envio': kwargs.get('gastos_envio'),
         'total': kwargs.get('total'),
-        'nombres_form': kwargs.get('nombres'),
+        'nombres_form': kwargs.get('nombres_form'),
         'correo': kwargs.get('correo'),
         'numero_telefono': kwargs.get('numero_telefono'),
         'direccion': kwargs.get('direccion')

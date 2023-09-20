@@ -13,10 +13,10 @@ urlpatterns = [
     path('user_admin/', core_views.admin, name="admin"),
     path('my-account/', core_views.myaccount, name="my-account"),
     
-    path('pedido/', pedidos_views.pedidos_view, name="pedidos_view"),
+    path('pedido/', pedidos_views.pedidos, name="pedidos_view"),
     path('checkout/', pedidos_views.checkout, name="checkout"),
     
-    path('enviar_email/', pedidos_views.send_email, name='enviar_email'),
+    # path('enviar_email/', pedidos_views.send_email, name='enviar_email'),
     
     # Detalles de productos
     path('product-detail/<int:producto_id>/', core_views.product_detail, name='product_detail'),

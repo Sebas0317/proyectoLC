@@ -50,19 +50,20 @@ def pedidos(request):
         'numero_telefono': numero_telefono,
         'direccion': direccion,
     }
-    send_email(request,cart_items, nombres, correo, numero_telefono, direccion)
+    send_email(request,cart_items, nombres, correo, numero_telefono, direccion, total)
 
 
     return render(request, 'pedidos/pedidos.html', context)
 
 
-def send_email(request,cart_items, nombres, correo, numero_telefono, direccion):
+def send_email(request,cart_items, nombres, correo, numero_telefono, direccion, total):
     # Enviar correo
     subject = 'Confirmación de pedido'
     message = f'Ud ha comprado los siguientes artículos:\n'
     for item in cart_items:
         message += f'{item["product"].nombre} - Cantidad: {item["quantity"]}\n'
     message += f'\nLos artículos han sido enviados con los siguientes datos:\n'
+    message += f'\nTotal: {total}\n'
     message += f'Nombres: {nombres}\nCorreo: {correo}\nTeléfono: {numero_telefono}\nDirección: {direccion}'
     email = {correo}
     from_email="comercializadoralyc99@gmail.com"

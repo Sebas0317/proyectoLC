@@ -27,19 +27,19 @@
                 {% csrf_token %}
                 <div class="col-md-6">
                   <label for="nombres_form">Nombres</label>
-                  <input class="form-control" type="text" id="nombres_form" name="nombres_form" placeholder="Nombre" value="{{ user.username|default:'' }}" />
+                  <input class="form-control" type="text" id="nombres_form" name="nombres_form" placeholder="Nombre" value="{{ user.username|default:'' }}" required/>
                 </div>
                 <div class="col-md-6">
                   <label for="correo">Correo</label>
-                  <input class="form-control" type="text" id="correo" name="correo" placeholder="Correo" value="{{ user.email|default:'' }}" />
+                  <input class="form-control" type="text" id="correo" name="correo" placeholder="Correo" value="{{ user.email|default:'' }}" required />
                 </div>
                 <div class="col-md-6">
                   <label for="numero_telefono" id="num_tel">Número de Teléfono</label>
-                  <input class="form-control" type="text" id="numero_telefono" name="numero_telefono" placeholder="Número de Teléfono" value="{{ user.phone }}" />
+                  <input class="form-control" type="text" id="numero_telefono" name="numero_telefono" placeholder="Número de Teléfono" value="{{ user.phone }}" required />
                 </div>
                 <div class="col-md-6">
                   <label for="direccion">Dirección</label>
-                  <input class="form-control" type="text" id="direccion" name="direccion" placeholder="Dirección" value="{{ user.adress }}" />
+                  <input class="form-control" type="text" id="direccion" name="direccion" placeholder="Dirección" value="{{ user.adress }}" required />
                 </div>
                 <div class="checkout-btn" id="boton_confirmar">
                   <button type="submit">Confirmar Compra</button>
@@ -73,22 +73,6 @@
 
 <style>
   /* Estilos para Breadcrumb */
-
-
-
-  #num_tel{
-    width: 400px;
-    margin-left: -131px;
-  }
-
-  #boton_confirmar{
-    margin-left: -117px;
-  }
-
-  #formulario_form{
-    margin-left: 70px;
-  }
-
   .breadcrumb-wrap {
     background-color: #f8f9fa;
     padding: 10px 0;
@@ -117,9 +101,6 @@
   /* Estilos para Checkout */
   .checkout {
     padding: 30px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   .checkout-inner {
@@ -143,9 +124,8 @@
   .form-control {
     font-size: 18px; /* Tamaño de fuente más grande */
     margin-bottom: 20px; /* Espacio entre campos de entrada */
-    width: 250px; /* Ancho completo */
+    width: 100%; /* Ancho completo */
     padding: 10px; /* Espaciado interno */
-    margin-left: -50px
   }
 
   .checkout-btn button {
@@ -178,14 +158,17 @@
   .checkout-summary h2 span {
     font-weight: bold;
   }
-  .checkout .billing-address h2,
-.checkout .shipping-address h2 {
-    font-size: 25px;
-    margin-bottom: 20px;
-    margin-left: -443px;
-}
 
-  /* Añade más estilos personalizados según sea necesario */
+  /* Estilos para pantallas grandes (más de 768px) */
+  @media (min-width: 769px) {
+    .checkout-inner {
+      padding: 40px; /* Aumenta el espacio interno en pantallas más grandes */
+    }
+    
+    .form-control {
+      width: 250px; /* Ancho fijo para campos de entrada en pantallas grandes */
+    }
+  }
 </style>
 
 {% endblock %}

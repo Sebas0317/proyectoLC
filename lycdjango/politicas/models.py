@@ -68,10 +68,9 @@ class Poldevoluiones(models.Model):
 
     def __str__(self):
         return self.titulo
-
+    
 class Copyright(models.Model):
-    titulo = models.CharField(max_length=50)
-    contenido = RichTextField()
+    frase = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.contenido
+        return self.frase

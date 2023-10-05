@@ -5,4 +5,3 @@ class DireccionEnvioForm(forms.Form):
     correo = forms.EmailField(label='Correo')
     numero_telefono = forms.CharField(label='Numero de Telefono', max_length=15)
     direccion = forms.CharField(label='Direccion', max_length=200)
-

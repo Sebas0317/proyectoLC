@@ -322,59 +322,36 @@
     </div>
   </div>
 
+  <script>
+    document.getElementById('add_to_cart_link').addEventListener('click', function(event) {
+        event.preventDefault();  // Esto previene el comportamiento predeterminado del enlace
+        
+        // Añade tu código de AJAX aquí para enviar una solicitud POST al servidor
+    });
+    </script>
+    
 
-
-  <div class="review">
-    <div class="container-fluid">
-      <div class="row align-items-center review-slider normal-slider">
-        <div class="col-md-6">
-          <div class="review-slider-item">
-            <div class="review-img">
-              <img src="{% static 'core/img/review-1.jpg' %}" alt="Image" />
-            </div>
-            <div class="review-text">
-              <h2>Ultimo Comprador</h2>
-              <h3></h3>
-          
-              <p>
-                ¡Acabo de recibir mi pedido y estoy encantado! La calidad del producto superó mis expectativas. El proceso de compra fue fácil y el envío llegó incluso antes de lo esperado. ¡Definitivamente volveré a comprar en esta tienda!
-              </p>
+    <div class="review">
+      <div class="container-fluid">
+        <div class="row align-items-center review-slider normal-slider">
+          {% for comentario in comentarios %}
+          <div class="col-md-6">
+            <div class="review-slider-item">
+              <div class="review-img">
+                <img src="{{ comentario.imagen.url }}" alt="Imagen de Comentario" />
+              </div>
+              <div class="review-text">
+                <h2>{{ comentario.nombre_comprador }}</h2>
+                <h3></h3>
+                <p>{{ comentario.comentario }}</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-6">
-          <div class="review-slider-item">
-            <div class="review-img">
-              <img src="{% static 'core/img/review-2.jpg' %}"  alt="Image" />
-            </div>
-            <div class="review-text">
-              <h2>Ultimo Comprador</h2>
-              <h3></h3>
-            
-              <p>
-                Quería agradecerles por el excelente servicio. Desde la navegación en la página hasta el momento en que recibí mi compra, todo fue impecable. El artículo llegó en perfecto estado y la atención al cliente fue excepcional. ¡Sin duda recomendaré esta tienda a mis amigos y familiares!
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="review-slider-item">
-            <div class="review-img">
-              <img src="{% static 'core/img/review-3.jpg' %}"  alt="Image" />
-            </div>
-            <div class="review-text">
-              <h2>Ultimo Comprador</h2>
-              <h3></h3>
-            
-              <p>
-                No suelo dejar reseñas, pero esta vez lo merece. La experiencia de compra fue fluida y el producto es exactamente lo que estaba buscando. Además, el empaquetado estaba muy bien protegido. ¡Estoy muy satisfecho con mi compra y definitivamente volveré por más!
-              </p>
-            </div>
-          </div>
+          {% endfor %}
         </div>
       </div>
     </div>
-  </div>
+    
 
   <!-- Review End -->
 {% endblock %}

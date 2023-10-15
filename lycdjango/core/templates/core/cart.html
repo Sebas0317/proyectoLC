@@ -6,118 +6,126 @@
   <div class="breadcrumb-wrap">
     <div class="container-fluid">
       <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'home' %}">Incio</a></li>
-        <li class="breadcrumb-item active" href="{% url 'cart' %}"> Carrito</li>
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item active"><a href="{% url 'cart' %}">Carrito</a></li>
       </ul>
     </div>
-  </div>
+  </div> 
+
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-8">
         <div class="cart-page-inner">
           {% if cart_items %}
-          <div class="table-responsive">
-            <table class="table table-bordered">
-              <thead class="thead-dark">
-                <tr>
-                  <th>Producto</th>
-                  <th>Precio</th>
-                  <th>Cantidad</th>
-                  <th>Total</th>
-                  <th>Eliminar</th>
-                </tr>
-              </thead>
-              <tbody class="align-middle">
-                {% for item in cart_items %}
-                <tr>
-                  <td>
-                    <div class="img">
-                      <a href="#">
-                        {% comment %}
-                        <img
-                          src="{{ item.product.imagen.url }}"
-                          alt="{{ item.product.nombre }}"
-                        />
-                        {% endcomment %}
-                      </a>
-                      <p>{{ item.product.nombre }}</p>
-                    </div>
-                  </td>
-                  <td>${{ item.product.precio }} COP</td>
-                  <td data-product-id="{{ item.product.id }}">
-                    <div class="qty">
-                      <button class="btn-minus">
-                        <i class="fa fa-minus"></i>
-                      </button>
-                      <input
-                        type="text"
-                        value="{{ item.quantity }}"
-                        data-product-id="{{ item.product.id }}"
-                        data-product-price="{{ item.product.precio }}"
-                      />
-                      <button class="btn-plus">
-                        <i class="fa fa-plus"></i>
-                      </button>
-                    </div>
-                  </td>
-                  <td class="total-price">${{ item.total_item_price }} COP</td>
-                    
-                  <td>
-                    {% csrf_token %}
-                    <button class="btn-delete" data-product-id="{{ item.product.id }}">
-                      <i class="fa fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                    <th>Eliminar</th>
+                  </tr>
+                </thead>
+                <tbody class="align-middle">
+                  {% for item in cart_items %}
+                    <tr>
+                      <td>
+                        <div class="img">
+                          <a href="#">
+                            <img src="{{ item.product.imagen.url }}" alt="{{ item.product.nombre }}" />
+                          </a>
+                          <p>{{ item.product.nombre }}</p>
+                        </div>
+                      </td>
+                      <td>${{ item.product.precio }} COP</td>
+                      <td data-product-id="{{ item.product.id }}">
+                        <div class="qty">
+                          <button class="btn-minus">
+                            <i class="fa fa-minus"></i>
+                          </button>
+                          <input
+                            type="text"
+                            value="{{ item.quantity }}"
+                            data-product-id="{{ item.product.id }}"
+                            data-product-price="{{ item.product.precio }}"
+                          />
+                          <button class="btn-plus">
+                            <i class="fa fa-plus"></i>
+                          </button>
+                        </div>
+                      </td>
+                      <td class="total-price">${{ item.total_item_price }} COP</td>
+                      <td>
+                        {% csrf_token %}
+                        <button class="btn-delete" data-product-id="{{ item.product.id }}">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
           {% else %}
-          <div class="alert alert-info" role="alert">
-            <strong>No hay elementos agregados al carrito.</strong>
-        </div>  
-        {% endif %}
+            <div class="alert alert-info" role="alert">
+              <strong>No hay elementos agregados al carrito.</strong>
+            </div>
+          {% endif %}
+
+          <div class="billing-address mt-5  ">
+            <h2>Dirección de Envío</h2>
+            <div class="row">
+              <form method="post" action="{% url 'pedidos_view' %}" id="formulario_form">
+                {% csrf_token %}
+                <div class="col-md-6">
+                  <label for="nombres_form">Nombres</label>
+                  <input class="form-control" type="text" id="nombres_form" name="nombres_form" placeholder="Nombre" value="{{ user.username|default:'' }}" required/>
+                </div>
+                <div class="col-md-6">
+                  <label for="correo">Correo</label>
+                  <input class="form-control" type="text" id="correo" name="correo" placeholder="Correo" value="{{ user.email|default:'' }}" required />
+                </div>
+                <div class="col-md-6">
+                  <label for="numero_telefono" id="num_tel">Número de Teléfono</label>
+                  <input class="form-control" type="text" id="numero_telefono" name="numero_telefono" placeholder="Número de Teléfono" value="{{ user.phone }}" required />
+                </div>
+                <div class="col-md-6">
+                  <label for="direccion">Dirección</label>
+                  <input class="form-control" type="text" id="direccion" name="direccion" placeholder="Dirección" value="{{ user.adress }}" required />
+                </div>
+                <div class="checkout-btn" id="boton_confirmar">
+                    <button type="submit">Confirmar pedido</button>
+                  
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
+
       <div class="col-lg-4">
         <div class="cart-page-inner">
           <div class="row">
             <div class="col-md-12">
-                <div class="coupon">
-                    <form method="post">
-                        {% csrf_token %}
-                        <input type="text" name="cupon_codigo" placeholder="Coupon Code" />
-                        <button type="submit">Aplicar código</button>
-                    </form>
+              <div class="cart-summary">
+                <div class="cart-content">
+                  <h1>Resumen del carrito</h1>
+                  <p>Sub Total<span>${{ subtotal }}</span></p>
+                  <p>Gastos de envío<span>${{ gastos_envio.monto }}</span></p>
+                  <h2>Total<span>${{ total }}</span></h2>
                 </div>
+                
+              </div>
             </div>
-            <div class="col-md-12">
-                <div class="cart-summary">
-                    <div class="cart-content">
-                        <h1>Resumen del carrito</h1>
-                        <p>Sub Total<span>${{ subtotal }}</span></p>
-                        <p>Gastos de envío<span>${{ gastos_envio.monto }}</span></p>
-                        {% comment %} <p>Descuento<span>${{ descuento_total }}</span></p> {% endcomment %}
-                        <h2>Total<span>${{ total }}</span></h2>
-                    </div>
-                    <div class="cart-btn">
-                        <button>Actualizar carrito</button>
-                        <form method="post" action="{% url 'checkout' %}">
-                          {% csrf_token %}
-                          <button type="submit">Checkout</button>
-                      </form>
-                      
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <script>
   $(document).ready(function () {
@@ -223,6 +231,106 @@
     }
   });
 </script>
+
+<style>
+  /* Estilos para Breadcrumb */
+  .breadcrumb-wrap {
+    background-color: #f8f9fa;
+    padding: 10px 0;
+  }
+
+  .breadcrumb {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .breadcrumb-item {
+    display: inline;
+    margin-right: 5px;
+  }
+
+  .breadcrumb-item a {
+    color: #003171;
+    text-decoration: none;
+  }
+
+  .breadcrumb-item.active {
+    color: #000;
+  }
+
+  /* Estilos para Checkout */
+  .checkout {
+    padding: 30px 0;
+  }
+
+  .checkout-inner {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    text-align: center; /* Centrar el contenido */
+  }
+
+  .billing-address h2 {
+    font-size: 28px; /* Tamaño de fuente más grande */
+    margin-bottom: 20px;
+  }
+
+  .billing-address label {
+    font-size: 20px; /* Tamaño de fuente más grande */
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .form-control {
+    font-size: 18px; /* Tamaño de fuente más grande */
+    margin-bottom: 20px; /* Espacio entre campos de entrada */
+    width: 100%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+  }
+
+  .checkout-btn button {
+    background-color: #003171;
+    color: white;
+    border: none;
+    padding: 15px 30px; /* Espaciado interno más grande */
+    font-size: 24px; /* Tamaño de fuente más grande */
+    cursor: pointer;
+    display: block;
+    margin: 0 auto; /* Centrar el botón */
+  }
+
+  /* Estilos para el resumen del carrito */
+  .checkout-summary {
+    margin-top: 20px;
+  }
+
+  .checkout-summary h1 {
+    font-size: 28px; /* Tamaño de fuente más grande */
+    margin-bottom: 20px;
+  }
+
+  .checkout-summary p {
+    font-size: 20px; /* Tamaño de fuente más grande */
+  }
+
+  .sub-total span,
+  .ship-cost span,
+  .checkout-summary h2 span {
+    font-weight: bold;
+  }
+
+  /* Estilos para pantallas grandes (más de 768px) */
+  @media (min-width: 769px) {
+    .checkout-inner {
+      padding: 40px; /* Aumenta el espacio interno en pantallas más grandes */
+    }
+    
+    .form-control {
+      width: 250px; /* Ancho fijo para campos de entrada en pantallas grandes */
+    }
+  }
+</style>
 
 
 {% endblock %}

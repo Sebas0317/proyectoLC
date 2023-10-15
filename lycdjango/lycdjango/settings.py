@@ -58,7 +58,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'core.context_processors.correo_empresa',  # Agrega esta línea
+                'core.context_processors.correo_empresa',
+                'core.context_processors.copyright',# Agrega esta línea
             ],
         },
     },
@@ -166,3 +167,7 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = {
     'unsafe-none': None,
     'same-origin-allow-popups': "'self' allow-popups",
 }
+
+
+# settings.py
+LOGIN_URL = 'login'

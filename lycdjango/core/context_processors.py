@@ -4,6 +4,6 @@ def correo_empresa(request):
     correo_empresa = CorreoEmpresa.objects.first()
     return {'correo_empresa': correo_empresa}
 
-def copy_right(request):
-    copy = Copyright.objects.first()
-    return {'copy': copy}
+def copyright(request):
+    copyright = Copyright.objects.first()
+    return {'copyright': copyright}

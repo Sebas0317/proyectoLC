@@ -2,6 +2,8 @@
 {% block title %}Lista de productos{% endblock %}
 {% load static %}
 {% block content %}
+
+
 <div class="product_list_container">
   <!-- Breadcrumb Start -->
   <div class="breadcrumb-wrap">
@@ -91,7 +93,7 @@
                     <a href="{% url 'add_to_wishlist' producto.id %}" class="add-to-wishlist" data-product-id="{{ producto.id }}">
                       <i class="fa fa-heart"></i>
                     </a>
-                    <a href="#"><i class="fa fa-search"></i></a>
+                    <a href="{% url 'product_detail' producto.id %}"><i class="fa fa-search"></i></a>
                   </div>
                 </div>
                 <div class="product-price">

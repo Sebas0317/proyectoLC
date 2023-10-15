@@ -5,16 +5,21 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from politicas.models import GastosEnvio
+
 # Importaciones del proyecto
 from productos.models import Producto
 from .cart import Cart
 from .wishlist import Wish
+from .models import Comentario
 from politicas.models import Cupon
+from pedidos.models import PedidosOrden
 
 # Importaciones de Python
 import random   
-from politicas.models import CorreoEmpresa,BrandImage
+from politicas.models import CorreoEmpresa, BrandImage
+
 # Importa tu formulario en las vistas
+
 
 
 
@@ -26,6 +31,7 @@ def home(request):
     
     correo_empresa = CorreoEmpresa.objects.first()  # Obtén el primer registro de CorreoEmpresa
     # copy = Copyright.objects.first() # obten los derechos de autor
+    comentarios = Comentario.objects.all()
 
     brand_images = BrandImage.objects.all()  # Obtén todas las imágenes de marca disponibles
     
@@ -33,6 +39,7 @@ def home(request):
         'ultimos_productos': ultimos_productos,
         'productos_aleatorios': productos_aleatorios,
         'correo_empresa': correo_empresa,
+        'comentarios':comentarios,
         #'copy': copy,
         'brand_images': brand_images,  # Agrega las imágenes de la marca al contexto
     })
@@ -63,9 +70,12 @@ def productlist(request):
         }) 
 
 
-
 def myaccount(request):
-        return render(request, "core/my-account.html")
+    # Obtén los pedidos asociados al usuario actual
+    pedidos_usuario = PedidosOrden.objects.filter(user=request.user)
+
+    return render(request, "core/my-account.html", {'pedidos_usuario': pedidos_usuario})
+
 def wishlist(request):
         return render(request, "core/wishlist.html")
 def contact(request):
@@ -178,6 +188,7 @@ def move_to_cart(request, product_id):
         # Agrega el producto al carrito con la cantidad correspondiente
         cart.add(product=product, quantity=quantity)
 
+    messages.success(request, 'El producto se ha ha movido al carritocorrectamente.')
     # Redirige al usuario de vuelta a la lista de deseos o a donde desees
     return redirect('wishlist')  # Ajusta el nombre de la vista de la lista de deseos si es diferente
 
@@ -221,6 +232,7 @@ def remove_from_wish(request, product_id):
     product = wish_list.get_product(product_id)
     wish_list.remove(product_id)
 
+    messages.success(request, 'El producto se ha eliminado de la lista de deseos correctamente.')
     if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         return JsonResponse({'success': True})
     else:

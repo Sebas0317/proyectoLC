@@ -9,32 +9,29 @@
 
   <title>{% block title%} {% endblock%} | Mi Web</title>
   {% load static %}
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-  <!-- CSS Libraries -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
-  <link href="{% static 'core/css/mainstyle.css' %}" rel="stylesheet" />
-
-  <!-- JavaScript Libraries -->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Template Javascript -->
-  <script src="{% static 'core/js/main.js' %}"></script>
-  <!---IMPORTACION DE SLICKER -->
-  <link rel="stylesheet" href="{% static 'lib/slick/slick.css' %}" type="text/css">
-  <link rel="stylesheet" href="{% static 'lib/slick/slick-theme.css' %}" type="text/css">
   
+ <!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-  <!-- Agrega estos enlaces en tu archivo HTML (usualmente en el head) -->
+<!-- CSS Libraries -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+<link href="{% static 'core/css/mainstyle.css' %}" rel="stylesheet" />
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-B4gt1OgOyR0Z6ycPMz3Fmg1JwzVVm+GwI6Bi2a4B8npUj7mEVdoWrRbFtA4fhuP" crossorigin="anonymous">
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-5mM/9t2Ui6OyWkfIPE08iCRi/xlJ7I8/AAUjN0c5F7R06IexJvp0sI0d7uk5lMjGs" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz1wD2urDDInEMAZLts13eeB4H9UQapP6BWHujhX8rM5P0paCWI4E0FwaV" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-pzj5f+UAhygMl/7fhaxKLS7shf5Y7oXvxmznPZOqcW/nWlRJzg0IHKVoRXfn0l1A" crossorigin="anonymous"></script>
+<script src="{% static 'core/js/main.js' %}"></script>
+
+<!-- IMPORTACION DE SLICKER -->
+<link rel="stylesheet" href="{% static 'lib/slick/slick.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'lib/slick/slick-theme.css' %}" type="text/css">
+
 
 <style>
   .cart {
@@ -55,6 +52,33 @@
 </head>
 
   <body>
+
+    {% if messages %}
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="alert alert-success mb-0" role="alert">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('#successModal').modal('show');
+            setTimeout(function(){
+                $('#successModal').modal('hide');
+            }, 5000); // Cierra el modal después de 5 segundos
+        });
+    </script>
+{% endif %}
+
+
     <!-- Top bar Start -->
     <div class="top-bar">
       <div class="container-fluid">
@@ -87,10 +111,11 @@
               <a href="{% url 'home' %}" class="nav-item nav-link">Inicio</a>
               <a href="{% url 'product_list' %}" class="nav-item nav-link">Productos</a>
     
-              <a href="{% url 'contact' %}" class="nav-item nav-link">Contactenos</a>
+              <a href="{% url 'contacto' %}" class="nav-item nav-link">Contactenos</a>
+              
+              {% if user.is_authenticated %}
               <a href="{% url 'wishlist' %}" class="nav-item nav-link">Lista de Deseos</a>
               <a href="{% url 'pedidos_view' %}" class="nav-item nav-link">Lista de Pedidos</a>
-              {% if user.is_authenticated %}
     <a href="{% url 'my-account' %}" class="nav-item nav-link">Mi Cuenta</a>
 {% endif %}
 
@@ -256,12 +281,9 @@
         <div class="container">
           <div class="row">
             <div class="col-md-6 copyright">
-              <p>{{ copy.contenido }}</p>
+              <p>{{ copyright.frase }}</p>
             </div>
- 
-            <div class="col-md-6 template-by">
-              <p></p>
-            </div>
+
           </div>
         </div>
       </div>

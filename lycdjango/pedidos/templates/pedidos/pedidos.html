@@ -92,18 +92,13 @@
                   <h2>Total de Compra<span>${{ total }}</span></h2>
                 </div>
                 <div class="cart-btn">
-                  <button href="{% url 'checkout' %}">
-                    Actualizar Direccion
+                  <button href="{% url 'home' %}">
+                    Ir al home
                   </button>
 
                   <!-- ... (tu código actual) -->
-                  <button
-                    type="submit"
-                    data-toggle="modal"
-                    data-target="#pedidoModal"
-                    id="enviarCorreoBtn"
-                  >
-                    Realizar Pedido
+                  <button href="{% url 'product_list' %}">
+                    Seguir comprando
                   </button>
                 </div>
               </div>

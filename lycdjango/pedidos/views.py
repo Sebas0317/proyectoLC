@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from core.cart import Cart
 from productos.models import Producto
-from .forms import DireccionEnvioForm
+from core.forms import DireccionEnvioForm
 from politicas.models import GastosEnvio
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
 from django.template.loader import render_to_string
+from .models import PedidosOrden
 
 
 def pedidos(request):
@@ -35,6 +36,7 @@ def pedidos(request):
             correo = form.cleaned_data['correo']
             numero_telefono = form.cleaned_data['numero_telefono']
             direccion = form.cleaned_data['direccion']
+            send_email(request,cart_items, nombres, correo, numero_telefono, direccion, total)
 
     else:
         form = DireccionEnvioForm(request.user)
@@ -50,28 +52,63 @@ def pedidos(request):
         'numero_telefono': numero_telefono,
         'direccion': direccion,
     }
-    send_email(request,cart_items, nombres, correo, numero_telefono, direccion, total)
+   
 
 
     return render(request, 'pedidos/pedidos.html', context)
 
+def send_email(request, cart_items, nombres, correo, numero_telefono, direccion, total):
+    subject = 'Confirmación de pedido de {}'.format(nombres)
+    message = f'''
+    Hola {nombres},
 
-def send_email(request,cart_items, nombres, correo, numero_telefono, direccion, total):
-    # Enviar correo
-    subject = 'Confirmación de pedido'
-    message = f'Ud ha comprado los siguientes artículos:\n'
+    Gracias por tu compra. Te confirmamos que tu pedido ha sido enviado con los siguientes datos:
+
+    Direccion: {direccion}
+    Correo: {correo}
+    Telefono: {numero_telefono}
+    Artículos:
+    '''
+    total_pedido = 0
     for item in cart_items:
         message += f'{item["product"].nombre} - Cantidad: {item["quantity"]}\n'
-    message += f'\nLos artículos han sido enviados con los siguientes datos:\n'
-    message += f'\nTotal: {total}\n'
-    message += f'Nombres: {nombres}\nCorreo: {correo}\nTeléfono: {numero_telefono}\nDirección: {direccion}'
-    email = {correo}
-    from_email="comercializadoralyc99@gmail.com"
-    message_text=strip_tags(message)
+        total_pedido += item["total_item_price"]
 
-    send_mail(subject, message_text, 'comercializadoralyc99@gmail.com',email, from_email)
+    message += f'''
+
+    Total: {total_pedido}
+
+    Te enviaremos un correo electrónico con el número de seguimiento de tu pedido.
+
+    Saludos,
+    Equipo de company LYC
+    '''
+
+    # Envío de acuse de recibo
+    from_email = "comercializadoralyc99@gmail.com"
+    recipient_list = [correo]
+    send_mail(subject, message, from_email, recipient_list)
+
+    # Guardar en PedidoUsuario
+    PedidosOrden.objects.create(
+        user=request.user,
+        producto=cart_items[0]["product"].nombre,
+        cantidad=sum(item["quantity"] for item in cart_items),
+        total=total_pedido,
+        nombres=nombres,
+        correo=correo,
+        direccion=direccion,
+        numero_telefono=numero_telefono,
+    )
+
+    for item in cart_items:
+        producto = item["product"]
+        cantidad_comprada = item["quantity"]
+        producto.cantidad_disponible -= cantidad_comprada
+        producto.save()
+  
+
     return render(request, 'pedidos/pedidos.html')
-
 
 # def send_email(self,**kwargs):
 #     asunto="Gracias por el pedido"

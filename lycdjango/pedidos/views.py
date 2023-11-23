@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from core.cart import Cart
 from productos.models import Producto
 from core.forms import DireccionEnvioForm
@@ -37,6 +38,8 @@ def pedidos(request):
             numero_telefono = form.cleaned_data['numero_telefono']
             direccion = form.cleaned_data['direccion']
             send_email(request,cart_items, nombres, correo, numero_telefono, direccion, total)
+            messages.success(request, 'El pedido se ha enviado correctamente. toda la información ha sido enviada al correo.')
+
 
     else:
         form = DireccionEnvioForm(request.user)

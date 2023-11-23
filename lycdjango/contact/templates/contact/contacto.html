@@ -57,71 +57,59 @@
                 <div class="col-lg-4">
                     <div class="contact-form">
                         <form action="" method="POST" id="contenedor">
-                            <div class="row">
+                            <h2>Escribenos</h2>
                             {% csrf_token %}
-                            <div class="form-group">
-                                <label>Nombre *</label>
-                                <div class="input-group">
-                                    {{ form.nombre }}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            {{ form.nombre }}
+                                        </div>
+                                        <div>
+                                            {{ form.nombre.errors }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            {{ form.correo }}
+                                        </div>
+                                        <div>
+                                            {{ form.correo.errors }}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    {{ form.nombre.errors }}
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            {{ form.asunto }}
+                                        </div>
+                                        <div>
+                                            {{ form.asunto.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            {{ form.mensaje }}
+                                        </div>
+                                        <div>
+                                            {{ form.mensaje.errors }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                
-                            <div class="form-group">
-                                <label>Email *</label>
-                                <div class="input-group">
-                                    {{ form.correo }}
-                                </div>
-                                <div>
-                                    {{ form.correo.errors }}
-                                </div>
-                            </div> 
-
-                            <div class="form-group">
-                                <label>Asunto *</label>
-                                <div class="input-group">
-                                    {{ form.asunto }}
-                                </div>
-                                <div>
-                                    {{ form.asunto.errors }}
-                                </div>
-                            </div>
-                            
-                
-                            <div class="form-group">
-                                <label>Mensaje *</label>
-                                <div class="input-group">
-                                    {{ form.mensaje }}
-                                </div>
-                                <div>
-                                    {{ form.mensaje.errors }}
-                                </div>
-                            </div>
-                
                             <div class="text-center">
                                 <input type="submit" value="Enviar" id="botonF">
                             </div>
-                
-                            <div class="row m-5">
-                                {% if 'ok' in request.GET %}
-                                <div class="alert alert-info alert-dismissible fade show" role="alert">
-                                    </div>
-                                {% endif %}
-                            </div>
-                
-                            <div class="row m-5">
-                                {% if 'fail' in request.GET %}
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
-                        
+                            <!-- Código para mostrar alertas si hay éxito o falla -->
                         </form>
                     </div>
                 </div>
+                
+                
+                
+                
                 <div class="col-lg-12">
                     <div class="contact-map">
                     <iframe
@@ -138,42 +126,65 @@
         </div>
     </div>
 
-<!-- <style>.contact-form {
-    padding: 20px;
-  }
-  
-  .contact-form .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .contact-form .input-group {
+<style>
+    /* Estilos para el formulario */
+.contact-form form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Estilos para los campos del formulario */
+.contact-form .form-group {
+    margin-bottom: 10px;
+}
+
+.contact-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
     width: 100%;
-  }
-  
-  .contact-form .input-group input {
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .contact-form .input-group .error {
-    color: red;
-  }
-  
-  .contact-form .text-center {
-    text-align: center;
-  }
-  
-  .contact-form input[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #000;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+/* Estilos para el botón de enviar */
+.contact-form #botonF {
+    background-color: #003171;
     color: #fff;
+    padding: 10px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
-  }
-  </style> -->
+}
+
+/* Estilos para las alertas */
+.contact-form .alert {
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.contact-form .alert-info {
+    background-color: #cce5ff;
+    border-color: #b8daff;
+    color: #004085;
+}
+
+.contact-form .alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+  </style> 
 
     <script>
         const alert = document.querySelector('.alert');

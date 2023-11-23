@@ -82,6 +82,8 @@ def send_email(request, cart_items, nombres, correo, numero_telefono, direccion,
     Total: {total_pedido}
 
     Te enviaremos un correo electrónico con el número de seguimiento de tu pedido.
+    
+    Una persona de nuestro equipo se pondrá en contacto contigo próximamente para definir los detalles del pago y del envío.
 
     Saludos,
     Equipo de company LYC

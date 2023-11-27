@@ -196,41 +196,40 @@
 
           <div class="row align-items-center product-slider product-slider-3">
             {% for producto_relacionado in productos_relacionados %}
-                <div class="col-lg-3">
-                    <div class="product-item">
-                        <div class="product-title">
-                            <a href="#">{{ producto_relacionado.nombre }}</a>
-                        </div>
-                        <div class="product-image">
-                            <a href="#">
-                                <img src="{{ producto_relacionado.imagen.url }}" alt="Product Image" />
-                            </a>
-                            <div class="product-action">
-                                {% if user.is_authenticated %}
-                                    <a href="{% url 'add_to_cart' producto_relacionado.id %}"><i class="fa fa-cart-plus"></i></a>
-                                {% else %}
-                                    <a href="{% url 'login' %}"><i class="fa fa-user"></i></a>
-                                {% endif %}
-                                <a href="{% url 'add_to_wishlist' producto_relacionado.id %}" class="add-to-wishlist" data-product-id="{{ product.id }}">
-                                    <i class="fa fa-heart"></i>
-                                </a>
-                                <a href="#"><i class="fa fa-search"></i></a>
+                {% if producto_relacionado.cantidad_disponible > 0 %}
+                    <div class="col-lg-3">
+                        <div class="product-item">
+                            <div class="product-title">
+                                <a href="#">{{ producto_relacionado.nombre }}</a>
                             </div>
-                        </div>
-                        <div class="product-price">
-                            <h3><span>$</span>{{ producto_relacionado.precio }}</h3>
-                            {% if producto_relacionado.cantidad_disponible > 0 %}
+                            <div class="product-image">
+                                <a href="#">
+                                    <img src="{{ producto_relacionado.imagen.url }}" alt="Product Image" />
+                                </a>
+                                <div class="product-action">
+                                    {% if user.is_authenticated %}
+                                        <a href="{% url 'add_to_cart' producto_relacionado.id %}"><i class="fa fa-cart-plus"></i></a>
+                                    {% else %}
+                                        <a href="{% url 'login' %}"><i class="fa fa-user"></i></a>
+                                    {% endif %}
+                                    <a href="{% url 'add_to_wishlist' producto_relacionado.id %}" class="add-to-wishlist" data-product-id="{{ producto_relacionado.id }}">
+                                        <i class="fa fa-heart"></i>
+                                    </a>
+                                    <a href="#"><i class="fa fa-search"></i></a>
+                                </div>
+                            </div>
+                            <div class="product-price">
+                                <h3><span>$</span>{{ producto_relacionado.precio }}</h3>
                                 <a class="btn" href="{% url 'product_detail' producto_relacionado.id %}">
                                     <i class="fa fa-shopping-cart"></i>Comprar
                                 </a>
-                            {% else %}
-                                <button class="btn btn-disabled" disabled>Agotado</button>
-                            {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endif %}
             {% endfor %}
         </div>
+        
         
         </div>
       </div>
@@ -264,39 +263,42 @@
           </nav>
       </div>
 
-        <div class="sidebar-widget widget-slider">
-          <div class="sidebar-slider normal-slider">
+      <div class="sidebar-widget widget-slider">
+        <div class="sidebar-slider normal-slider">
             {% for producto_aleatorio in productos_aleatorios %}
-            <div class="product-item">
-              <div class="product-title">
-                <a href="#">{{ producto_aleatorio.nombre }}</a>
-              </div>
-              <div class="product-image">
-                <a href="#">
-                  <img src="{{ producto_aleatorio.imagen.url }}" alt="Product Image" />
-                </a>
-                <div class="product-action">
-                  {% if user.is_authenticated %}
-                  <a href="{% url 'add_to_cart' producto.id %}"><i class="fa fa-cart-plus"></i></a>
-                {% else %}
-                  <a href="{% url 'login' %}"><i class="fa fa-user"></i></a>
+                {% if producto_aleatorio.cantidad_disponible > 0 %}
+                    <div class="product-item">
+                        <div class="product-title">
+                            <a href="#">{{ producto_aleatorio.nombre }}</a>
+                        </div>
+                        <div class="product-image">
+                            <a href="#">
+                                <img src="{{ producto_aleatorio.imagen.url }}" alt="Product Image" />
+                            </a>
+                            <div class="product-action">
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'add_to_cart' producto_aleatorio.id %}"><i class="fa fa-cart-plus"></i></a>
+                                {% else %}
+                                    <a href="{% url 'login' %}"><i class="fa fa-user"></i></a>
+                                {% endif %}
+                                <a href="{% url 'add_to_wishlist' producto_aleatorio.id %}" class="add-to-wishlist" data-product-id="{{ producto_aleatorio.id }}">
+                                    <i class="fa fa-heart"></i>
+                                </a>
+                                <a href="#"><i class="fa fa-search"></i></a>
+                            </div>
+                        </div>
+                        <div class="product-price">
+                            <h3><span>$</span>{{ producto_aleatorio.precio }}</h3>
+                            <a class="btn" href="{% url 'product_detail' producto_aleatorio.id %}">
+                                <i class="fa fa-shopping-cart"></i>Comprar
+                            </a>
+                        </div>
+                    </div>
                 {% endif %}
-                <a href="{% url 'add_to_wishlist' producto.id %}" class="add-to-wishlist" data-product-id="{{ product.id }}">
-                  <i class="fa fa-heart"></i>
-              </a>
-                  <a href="#"><i class="fa fa-search"></i></a>
-                </div>
-              </div>
-              <div class="product-price">
-                <h3><span>$</span>{{ producto_aleatorio.precio }}</h3>
-                <a class="btn" href="{% url 'product_detail' producto_aleatorio.id %}">
-                  <i class="fa fa-shopping-cart"></i>Comprar
-                </a>
-              </div>
-            </div>
-          {% endfor %}
-          </div>
+            {% endfor %}
         </div>
+    </div>
+    
 
         
 

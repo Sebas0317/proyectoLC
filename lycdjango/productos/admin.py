@@ -22,7 +22,7 @@ class TipoProductoAdmin(admin.ModelAdmin):
     search_fields = ('nombre',)
 
 @admin.register(Comentario)
-class comentarios(admin.ModelAdmin):
-    list_display = ('autor','texto')
+class ComentarioAdmin(admin.ModelAdmin):
+    list_display = ('usuario', 'contenido', 'fecha')  # Asegúrate de tener los nombres correctos de los campos
 
 admin.site.register(TipoProducto, TipoProductoAdmin)

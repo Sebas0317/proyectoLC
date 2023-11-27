@@ -24,6 +24,15 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre
 
+class Comentario(models.Model):
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='comentarios')
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE,default=None)
+    fecha = models.DateTimeField(auto_now_add=True)
+    # Agregar el campo 'contenido' para el texto del comentario
+    contenido = models.TextField()
+
+    def __str__(self):
+        return f"Comentario de {self.usuario.username} en {self.producto.nombre}"
 
 class Especificacion(models.Model):
     producto = models.ForeignKey(Producto, related_name='especificaciones', on_delete=models.CASCADE)
@@ -33,12 +42,4 @@ class Especificacion(models.Model):
     def __str__(self):
         return f"{self.nombre}: {self.valor}"
     
-#comentarios
-class Comentario(models.Model):
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    autor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)  #asociar comentarios a usuarios
-    texto = models.TextField()
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"Comentario por {self.autor} en {self.producto.nombre}"

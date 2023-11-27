@@ -156,35 +156,25 @@
                 </ul>
               </div>
               <div id="reviews" class="container tab-pane fade">
+                {% for comentario in comentarios %}
                 <div class="reviews-submitted">
-                  <div class="reviewer">
-                    <span id="reviewer_name">nombre persona</span> -
-                    <span>01 Jan 2020</span>
-                  </div>
-                  <p>
-                    Sed ut perspiciatis unde omnis iste natus error sit
-                    voluptatem accusantium doloremque laudantium, totam rem
-                    aperiam.
-                  </p>
+                    <div class="reviewer">
+                        <span>{{ comentario.usuario.username }}</span> -
+                        <span>{{ comentario.fecha }}</span>
+                    </div>
+                    <p>{{ comentario.contenido }}</p>
                 </div>
+                {% endfor %}
+            
                 <div class="reviews-submit">
-                  <h4>Dejanos un Comentario:</h4>
-                  <div class="row form">
-                    <div class="col-sm-6">
-                      <input type="text" placeholder="Name" />
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="email" placeholder="Email" />
-                    </div>
-                    <div class="col-sm-12">
-                      <textarea placeholder="Review"></textarea>
-                    </div>
-                    <div class="col-sm-12">
-                      <button>Enviar</button>
-                    </div>
-                  </div>
+                    <h4>Dejanos un Comentario:</h4>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit">Enviar</button>
+                    </form>
                 </div>
-              </div>
+            </div>
             </div>
           </div>
         </div>

@@ -13,6 +13,7 @@ from .wishlist import Wish
 from .models import Comentario
 from politicas.models import Cupon
 from pedidos.models import PedidosOrden
+from productos.forms import ComentarioForm
 
 # Importaciones de Python
 import random   
@@ -44,20 +45,37 @@ def home(request):
         'brand_images': brand_images,  # Agrega las imágenes de la marca al contexto
     })
 
+
+
 def product_detail(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
     productos_relacionados = Producto.objects.filter(tipo=producto.tipo).exclude(id=producto_id)[:8]
     productos_disponibles = Producto.objects.all().exclude(id=producto_id)
-    
     productos_aleatorios = random.sample(list(productos_disponibles), len(productos_relacionados))
-    
     brand_images = BrandImage.objects.all()  # Obtén todas las imágenes de marca disponibles
     
+    # Obtener comentarios del producto
+    comentarios = producto.comentarios.all()
+    
+    # Manejar el formulario de comentario
+    if request.method == 'POST':
+        form = ComentarioForm(request.POST)
+        if form.is_valid():
+            nuevo_comentario = form.save(commit=False)
+            nuevo_comentario.producto = producto
+            nuevo_comentario.usuario = request.user  # Asigna el usuario actual al comentario
+            nuevo_comentario.save()
+            return redirect('product_detail', producto_id=producto_id)
+    else:
+        form = ComentarioForm()
+
     return render(request, 'core/product-detail.html', {
         'producto': producto,
         'productos_relacionados': productos_relacionados,
         'productos_aleatorios': productos_aleatorios,
         'brand_images': brand_images,
+        'comentarios': comentarios,  # Agregar comentarios al contexto
+        'form': form,  # Agregar formulario al contexto
     })
 
 
@@ -237,3 +255,4 @@ def remove_from_wish(request, product_id):
         return JsonResponse({'success': True})
     else:
         return redirect('core:wishlist')  # Cambiado el redireccionamiento a la página de la lista de deseos
+    

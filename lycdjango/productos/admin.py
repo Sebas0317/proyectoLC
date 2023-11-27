@@ -3,6 +3,12 @@ from .models import Producto, Especificacion, TipoProducto, Comentario
 
 class EspecificacionInline(admin.TabularInline):
     model = Especificacion
+from django.contrib import admin
+from .models import Producto, TipoProducto, Comentario
+
+class ComentarioInline(admin.TabularInline):
+    model = Comentario
+    extra = 0
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
@@ -10,19 +16,19 @@ class ProductoAdmin(admin.ModelAdmin):
     list_filter = ('precio', 'cantidad_disponible', 'fecha_carga', 'fecha_actualizacion', 'tipo')
     search_fields = ('nombre', 'tipo__nombre')
     list_editable = ('nombre', 'precio', 'cantidad_disponible', 'tipo')
-    inlines = [EspecificacionInline]
+    inlines = [ComentarioInline]
 
     def get_tipo(self, obj):
         return obj.tipo.nombre if obj.tipo else None
 
-    get_tipo.short_description = 'Tipo'  # Cambia el nombre de la columna para mostrar el tipo en el admin
+    get_tipo.short_description = 'Tipo'
 
+@admin.register(TipoProducto)
 class TipoProductoAdmin(admin.ModelAdmin):
     list_display = ('nombre',)
     search_fields = ('nombre',)
 
 @admin.register(Comentario)
 class ComentarioAdmin(admin.ModelAdmin):
-    list_display = ('usuario', 'contenido', 'fecha')  # Asegúrate de tener los nombres correctos de los campos
+    list_display = ('usuario', 'contenido', 'fecha')  
 
-admin.site.register(TipoProducto, TipoProductoAdmin)

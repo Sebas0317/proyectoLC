@@ -75,6 +75,7 @@
           
             <!-- Loop over products -->
             {% for producto in page_obj %}
+            {% if producto.cantidad_disponible > 0 %}
             <div class="col-md-4 mt-3">
               <div class="product-item">
                 <div class="product-title">
@@ -85,16 +86,19 @@
                     <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" />
                   </a>
                   <div class="product-action">
-                    {% if user.is_authenticated %}
-                    <a href="{% url 'add_to_cart' producto.id %}"><i class="fa fa-cart-plus"></i></a>
-                    {% else %}
-                    <a href="{% url 'login' %}"><i class="fa fa-user"></i></a>
+                    {% if producto.cantidad_disponible > 0 %}
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'add_to_cart' producto.id %}"><i class="fa fa-cart-plus"></i></a>
+                        {% else %}
+                            <a href="{% url 'login' %}"><i class="fa fa-user"></i></a>
+                        {% endif %}
                     {% endif %}
                     <a href="{% url 'add_to_wishlist' producto.id %}" class="add-to-wishlist" data-product-id="{{ producto.id }}">
-                      <i class="fa fa-heart"></i>
+                        <i class="fa fa-heart"></i>
                     </a>
                     <a href="{% url 'product_detail' producto.id %}"><i class="fa fa-search"></i></a>
-                  </div>
+                </div>
+                
                 </div>
                 <div class="product-price">
                   <h3><span>$</span>{{ producto.precio }}</h3>
@@ -116,6 +120,7 @@
                 </div>
               </div>
             </div>
+            {% endif %}
             {% endfor %}
 
             {% if mensaje_sin_productos %}
@@ -191,6 +196,7 @@
           <div class="sidebar-widget widget-slider">
             <div class="sidebar-slider normal-slider">
               {% for producto in page_obj %}
+              {% if producto.cantidad_disponible > 0 %}
               <div class="product-item">
                 <div class="product-title">
                   <a href="{% url 'product_detail' producto.id %}">{{ producto.nombre }}</a>
@@ -228,6 +234,7 @@
                   {% endif %}
                 </div>
               </div>
+              {% endif %}
               {% endfor %}
             </div>
           </div>

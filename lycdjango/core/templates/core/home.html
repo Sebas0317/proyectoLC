@@ -220,6 +220,7 @@
       </div>
       <div class="row align-items-center product-slider product-slider-4">
         {% for producto in productos_aleatorios %}
+        {% if producto.cantidad_disponible > 0 %}
         <div class="col-lg-3">
           <div class="product-item">
             <div class="product-title">
@@ -257,7 +258,7 @@
             </div>
           </div>
         </div>
-        
+        {% endif %}
         {% endfor %}
       
       
@@ -274,6 +275,7 @@
       </div>
       <div class="row align-items-center product-slider product-slider-4">
         {% for producto in ultimos_productos %}
+        {% if producto.cantidad_disponible > 0 %}
         <div class="col-lg-3">
           <div class="product-item">
             <div class="product-title">
@@ -311,7 +313,7 @@
             </div>
           </div>
         </div>
-        
+        {% endif %}
         {% endfor %}
       
         

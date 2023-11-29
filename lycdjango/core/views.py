@@ -58,13 +58,18 @@ def product_detail(request, producto_id):
     comentarios = producto.comentarios.all()
     
     # Manejar el formulario de comentario
+     # Manejar el formulario de comentario
     if request.method == 'POST':
         form = ComentarioForm(request.POST)
         if form.is_valid():
             nuevo_comentario = form.save(commit=False)
             nuevo_comentario.producto = producto
-            nuevo_comentario.usuario = request.user  # Asigna el usuario actual al comentario
+            nuevo_comentario.usuario = request.user
             nuevo_comentario.save()
+
+            # Agregar un mensaje de éxito
+            messages.success(request, 'Comentario agregado con éxito.')
+
             return redirect('product_detail', producto_id=producto_id)
     else:
         form = ComentarioForm()
@@ -74,10 +79,9 @@ def product_detail(request, producto_id):
         'productos_relacionados': productos_relacionados,
         'productos_aleatorios': productos_aleatorios,
         'brand_images': brand_images,
-        'comentarios': comentarios,  # Agregar comentarios al contexto
-        'form': form,  # Agregar formulario al contexto
+        'comentarios': comentarios,
+        'form': form,
     })
-
 
 
 

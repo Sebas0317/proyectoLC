@@ -1,6 +1,15 @@
 {% extends 'core/base.html' %} 
 {% block title %}Detalle del producto{% endblock%} 
 {% load static %} {% block content %}
+
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+{% endif %}
+
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-wrap">
   <div class="container-fluid">
@@ -173,6 +182,7 @@
                       {{ form.as_p }}
                       <button type="submit" class="submit-btn">Enviar</button>
                   </form>
+                 
 <style>
 
                     /* Estilos para el formulario de comentarios */
